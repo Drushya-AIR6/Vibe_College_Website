@@ -1,261 +1,1252 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#14211d" />
-    <meta
-      name="description"
-      content="Set sail for Vibe College: find your way around campus, discover courses, and join the crew."
-    />
-    <title>Vibe College — Chart Your Own Course</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="app.js" defer></script>
-  </head>
-  <body>
-    <div class="announcement">
-      <span class="announcement-icon" aria-hidden="true">✦</span>
-      <p>OPEN DECK DAY · Saturday, 24 October · All hands welcome</p>
-      <a href="#events">Claim your place <span aria-hidden="true">→</span></a>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="theme-color" content="#14211d"/>
+  <meta name="description" content="Set sail for Vibe College: Admissions, Courses, Placements, Campus Map, Events and more. A college for curious, bold, adventure-seeking souls."/>
+  <title>Vibe College — Chart Your Own Course</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     ANNOUNCEMENT BAR
+════════════════════════════════════════════════════════════ -->
+<div class="announcement" id="announcement-bar">
+  <span class="announcement-icon" aria-hidden="true">✦</span>
+  <p>OPEN DECK DAY · Saturday, 24 October · All hands welcome</p>
+  <a href="#events">Claim your place <span aria-hidden="true">→</span></a>
+  <button class="announcement-close" id="announcement-close" aria-label="Dismiss">×</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════════════════════ -->
+<header class="site-header" id="site-header">
+  <a class="brand" href="#" aria-label="Vibe College home">
+    <span class="brand-mark" aria-hidden="true">VC</span>
+    <span class="brand-name">VIBE <small>COLLEGE</small></span>
+  </a>
+  <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="#about">About</a>
+    <a href="#admissions">Admissions</a>
+    <a href="#courses">Courses</a>
+    <a href="#placements">Placements</a>
+    <a href="#locator">Campus</a>
+    <a href="#events">Events</a>
+    <a href="#portal">Students</a>
+    <a href="#contact">Contact</a>
+    <button class="compass-toggle" type="button" aria-expanded="false" aria-controls="learning-compass">
+      <span aria-hidden="true">✳</span> Compass
+    </button>
+  </nav>
+  <section class="learning-compass" id="learning-compass" aria-labelledby="compass-title" hidden>
+    <div class="compass-panel-heading">
+      <span class="compass-rose" aria-hidden="true">✳</span>
+      <div>
+        <p class="compass-kicker">YOUR NEXT PORT</p>
+        <h2 id="compass-title">Learning compass</h2>
+      </div>
+      <button class="compass-close" type="button" aria-label="Close learning compass">×</button>
+    </div>
+    <label class="compass-search-label" for="compass-search">What are you curious about?</label>
+    <div class="compass-search">
+      <span aria-hidden="true">⌕</span>
+      <input id="compass-search" type="search" placeholder='Try "design", "science", or "apply"' autocomplete="off"/>
+    </div>
+    <p class="compass-hint" id="compass-hint" aria-live="polite">A few good next steps, picked for your search.</p>
+    <div class="compass-recommendations" id="compass-recommendations" aria-live="polite"></div>
+    <p class="compass-privacy">Just a helpful guide — your searches stay on this page.</p>
+  </section>
+  <a class="nav-cta" href="#admissions">Come aboard <span aria-hidden="true">↗</span></a>
+</header>
+
+<main>
+
+<!-- ══════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-chart" aria-hidden="true"></div>
+  <div class="hero-copy">
+    <p class="eyebrow"><span></span>A college for curious souls</p>
+    <h1>Chart your<br/>own <em>course.</em></h1>
+    <p class="hero-intro">Big ideas. Good people. A little salt in the air. Find your crew and make a future worth sailing toward.</p>
+    <div class="hero-actions">
+      <a class="button button-gold" href="#admissions">Apply Now <span aria-hidden="true">→</span></a>
+      <a class="text-link" href="#locator"><span class="play-icon" aria-hidden="true">⌖</span>Explore Campus</a>
+    </div>
+    <div class="hero-proof">
+      <div class="crew-avatars" aria-hidden="true"><span>J</span><span>M</span><span>A</span><b>+</b></div>
+      <p><strong>2,400+ crew members</strong><br/>and counting</p>
+      <span class="proof-divider"></span>
+      <p class="proof-rating"><strong>4.9 <span aria-label="out of 5 stars">★★★★★</span></strong><br/>student rating</p>
+    </div>
+  </div>
+  <div class="hero-art" aria-label="Ship sailing toward campus">
+    <div class="sun"></div>
+    <span class="art-label">Somewhere worth<br/>finding <span>↙</span></span>
+    <div class="distant-island"></div>
+    <div class="wave wave-back"></div>
+    <div class="wave wave-mid"></div>
+    <div class="wave wave-front"></div>
+    <div class="ship">
+      <div class="ship-flag">☠</div>
+      <div class="sail sail-large"></div>
+      <div class="sail sail-small"></div>
+      <div class="mast"></div>
+      <div class="hull"></div>
+    </div>
+    <div class="seagull seagull-1" aria-hidden="true">〜</div>
+    <div class="seagull seagull-2" aria-hidden="true">〜</div>
+    <div class="art-compass"><span>N</span><i>✳</i></div>
+    <div class="art-coordinate">12° 34' N &nbsp;56° 78' W</div>
+  </div>
+  <div class="hero-bottom">
+    <span>LEARNING WITH A LITTLE ADVENTURE</span>
+    <span>↓ &nbsp;SCROLL TO EXPLORE</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     STATS
+════════════════════════════════════════════════════════════ -->
+<section class="stats-section" aria-label="College at a glance">
+  <div class="stats-grid">
+    <div class="stat-item"><span class="stat-icon">⚓</span><strong class="stat-number" data-target="2400">0</strong><span class="stat-plus">+</span><p class="stat-label">Crew Members</p></div>
+    <div class="stat-item"><span class="stat-icon">✳</span><strong class="stat-number" data-target="48">0</strong><span class="stat-plus"></span><p class="stat-label">Courses Offered</p></div>
+    <div class="stat-item"><span class="stat-icon">☆</span><strong class="stat-number" data-target="97">0</strong><span class="stat-plus">%</span><p class="stat-label">Placement Rate</p></div>
+    <div class="stat-item"><span class="stat-icon">♜</span><strong class="stat-number" data-target="156">0</strong><span class="stat-plus"></span><p class="stat-label">Recruiters</p></div>
+    <div class="stat-item"><span class="stat-icon">⚑</span><strong class="stat-number" data-target="32">0</strong><span class="stat-plus">L</span><p class="stat-label">Avg Package (₹)</p></div>
+    <div class="stat-item"><span class="stat-icon">★</span><strong class="stat-number" data-target="18">0</strong><span class="stat-plus"></span><p class="stat-label">Years of Excellence</p></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     ABOUT — CAPTAIN'S QUARTERS
+════════════════════════════════════════════════════════════ -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-left">
+      <p class="eyebrow eyebrow-dark"><span></span>Captain's Quarters</p>
+      <h2>Where every voyage<br/>begins with <em>purpose.</em></h2>
+      <p class="about-lead">Founded in 2008 on the belief that the best education feels like discovery, Vibe College has shaped over 12,000 graduates who are changing the world — one bold idea at a time.</p>
+
+      <div class="vision-mission">
+        <div class="vm-card">
+          <span class="vm-icon">🧭</span>
+          <h3>Vision</h3>
+          <p>To be a globally recognised institution that nurtures innovation, integrity and leadership in every student.</p>
+        </div>
+        <div class="vm-card">
+          <span class="vm-icon">⚓</span>
+          <h3>Mission</h3>
+          <p>To deliver transformative education through experiential learning, research and industry collaboration.</p>
+        </div>
+      </div>
+
+      <div class="accreditation-strip">
+        <span class="acc-badge">NAAC A+</span>
+        <span class="acc-badge">NBA Accredited</span>
+        <span class="acc-badge">NIRF Ranked</span>
+        <span class="acc-badge">AICTE Approved</span>
+        <span class="acc-badge">UGC Recognised</span>
+      </div>
     </div>
 
-    <header class="site-header">
-      <a class="brand" href="#" aria-label="Vibe College home">
-        <span class="brand-mark" aria-hidden="true">VC</span>
-        <span class="brand-name">VIBE <small>COLLEGE</small></span>
+    <div class="about-right">
+      <div class="principal-card">
+        <div class="principal-avatar" aria-hidden="true">
+          <span>VC</span>
+        </div>
+        <div class="principal-badge">CAPTAIN OF THE SHIP</div>
+        <h3>Capt. Dr. Viveka Chandra</h3>
+        <p class="principal-title">Principal & Director</p>
+        <blockquote class="principal-quote">
+          <p>"Education is not filling a vessel — it is lighting a fire. At Vibe College, we hand every student a torch and set them free to illuminate the world."</p>
+        </blockquote>
+        <div class="principal-social">
+          <a href="#" aria-label="Principal's LinkedIn">in</a>
+          <a href="#" aria-label="Principal's email">✉</a>
+        </div>
+      </div>
+
+      <div class="history-timeline">
+        <p class="timeline-label">THE VOYAGE SO FAR</p>
+        <div class="timeline-item"><span class="tl-year">2008</span><span class="tl-dot"></span><span class="tl-text">Founded with 3 departments and 240 students</span></div>
+        <div class="timeline-item"><span class="tl-year">2013</span><span class="tl-dot"></span><span class="tl-text">NAAC accreditation and first NBA cycle</span></div>
+        <div class="timeline-item"><span class="tl-year">2018</span><span class="tl-dot"></span><span class="tl-text">New campus wing, Research Centre launched</span></div>
+        <div class="timeline-item"><span class="tl-year">2022</span><span class="tl-dot"></span><span class="tl-text">NAAC A+ rating, 100% placement milestone</span></div>
+        <div class="timeline-item tl-now"><span class="tl-year">Now</span><span class="tl-dot"></span><span class="tl-text">2,400+ students across 12 programmes</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     ADMISSIONS — CREW QUARTERS
+════════════════════════════════════════════════════════════ -->
+<section class="admissions-section" id="admissions">
+  <div class="admissions-inner">
+    <div class="section-heading light-heading">
+      <p class="eyebrow"><span></span>Crew Quarters</p>
+      <h2>Join the <em>crew.</em></h2>
+      <p>Everything you need to set sail — eligibility, dates, fees and your application.</p>
+    </div>
+
+    <!-- Eligibility + Dates -->
+    <div class="admissions-grid">
+      <div class="adm-card">
+        <span class="adm-card-icon">📋</span>
+        <h3>Eligibility</h3>
+        <ul class="adm-list">
+          <li>10+2 or equivalent with minimum 50% aggregate</li>
+          <li>Physics, Chemistry, Maths for B.Tech programmes</li>
+          <li>Any stream for BBA and B.Com</li>
+          <li>Valid JEE / CUET / State CET score preferred</li>
+          <li>Direct admission on merit for ≥ 80% students</li>
+        </ul>
+      </div>
+      <div class="adm-card">
+        <span class="adm-card-icon">📅</span>
+        <h3>Important Dates</h3>
+        <div class="dates-timeline">
+          <div class="date-row done"><span class="dr-date">01 Sep</span><span class="dr-dot"></span><span class="dr-label">Applications Open</span></div>
+          <div class="date-row done"><span class="dr-date">15 Oct</span><span class="dr-dot"></span><span class="dr-label">Last Date — Round 1</span></div>
+          <div class="date-row active"><span class="dr-date">24 Oct</span><span class="dr-dot"></span><span class="dr-label">Open Deck Day (Campus Visit)</span></div>
+          <div class="date-row"><span class="dr-date">10 Nov</span><span class="dr-dot"></span><span class="dr-label">Merit List Published</span></div>
+          <div class="date-row"><span class="dr-date">25 Nov</span><span class="dr-dot"></span><span class="dr-label">Last Date — Round 2</span></div>
+          <div class="date-row"><span class="dr-date">05 Jan</span><span class="dr-dot"></span><span class="dr-label">Classes Begin</span></div>
+        </div>
+      </div>
+      <div class="adm-card">
+        <span class="adm-card-icon">📁</span>
+        <h3>Document Checklist</h3>
+        <ul class="adm-list checklist">
+          <li>10th and 12th mark sheets (originals + 2 copies)</li>
+          <li>Transfer & Migration Certificate</li>
+          <li>Character Certificate from last institution</li>
+          <li>Passport-size photographs (6 copies)</li>
+          <li>ID proof (Aadhaar / Passport)</li>
+          <li>Caste / Income certificate (if applicable)</li>
+          <li>Entrance exam scorecard (JEE / CUET / CET)</li>
+        </ul>
+      </div>
+      <div class="adm-card">
+        <span class="adm-card-icon">🎁</span>
+        <h3>Scholarships</h3>
+        <ul class="adm-list">
+          <li><strong>Gold Anchor:</strong> 100% tuition waiver — top 5 rankers</li>
+          <li><strong>Silver Sail:</strong> 50% fee waiver — merit 80%+ in board exams</li>
+          <li><strong>Crew Solidarity:</strong> 25% waiver — economically disadvantaged</li>
+          <li><strong>Sports Compass:</strong> for state/national level athletes</li>
+          <li>Government scholarships honoured (SC/ST/OBC/EWS)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Fee Structure -->
+    <div class="fee-section">
+      <h3 class="fee-title">⚓ Fee Structure — 2026–27</h3>
+      <div class="fee-table-wrap">
+        <table class="fee-table">
+          <thead>
+            <tr><th>Programme</th><th>Duration</th><th>Annual Tuition (₹)</th><th>One-time Fee (₹)</th><th>Total (₹)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>B.Tech (all branches)</td><td>4 Years</td><td>1,20,000</td><td>15,000</td><td>4,95,000</td></tr>
+            <tr><td>BBA</td><td>3 Years</td><td>80,000</td><td>10,000</td><td>2,50,000</td></tr>
+            <tr><td>B.Com (Honours)</td><td>3 Years</td><td>60,000</td><td>10,000</td><td>1,90,000</td></tr>
+            <tr><td>BA (Humanities)</td><td>3 Years</td><td>55,000</td><td>10,000</td><td>1,75,000</td></tr>
+            <tr><td>M.Tech</td><td>2 Years</td><td>1,40,000</td><td>12,000</td><td>2,92,000</td></tr>
+            <tr><td>MBA</td><td>2 Years</td><td>1,60,000</td><td>15,000</td><td>3,35,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="fee-note">✦ Instalment options available: 2 or 4 instalments per year · Education loan tie-ups with SBI, HDFC, Axis Bank</p>
+    </div>
+
+    <!-- Application Form -->
+    <div class="apply-form-section" id="apply-form">
+      <div class="apply-form-box">
+        <div class="form-header">
+          <span class="form-icon">☠</span>
+          <div>
+            <p class="form-kicker">JOIN THE CREW</p>
+            <h3>Submit Your Application</h3>
+          </div>
+        </div>
+        <form class="enquiry-form" id="application-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="app-name">Full Name *</label>
+              <input type="text" id="app-name" placeholder="Yer full pirate name" required/>
+            </div>
+            <div class="form-group">
+              <label for="app-email">Email *</label>
+              <input type="email" id="app-email" placeholder="captain@ship.com" required/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="app-phone">Phone *</label>
+              <input type="tel" id="app-phone" placeholder="+91 00000 00000" required/>
+            </div>
+            <div class="form-group">
+              <label for="app-program">Programme *</label>
+              <select id="app-program" required>
+                <option value="">Select a programme</option>
+                <option>B.Tech — Computer Science</option>
+                <option>B.Tech — Electronics</option>
+                <option>B.Tech — Mechanical</option>
+                <option>BBA</option>
+                <option>B.Com (Honours)</option>
+                <option>BA (Humanities)</option>
+                <option>MBA</option>
+                <option>M.Tech</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="app-message">Message / Questions (optional)</label>
+            <textarea id="app-message" rows="3" placeholder="Ask the captain anything..."></textarea>
+          </div>
+          <button type="submit" class="button button-gold form-submit-btn">
+            Set Sail <span aria-hidden="true">↗</span>
+          </button>
+          <p class="form-success" id="form-success" hidden>✦ Message in a bottle sent! We'll reach ye within 48 hours.</p>
+        </form>
+      </div>
+
+      <!-- FAQ -->
+      <div class="faq-box">
+        <h3 class="faq-title">⚓ Frequently Asked Questions</h3>
+        <div class="faq-list" id="faq-list">
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Is there an entrance test conducted by Vibe College?</button>
+            <div class="faq-a"><p>No — we accept JEE, CUET and State CET scores. Direct merit admission is also available for students scoring above 80% in boards.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Can I apply for multiple programmes?</button>
+            <div class="faq-a"><p>Yes, you may indicate up to 3 programme preferences in your application. Final allocation depends on merit and seat availability.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Are hostel facilities available?</button>
+            <div class="faq-a"><p>Yes — separate hostels for boys and girls, with 24/7 security, Wi-Fi, and a mess. Hostel fee is ₹80,000/year (including food).</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">What is the refund policy if I withdraw?</button>
+            <div class="faq-a"><p>Refunds follow UGC guidelines: 100% refund before classes start, 90% within 15 days, 80% within 30 days. The admission fee (₹5,000) is non-refundable.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Are there lateral entry options for diploma holders?</button>
+            <div class="faq-a"><p>Yes — direct 2nd-year (lateral) entry is available for B.Tech for diploma holders with 60%+ marks, subject to AICTE norms.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">How do I reach the campus?</button>
+            <div class="faq-a"><p>Vibe College is 5 km from the city centre. Bus stops at the college gate. Nearest railway station: 3 km. We also run college buses from 12 city pickup points.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     COURSES
+════════════════════════════════════════════════════════════ -->
+<section class="courses-section" id="courses">
+  <div class="courses-heading">
+    <div>
+      <p class="eyebrow"><span></span>Choose your adventure</p>
+      <h2>Find your <em>north star.</em></h2>
+    </div>
+    <a class="text-link light-link" href="#admissions">Apply for a course <span aria-hidden="true">→</span></a>
+  </div>
+
+  <!-- Programme Tabs -->
+  <div class="course-tabs" role="tablist" aria-label="Course categories">
+    <button class="ctab active" role="tab" aria-selected="true" data-tab="ug">UG Programmes</button>
+    <button class="ctab" role="tab" aria-selected="false" data-tab="pg">PG Programmes</button>
+    <button class="ctab" role="tab" aria-selected="false" data-tab="research">Research</button>
+  </div>
+
+  <div class="ctab-content" id="tab-ug">
+    <div class="course-grid">
+      <a class="course-card course-sand" href="#admissions">
+        <span class="course-number">01 / THINK</span><span class="course-icon" aria-hidden="true">✳</span>
+        <h3>Arts &<br/>Humanities</h3>
+        <p>Ask better questions. Find surprising answers.</p>
+        <ul class="course-features"><li>Creative Writing</li><li>Philosophy & Ethics</li><li>Visual Arts</li><li>History & Culture</li></ul>
+        <div class="course-meta"><span>3 Years</span><span>Intake: 60</span><span>₹55,000/yr</span></div>
+        <span class="course-arrow">↗</span>
       </a>
-      <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">
-        <span></span><span></span>
-      </button>
-      <nav class="main-nav" aria-label="Main navigation">
-        <a href="#about">Our college</a>
-        <a href="#courses">Courses</a>
-        <a href="#locator">Campus map</a>
-        <a href="#events">Crew life</a>
-        <button class="compass-toggle" type="button" aria-expanded="false" aria-controls="learning-compass">
-          <span aria-hidden="true">✳</span> Learning compass
-        </button>
-      </nav>
-      <section class="learning-compass" id="learning-compass" aria-labelledby="compass-title" hidden>
-        <div class="compass-panel-heading">
-          <span class="compass-rose" aria-hidden="true">✳</span>
-          <div>
-            <p class="compass-kicker">YOUR NEXT PORT</p>
-            <h2 id="compass-title">Learning compass</h2>
-          </div>
-          <button class="compass-close" type="button" aria-label="Close learning compass">×</button>
-        </div>
-        <label class="compass-search-label" for="compass-search">What are you curious about?</label>
-        <div class="compass-search">
-          <span aria-hidden="true">⌕</span>
-          <input id="compass-search" type="search" placeholder="Try “design”, “science”, or “library”" autocomplete="off" />
-        </div>
-        <p class="compass-hint" id="compass-hint" aria-live="polite">A few good next steps, picked for your search.</p>
-        <div class="compass-recommendations" id="compass-recommendations" aria-live="polite"></div>
-        <p class="compass-privacy">Just a helpful guide—your searches stay on this page.</p>
-      </section>
-      <a class="nav-cta" href="#apply">Come aboard <span aria-hidden="true">↗</span></a>
-    </header>
+      <a class="course-card course-sea" href="#admissions">
+        <span class="course-number">02 / MAKE</span><span class="course-icon" aria-hidden="true">⌘</span>
+        <h3>B.Tech —<br/>Computer Science</h3>
+        <p>Build things that make tomorrow better.</p>
+        <ul class="course-features"><li>Data Science & AI</li><li>Cybersecurity</li><li>Cloud Engineering</li><li>Full-Stack Dev</li></ul>
+        <div class="course-meta"><span>4 Years</span><span>Intake: 120</span><span>₹1,20,000/yr</span></div>
+        <span class="course-arrow">↗</span>
+      </a>
+      <a class="course-card course-rust" href="#admissions">
+        <span class="course-number">03 / LEAD</span><span class="course-icon" aria-hidden="true">⚓</span>
+        <h3>BBA —<br/>Leadership</h3>
+        <p>Turn big-hearted ideas into real impact.</p>
+        <ul class="course-features"><li>Entrepreneurship</li><li>Global Strategy</li><li>Sustainable Commerce</li><li>Marketing & Branding</li></ul>
+        <div class="course-meta"><span>3 Years</span><span>Intake: 90</span><span>₹80,000/yr</span></div>
+        <span class="course-arrow">↗</span>
+      </a>
+      <a class="course-card course-moss" href="#admissions">
+        <span class="course-number">04 / BUILD</span><span class="course-icon" aria-hidden="true">⚙</span>
+        <h3>B.Tech —<br/>Electronics</h3>
+        <p>Engineer the signals that power civilisation.</p>
+        <ul class="course-features"><li>Embedded Systems</li><li>VLSI Design</li><li>IoT & Robotics</li><li>Signal Processing</li></ul>
+        <div class="course-meta"><span>4 Years</span><span>Intake: 60</span><span>₹1,20,000/yr</span></div>
+        <span class="course-arrow">↗</span>
+      </a>
+      <a class="course-card course-navy" href="#admissions">
+        <span class="course-number">05 / TRADE</span><span class="course-icon" aria-hidden="true">₹</span>
+        <h3>B.Com<br/>Honours</h3>
+        <p>Master the ledgers of commerce and trade.</p>
+        <ul class="course-features"><li>Financial Accounting</li><li>Taxation Law</li><li>Investment Analysis</li><li>Cost Management</li></ul>
+        <div class="course-meta"><span>3 Years</span><span>Intake: 60</span><span>₹60,000/yr</span></div>
+        <span class="course-arrow">↗</span>
+      </a>
+      <a class="course-card course-dusk" href="#admissions">
+        <span class="course-number">06 / CRAFT</span><span class="course-icon" aria-hidden="true">⚙</span>
+        <h3>B.Tech —<br/>Mechanical</h3>
+        <p>Shape the machines that shape the world.</p>
+        <ul class="course-features"><li>Thermodynamics</li><li>CAD / CAM</li><li>Robotics & Automation</li><li>Manufacturing</li></ul>
+        <div class="course-meta"><span>4 Years</span><span>Intake: 60</span><span>₹1,20,000/yr</span></div>
+        <span class="course-arrow">↗</span>
+      </a>
+    </div>
+  </div>
 
-    <main>
-      <section class="hero" id="about">
-        <div class="hero-chart" aria-hidden="true"></div>
-        <div class="hero-copy">
-          <p class="eyebrow"><span></span> A college for curious souls</p>
-          <h1>Chart your<br />own <em>course.</em></h1>
-          <p class="hero-intro">
-            Big ideas. Good people. A little salt in the air. Find your crew and
-            make a future worth sailing toward.
-          </p>
-          <div class="hero-actions">
-            <a class="button button-gold" href="#courses">Explore courses <span aria-hidden="true">→</span></a>
-            <a class="text-link" href="#locator"><span class="play-icon" aria-hidden="true">⌖</span> Find your way around</a>
-          </div>
-          <div class="hero-proof">
-            <div class="crew-avatars" aria-hidden="true"><span>J</span><span>M</span><span>A</span><b>+</b></div>
-            <p><strong>2,400+ crew members</strong><br />and counting</p>
-            <span class="proof-divider"></span>
-            <p class="proof-rating"><strong>4.9 <span aria-label="out of 5 stars">★★★★★</span></strong><br />student rating</p>
-          </div>
-        </div>
-        <div class="hero-art" aria-label="Illustration of a ship sailing toward the college">
-          <div class="sun"></div>
-          <span class="art-label">Somewhere worth<br />finding <span>↙</span></span>
-          <div class="distant-island"></div>
-          <div class="wave wave-back"></div>
-          <div class="wave wave-mid"></div>
-          <div class="wave wave-front"></div>
-          <div class="ship">
-            <div class="ship-flag">✦</div>
-            <div class="sail sail-large"></div>
-            <div class="sail sail-small"></div>
-            <div class="mast"></div>
-            <div class="hull"></div>
-          </div>
-          <div class="art-compass"><span>N</span><i>✳</i></div>
-          <div class="art-coordinate">12° 34' N &nbsp; 56° 78' W</div>
-        </div>
-        <div class="hero-bottom">
-          <span>LEARNING WITH A LITTLE ADVENTURE</span>
-          <span>↓ &nbsp; SCROLL TO EXPLORE</span>
-        </div>
-      </section>
+  <div class="ctab-content hidden" id="tab-pg">
+    <div class="course-grid">
+      <a class="course-card course-sea" href="#admissions">
+        <span class="course-number">01 / MASTER</span><span class="course-icon">⌘</span>
+        <h3>M.Tech —<br/>CS / AI</h3>
+        <p>Deep dive into the frontier of intelligence.</p>
+        <ul class="course-features"><li>Machine Learning</li><li>Deep Learning</li><li>NLP & Vision</li><li>Research Thesis</li></ul>
+        <div class="course-meta"><span>2 Years</span><span>Intake: 30</span><span>₹1,40,000/yr</span></div>
+        <span class="course-arrow">↗</span>
+      </a>
+      <a class="course-card course-rust" href="#admissions">
+        <span class="course-number">02 / COMMAND</span><span class="course-icon">⚓</span>
+        <h3>MBA —<br/>General / Finance</h3>
+        <p>Command the ship of enterprise.</p>
+        <ul class="course-features"><li>Strategic Management</li><li>Corporate Finance</li><li>Operations</li><li>Industry Internship</li></ul>
+        <div class="course-meta"><span>2 Years</span><span>Intake: 60</span><span>₹1,60,000/yr</span></div>
+        <span class="course-arrow">↗</span>
+      </a>
+      <a class="course-card course-moss" href="#admissions">
+        <span class="course-number">03 / DESIGN</span><span class="course-icon">✳</span>
+        <h3>M.Des —<br/>UX & Product</h3>
+        <p>Design experiences people remember.</p>
+        <ul class="course-features"><li>Interaction Design</li><li>Design Research</li><li>Prototyping & Testing</li><li>Capstone Project</li></ul>
+        <div class="course-meta"><span>2 Years</span><span>Intake: 30</span><span>₹1,30,000/yr</span></div>
+        <span class="course-arrow">↗</span>
+      </a>
+    </div>
+  </div>
 
-      <section class="locator-section" id="locator">
-        <div class="section-heading">
-          <p class="eyebrow eyebrow-dark"><span></span> The campus chart room</p>
-          <h2>Lost? Not on <em>our watch.</em></h2>
-          <p>Ask your feathered first mate. There’s a treasure somewhere on this map.</p>
+  <div class="ctab-content hidden" id="tab-research">
+    <div class="research-panel">
+      <div class="research-stat-grid">
+        <div class="rs-card"><strong>42</strong><p>Research Papers Published (2025)</p></div>
+        <div class="rs-card"><strong>8</strong><p>Active Patents Filed</p></div>
+        <div class="rs-card"><strong>₹3.2 Cr</strong><p>Funded Research Projects</p></div>
+        <div class="rs-card"><strong>6</strong><p>Incubated Startups</p></div>
+      </div>
+      <div class="research-areas">
+        <div class="ra-item"><span class="ra-icon">🤖</span><h4>AI & Machine Learning Lab</h4><p>Cutting-edge research in deep learning, computer vision and NLP — in collaboration with industry partners.</p></div>
+        <div class="ra-item"><span class="ra-icon">🌊</span><h4>Marine Systems Research Centre</h4><p>Interdisciplinary research on coastal engineering, underwater robotics and ocean data analytics.</p></div>
+        <div class="ra-item"><span class="ra-icon">♻️</span><h4>Sustainable Technology Hub</h4><p>Green energy, carbon-neutral manufacturing and climate-responsive design solutions for tomorrow.</p></div>
+        <div class="ra-item"><span class="ra-icon">💡</span><h4>Innovation & Incubation Cell</h4><p>Seed funding, mentorship and co-working space for student and faculty startups since 2019.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     PLACEMENTS — THE BOUNTY BOARD
+════════════════════════════════════════════════════════════ -->
+<section class="placements-section" id="placements">
+  <div class="placements-inner">
+    <div class="section-heading">
+      <p class="eyebrow eyebrow-dark"><span></span>The Bounty Board</p>
+      <h2>Where ambition meets <em>opportunity.</em></h2>
+      <p>Our placement cell works year-round to connect students with the best ships on the sea.</p>
+    </div>
+
+    <!-- Package Stats -->
+    <div class="placement-stats">
+      <div class="ps-card gold"><strong>₹68 LPA</strong><p>Highest Package</p></div>
+      <div class="ps-card"><strong>₹32 LPA</strong><p>Average Package</p></div>
+      <div class="ps-card"><strong>₹18 LPA</strong><p>Median Package</p></div>
+      <div class="ps-card"><strong>97%</strong><p>Students Placed</p></div>
+    </div>
+
+    <!-- Year-wise chart (CSS-only bar chart) -->
+    <div class="year-chart-section">
+      <h3 class="chart-title">Year-wise Placement Trends</h3>
+      <div class="bar-chart" aria-label="Year-wise placement statistics">
+        <div class="bar-group">
+          <div class="bar-wrap"><div class="bar" style="--h:65%" data-val="₹24L"></div></div>
+          <span class="bar-label">2022</span>
         </div>
-        <div class="locator-card">
-          <div class="locator-topline">
-            <div class="locator-title"><span class="tiny-compass">✳</span><span>CAMPUS TREASURE FINDER</span></div>
-            <span class="map-coordinate">CHART NO. 07 — UPDATED TODAY</span>
+        <div class="bar-group">
+          <div class="bar-wrap"><div class="bar" style="--h:74%" data-val="₹27L"></div></div>
+          <span class="bar-label">2023</span>
+        </div>
+        <div class="bar-group">
+          <div class="bar-wrap"><div class="bar" style="--h:84%" data-val="₹30L"></div></div>
+          <span class="bar-label">2024</span>
+        </div>
+        <div class="bar-group">
+          <div class="bar-wrap"><div class="bar highlight" style="--h:100%" data-val="₹32L"></div></div>
+          <span class="bar-label">2025</span>
+        </div>
+      </div>
+      <p class="chart-note">Average CTC (₹ Lakhs Per Annum) — All branches combined</p>
+    </div>
+
+    <!-- Recruiters -->
+    <div class="recruiters-section">
+      <h3 class="recruiter-title">⚓ Our Recruiters</h3>
+      <div class="recruiter-grid">
+        <span class="recruiter-tag">Google</span>
+        <span class="recruiter-tag">Microsoft</span>
+        <span class="recruiter-tag">Amazon</span>
+        <span class="recruiter-tag">Infosys</span>
+        <span class="recruiter-tag">TCS</span>
+        <span class="recruiter-tag">Wipro</span>
+        <span class="recruiter-tag">Accenture</span>
+        <span class="recruiter-tag">Deloitte</span>
+        <span class="recruiter-tag">Goldman Sachs</span>
+        <span class="recruiter-tag">J.P. Morgan</span>
+        <span class="recruiter-tag">HDFC Bank</span>
+        <span class="recruiter-tag">Swiggy</span>
+        <span class="recruiter-tag">Zomato</span>
+        <span class="recruiter-tag">PhonePe</span>
+        <span class="recruiter-tag">ISRO</span>
+        <span class="recruiter-tag">DRDO</span>
+        <span class="recruiter-tag">Bosch</span>
+        <span class="recruiter-tag">L&T</span>
+        <span class="recruiter-tag">Mahindra</span>
+        <span class="recruiter-tag">Tata Group</span>
+      </div>
+    </div>
+
+    <!-- Alumni Success Stories -->
+    <div class="alumni-stories">
+      <h3 class="stories-title">✦ Crew Success Stories</h3>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-avatar">AK</div>
+          <div class="story-content">
+            <strong>Arjun Krishnamurthy</strong>
+            <span>B.Tech CS, 2021 · Software Engineer @ Google</span>
+            <p>"The projects we did in the AI lab directly landed me my interview at Google. Vibe College gave me real problems to solve, not just theory."</p>
           </div>
-          <div class="locator-content">
-            <div class="locator-guide">
-              <div class="parrot" aria-hidden="true">🦜</div>
-              <div class="parrot-speech">
-                <span class="speech-name">CAPTAIN POLLY</span>
-                <p>“Arrr, where be ye headed today?”</p>
-                <span class="speech-tail" aria-hidden="true"></span>
-              </div>
-              <form class="destination-form" id="destination-form">
-                <label for="destination">Name your destination</label>
-                <div class="search-field">
-                  <span aria-hidden="true">⌕</span>
-                  <input
-                    id="destination"
-                    name="destination"
-                    type="search"
-                    list="campus-places"
-                    placeholder="Try ‘The Old Library’"
-                    autocomplete="off"
-                    aria-describedby="search-hint"
-                  />
-                  <datalist id="campus-places"></datalist>
-                  <button type="submit" aria-label="Find destination">→</button>
-                </div>
-                <span class="search-hint" id="search-hint">A building, a landmark, or a place to grab a bite.</span>
-                <p class="search-error" id="search-error" role="status" aria-live="polite"></p>
-              </form>
-              <div class="popular-destinations">
-                <span>POPULAR PORTS</span>
-                <button type="button" data-destination="The Old Library">The Old Library</button>
-                <button type="button" data-destination="Founders Hall">Founders Hall</button>
-                <button type="button" data-destination="The Galley Café">The Galley Café</button>
-              </div>
-              <div class="bottle-prompt">
-                <span class="bottle-mini" aria-hidden="true">♧</span>
-                <p>Send Polly on a mission<br /><strong>and crack open a clue.</strong></p>
-              </div>
+        </div>
+        <div class="story-card">
+          <div class="story-avatar teal">SM</div>
+          <div class="story-content">
+            <strong>Shreya Menon</strong>
+            <span>MBA, 2022 · Product Manager @ PhonePe</span>
+            <p>"The entrepreneurship bootcamp here is unlike anything else. I pitched my first product idea here — now I'm building products for millions."</p>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="story-avatar gold">RP</div>
+          <div class="story-content">
+            <strong>Rohan Pillai</strong>
+            <span>B.Tech Electronics, 2023 · VLSI Engineer @ Intel</span>
+            <p>"Our electronics lab had equipment most colleges don't have. That exposure made all the difference when I was competing with IIT graduates."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     CAMPUS MAP — TREASURE FINDER
+════════════════════════════════════════════════════════════ -->
+<section class="locator-section" id="locator">
+  <div class="section-heading">
+    <p class="eyebrow eyebrow-dark"><span></span>The Campus Chart Room</p>
+    <h2>Lost? Not on <em>our watch.</em></h2>
+    <p>Ask your feathered first mate. There's a treasure somewhere on this map.</p>
+  </div>
+
+  <!-- Virtual Tour Strip -->
+  <div class="tour-strip">
+    <a class="tour-thumb" href="#locator" aria-label="Library">
+      <span class="tour-emoji">📚</span>
+      <span>The Old Library</span>
+    </a>
+    <a class="tour-thumb" href="#locator" aria-label="Founders Hall">
+      <span class="tour-emoji">🏛️</span>
+      <span>Founders Hall</span>
+    </a>
+    <a class="tour-thumb" href="#locator" aria-label="The Galley Café">
+      <span class="tour-emoji">☕</span>
+      <span>The Galley Café</span>
+    </a>
+    <a class="tour-thumb" href="#locator" aria-label="Arts Dock">
+      <span class="tour-emoji">🎨</span>
+      <span>Arts Dock</span>
+    </a>
+    <a class="tour-thumb" href="#locator" aria-label="Harbour Gardens">
+      <span class="tour-emoji">🌿</span>
+      <span>Harbour Gardens</span>
+    </a>
+    <a class="tour-thumb active" href="#locator" aria-label="Interactive Map">
+      <span class="tour-emoji">🗺️</span>
+      <span>Interactive Map ↓</span>
+    </a>
+  </div>
+
+  <div class="locator-card">
+    <div class="locator-topline">
+      <div class="locator-title"><span class="tiny-compass">✳</span><span>CAMPUS TREASURE FINDER</span></div>
+      <span class="map-coordinate">CHART NO. 07 — UPDATED TODAY</span>
+    </div>
+    <div class="locator-content">
+      <div class="locator-guide">
+        <div class="parrot" aria-hidden="true">🦜</div>
+        <div class="parrot-speech">
+          <span class="speech-name">CAPTAIN POLLY</span>
+          <p id="polly-text">"Arrr, where be ye headed today?"</p>
+          <span class="speech-tail" aria-hidden="true"></span>
+        </div>
+        <form class="destination-form" id="destination-form">
+          <label for="destination">Name your destination</label>
+          <div class="search-field">
+            <span aria-hidden="true">⌕</span>
+            <input id="destination" name="destination" type="search" list="campus-places" placeholder="Try 'The Old Library'" autocomplete="off" aria-describedby="search-hint"/>
+            <datalist id="campus-places"></datalist>
+            <button type="submit" aria-label="Find destination">→</button>
+          </div>
+          <span class="search-hint" id="search-hint">A building, a landmark, or a place to grab a bite.</span>
+          <p class="search-error" id="search-error" role="status" aria-live="polite"></p>
+        </form>
+        <div class="popular-destinations">
+          <span>POPULAR PORTS</span>
+          <button type="button" data-destination="The Old Library">The Old Library</button>
+          <button type="button" data-destination="Founders Hall">Founders Hall</button>
+          <button type="button" data-destination="The Galley Café">The Galley Café</button>
+          <button type="button" data-destination="Arts Dock">Arts Dock</button>
+          <button type="button" data-destination="Harbour Gardens">Harbour Gardens</button>
+        </div>
+        <div class="bottle-prompt">
+          <span class="bottle-mini" aria-hidden="true">♧</span>
+          <p>Send Polly on a mission<br/><strong>and crack open a clue.</strong></p>
+        </div>
+      </div>
+      <div class="treasure-area" aria-live="polite">
+        <div class="treasure-empty" id="treasure-empty">
+          <div class="empty-bottle" aria-hidden="true">
+            <span class="bottle-cork"></span><span class="bottle-neck"></span>
+            <span class="bottle-glass"><i>✉</i></span>
+          </div>
+          <p class="empty-title">A message in a bottle awaits</p>
+          <p>Pick your destination and Polly will<br/>reveal the secret chart.</p>
+          <span class="empty-doodle" aria-hidden="true">↗ &nbsp;✳</span>
+        </div>
+        <article class="treasure-map is-hidden" id="treasure-map" aria-labelledby="map-destination">
+          <div class="map-stamp">POLLY<br/>APPROVED</div>
+          <div class="map-paper-top"><span>THE VIBE ISLES · CAMPUS CHART</span><span>NO. 01</span></div>
+          <div class="map-scene">
+            <svg class="route-lines" viewBox="0 0 600 250" role="img" aria-label="Route to destination">
+              <path d="M72 186 C130 170 114 106 198 126 S260 191 330 151 S376 78 447 104 S495 109 525 74"/>
+            </svg>
+            <span class="map-land land-one"></span>
+            <span class="map-land land-two"></span>
+            <span class="map-watermark">VIBE<br/>CAMPUS</span>
+            <div class="map-location" id="map-location">
+              <span class="map-cross" aria-hidden="true">✕</span>
+              <span class="map-pin-label" id="map-destination">The Old Library</span>
             </div>
-            <div class="treasure-area" aria-live="polite">
-              <div class="treasure-empty" id="treasure-empty">
-                <div class="empty-bottle" aria-hidden="true">
-                  <span class="bottle-cork"></span><span class="bottle-neck"></span>
-                  <span class="bottle-glass"><i>✉</i></span>
-                </div>
-                <p class="empty-title">A message in a bottle awaits</p>
-                <p>Pick your destination and Polly will<br />reveal the secret chart.</p>
-                <span class="empty-doodle" aria-hidden="true">↗ &nbsp; ✳</span>
-              </div>
-              <article class="treasure-map is-hidden" id="treasure-map" aria-labelledby="map-destination">
-                <div class="map-stamp">POLLY<br />APPROVED</div>
-                <div class="map-paper-top">
-                  <span>THE VIBE ISLES · CAMPUS CHART</span><span>NO. 01</span>
-                </div>
-                <div class="map-scene">
-                  <svg class="route-lines" viewBox="0 0 600 250" role="img" aria-label="Dotted route leading to your destination">
-                    <path d="M72 186 C130 170 114 106 198 126 S260 191 330 151 S376 78 447 104 S495 109 525 74" />
-                  </svg>
-                  <span class="map-land land-one"></span>
-                  <span class="map-land land-two"></span>
-                  <span class="map-watermark">VIBE<br />CAMPUS</span>
-                  <div class="map-location" id="map-location">
-                    <span class="map-cross" aria-hidden="true">✕</span>
-                    <span class="map-pin-label" id="map-destination">The Old Library</span>
-                  </div>
-                  <span class="map-building building-one" id="nearby-one"><i>▤</i><b>North Quad</b></span>
-                  <span class="map-building building-two" id="nearby-two"><i>⌂</i><b>The Galley</b></span>
-                  <span class="map-building building-three" id="nearby-three"><i>▥</i><b>Founders Hall</b></span>
-                  <span class="map-building building-four" id="nearby-four"><i>♜</i><b>Arts Dock</b></span>
-                  <span class="map-compass"><i>✳</i><b>N</b></span>
-                  <span class="map-scale">0 ─── 100 paces</span>
-                </div>
-                <div class="map-caption">
-                  <span class="caption-icon" aria-hidden="true">⚑</span>
-                  <p><strong id="map-caption-title">The Old Library</strong><br /><span id="map-directions">Head past North Quad and follow the story-shaped trail.</span></p>
-                  <button class="map-copy" id="copy-directions" type="button" aria-label="Copy directions" title="Copy directions">⧉</button>
-                </div>
-              </article>
-            </div>
+            <span class="map-building building-one" id="nearby-one"><i>▤</i><b>North Quad</b></span>
+            <span class="map-building building-two" id="nearby-two"><i>⌂</i><b>The Galley</b></span>
+            <span class="map-building building-three" id="nearby-three"><i>▥</i><b>Founders Hall</b></span>
+            <span class="map-building building-four" id="nearby-four"><i>♜</i><b>Arts Dock</b></span>
+            <span class="map-compass"><i>✳</i><b>N</b></span>
+            <span class="map-scale">0 ─── 100 paces</span>
           </div>
-          <div class="locator-foot"><span>✦ &nbsp; NO GPS NEEDED. JUST A SENSE OF ADVENTURE.</span><span>IF POLLY GETS LOST, ASK THE LIBRARIANS.</span></div>
-        </div>
-      </section>
-
-      <section class="courses-section" id="courses">
-        <div class="courses-heading">
-          <div>
-            <p class="eyebrow"><span></span> Choose your adventure</p>
-            <h2>Find your <em>north star.</em></h2>
+          <div class="map-caption">
+            <span class="caption-icon" aria-hidden="true">⚑</span>
+            <p><strong id="map-caption-title">The Old Library</strong><br/><span id="map-directions">Head past North Quad and follow the story-shaped trail.</span></p>
+            <button class="map-copy" id="copy-directions" type="button" aria-label="Copy directions" title="Copy directions">⧉</button>
           </div>
-          <a class="text-link light-link" href="#apply">Browse all courses <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="course-grid">
-          <a class="course-card course-sand" href="#apply">
-            <span class="course-number">01 / THINK</span><span class="course-icon" aria-hidden="true">✳</span>
-            <h3>Arts &<br />Humanities</h3><p>Ask better questions. Find surprising answers.</p><span class="course-arrow">↗</span>
-          </a>
-          <a class="course-card course-sea" href="#apply">
-            <span class="course-number">02 / MAKE</span><span class="course-icon" aria-hidden="true">⌘</span>
-            <h3>Science &<br />Technology</h3><p>Build things that make tomorrow better.</p><span class="course-arrow">↗</span>
-          </a>
-          <a class="course-card course-rust" href="#apply">
-            <span class="course-number">03 / LEAD</span><span class="course-icon" aria-hidden="true">⚓</span>
-            <h3>Business &<br />Leadership</h3><p>Turn big-hearted ideas into real impact.</p><span class="course-arrow">↗</span>
-          </a>
-        </div>
-      </section>
+        </article>
+      </div>
+    </div>
+    <div class="locator-foot"><span>✦ &nbsp;NO GPS NEEDED. JUST A SENSE OF ADVENTURE.</span><span>IF POLLY GETS LOST, ASK THE LIBRARIANS.</span></div>
+  </div>
+</section>
 
-      <section class="crew-section" id="events">
-        <div class="crew-copy">
-          <p class="eyebrow eyebrow-dark"><span></span> Life beyond the lecture hall</p>
-          <h2>Good ships need<br />a <em>good crew.</em></h2>
-          <p>From first light on the water to late-night ideas in the studio, the best part of college is who you find along the way.</p>
-          <a class="button button-dark" href="#apply">Meet your future crew <span aria-hidden="true">→</span></a>
+<!-- ══════════════════════════════════════════════════════════
+     EVENTS & CLUBS — THE CREW DECK
+════════════════════════════════════════════════════════════ -->
+<section class="events-section" id="events">
+  <div class="events-inner">
+    <div class="section-heading">
+      <p class="eyebrow eyebrow-dark"><span></span>The Crew Deck</p>
+      <h2>Good ships need<br/>a <em>good crew.</em></h2>
+      <p>Clubs, events and memories that last long after graduation.</p>
+    </div>
+
+    <div class="events-layout">
+      <!-- Clubs -->
+      <div class="clubs-panel">
+        <h3 class="panel-label">⚓ Clubs &amp; Societies</h3>
+        <div class="clubs-grid">
+          <div class="club-card tech">
+            <span class="club-icon">💻</span>
+            <h4>CodeCrew</h4>
+            <p>Competitive coding, hackathons &amp; tech talks</p>
+            <span class="club-tag">Technical</span>
+          </div>
+          <div class="club-card tech">
+            <span class="club-icon">🤖</span>
+            <h4>Roboship</h4>
+            <p>Robotics, Arduino &amp; autonomous systems</p>
+            <span class="club-tag">Technical</span>
+          </div>
+          <div class="club-card cultural">
+            <span class="club-icon">🎭</span>
+            <h4>Drama Deck</h4>
+            <p>Theatre, street plays &amp; film making</p>
+            <span class="club-tag">Cultural</span>
+          </div>
+          <div class="club-card cultural">
+            <span class="club-icon">🎵</span>
+            <h4>Sea Shanty Band</h4>
+            <p>Music, concerts &amp; annual college fest</p>
+            <span class="club-tag">Cultural</span>
+          </div>
+          <div class="club-card sports">
+            <span class="club-icon">⚽</span>
+            <h4>First Mates FC</h4>
+            <p>Football, cricket, badminton &amp; athletics</p>
+            <span class="club-tag">Sports</span>
+          </div>
+          <div class="club-card sports">
+            <span class="club-icon">🏊</span>
+            <h4>The Swimmers</h4>
+            <p>Swimming team — inter-college champions 2024</p>
+            <span class="club-tag">Sports</span>
+          </div>
         </div>
+      </div>
+
+      <!-- Events -->
+      <div class="events-panel">
+        <h3 class="panel-label">📅 Upcoming Events</h3>
         <div class="crew-note">
           <span class="note-tape"></span>
           <span class="note-star">✳</span>
           <span class="note-label">THE CAPTAIN'S LOG · 04</span>
-          <h3>Next up on deck</h3>
-          <div class="event-row"><span class="event-date">24<br /><small>OCT</small></span><p><strong>Open Deck Day</strong><br />Bring a friend. Meet the crew.</p><span>↗</span></div>
-          <div class="event-row"><span class="event-date">31<br /><small>OCT</small></span><p><strong>Night of a Thousand Lanterns</strong><br />A little light on the harbour.</p><span>↗</span></div>
-          <div class="note-footer">ALL HANDS. ALL HEARTS. &nbsp; <span>♡</span></div>
+          <h4>Next up on deck</h4>
+          <div class="event-row"><span class="event-date">24<br/><small>OCT</small></span><div><p><strong>Open Deck Day</strong></p><p>Bring a friend. Meet the crew. All welcome.</p></div><span>↗</span></div>
+          <div class="event-row"><span class="event-date">31<br/><small>OCT</small></span><div><p><strong>Night of a Thousand Lanterns</strong></p><p>A little light on the harbour.</p></div><span>↗</span></div>
+          <div class="event-row"><span class="event-date">07<br/><small>NOV</small></span><div><p><strong>Founder's Day Regatta</strong></p><p>All crews to the water. Inter-department sports day.</p></div><span>↗</span></div>
+          <div class="event-row"><span class="event-date">22<br/><small>NOV</small></span><div><p><strong>TechTide Hackathon</strong></p><p>48 hrs. 1 problem. Build the future.</p></div><span>↗</span></div>
+          <div class="note-footer">ALL HANDS. ALL HEARTS. &nbsp;<span>♡</span></div>
         </div>
-      </section>
 
-      <section class="apply-banner" id="apply">
-        <div class="apply-spark" aria-hidden="true">✳</div>
-        <p class="eyebrow"><span></span> Your next chapter starts here</p>
-        <h2>Ready to come <em>aboard?</em></h2>
-        <p>No peg leg required. Just a curious mind and room for a little adventure.</p>
-        <a href="mailto:admissions@vibecollege.example" class="button button-gold">Talk to admissions <span aria-hidden="true">→</span></a>
-      </section>
-    </main>
+        <!-- Gallery -->
+        <h3 class="panel-label gallery-label">🖼️ Event Gallery</h3>
+        <div class="gallery-grid">
+          <div class="gallery-item g1"><span>Founder's Day 2024</span></div>
+          <div class="gallery-item g2"><span>TechTide Hackathon</span></div>
+          <div class="gallery-item g3"><span>Annual Cultural Fest</span></div>
+          <div class="gallery-item g4"><span>Convocation 2025</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <footer class="site-footer">
+<!-- ══════════════════════════════════════════════════════════
+     ALUMNI — HALL OF LEGENDS
+════════════════════════════════════════════════════════════ -->
+<section class="alumni-section" id="alumni">
+  <div class="alumni-inner">
+    <div class="section-heading light-heading">
+      <p class="eyebrow"><span></span>Hall of Legends</p>
+      <h2>WANTED: <em>Our finest crew.</em></h2>
+      <p>12,000+ graduates charting their own courses across the globe.</p>
+    </div>
+
+    <div class="wanted-grid">
+      <div class="wanted-poster">
+        <div class="wanted-header"><span>✦</span> WANTED <span>✦</span></div>
+        <div class="wanted-avatar rust">AK</div>
+        <div class="wanted-name">Arjun Krishnamurthy</div>
+        <div class="wanted-crime">CHARGED WITH: Building AI systems at Google that serve a billion people</div>
+        <div class="wanted-year">B.Tech CS · 2021</div>
+        <div class="wanted-reward">REWARD: Inspiring every CS student after him</div>
+      </div>
+      <div class="wanted-poster">
+        <div class="wanted-header"><span>✦</span> WANTED <span>✦</span></div>
+        <div class="wanted-avatar teal">SM</div>
+        <div class="wanted-name">Shreya Menon</div>
+        <div class="wanted-crime">CHARGED WITH: Shipping products used by 50 million users at PhonePe</div>
+        <div class="wanted-year">MBA · 2022</div>
+        <div class="wanted-reward">REWARD: A reminder that management is an art</div>
+      </div>
+      <div class="wanted-poster">
+        <div class="wanted-header"><span>✦</span> WANTED <span>✦</span></div>
+        <div class="wanted-avatar gold">RP</div>
+        <div class="wanted-name">Rohan Pillai</div>
+        <div class="wanted-crime">CHARGED WITH: Designing chip architectures that power next-gen devices</div>
+        <div class="wanted-year">B.Tech ECE · 2023</div>
+        <div class="wanted-reward">REWARD: Proof that hardware is still the future</div>
+      </div>
+      <div class="wanted-poster">
+        <div class="wanted-header"><span>✦</span> WANTED <span>✦</span></div>
+        <div class="wanted-avatar sea">NP</div>
+        <div class="wanted-name">Nadia Pereira</div>
+        <div class="wanted-crime">CHARGED WITH: Founding a climate-tech startup that raised ₹5 Cr in seed funding</div>
+        <div class="wanted-year">BBA · 2020</div>
+        <div class="wanted-reward">REWARD: Showing that business can save the planet</div>
+      </div>
+    </div>
+
+    <div class="alumni-cta-strip">
+      <div class="alumni-stat"><strong>12,000+</strong><p>Alumni Worldwide</p></div>
+      <div class="alumni-stat"><strong>45+</strong><p>Countries</p></div>
+      <div class="alumni-stat"><strong>200+</strong><p>Entrepreneurs</p></div>
+      <a class="button button-outline-light" href="#contact">Join the Alumni Network →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     MESSAGE IN A BOTTLE
+════════════════════════════════════════════════════════════ -->
+<section class="mib-section" id="message-in-bottle">
+  <div class="mib-inner">
+    <div class="mib-left">
+      <p class="eyebrow eyebrow-dark"><span></span>Message in a Bottle</p>
+      <h2>Got a question?<br/><em>Ask the crew.</em></h2>
+      <p>Send us your question and a real person from our admissions team will reply within 48 hours. No bots, no scripts — just real answers.</p>
+      <div class="mib-bottle-art" aria-hidden="true">
+        <div class="big-bottle">
+          <span class="big-cork"></span>
+          <span class="big-neck"></span>
+          <span class="big-glass"><i>✉</i></span>
+        </div>
+        <div class="bottle-waves"><div></div><div></div></div>
+      </div>
+    </div>
+    <div class="mib-right">
+      <form class="mib-form" id="mib-form" novalidate>
+        <div class="form-group">
+          <label for="mib-name">Your Name</label>
+          <input type="text" id="mib-name" placeholder="Captain Flint" required/>
+        </div>
+        <div class="form-group">
+          <label for="mib-email">Your Email</label>
+          <input type="email" id="mib-email" placeholder="you@ship.com" required/>
+        </div>
+        <div class="form-group">
+          <label for="mib-question">Your Question</label>
+          <textarea id="mib-question" rows="4" placeholder="Arrr, what do ye wish to know about Vibe College?" required></textarea>
+        </div>
+        <button type="submit" class="button button-sea">
+          Send the Bottle <span aria-hidden="true">🌊</span>
+        </button>
+        <div class="mib-reply" id="mib-reply" hidden>
+          <div class="reply-bubble">
+            <span class="reply-tag">CAPTAIN POLLY REPLIES</span>
+            <p id="mib-reply-text">We've received your message! Our admissions crew will send a proper reply to your email within 48 hours. Fair winds! ⚓</p>
+          </div>
+        </div>
+      </form>
+
+      <!-- Common questions -->
+      <div class="common-qs">
+        <p class="cq-label">CREW FAQS — QUICK ANSWERS</p>
+        <button class="cq-btn" data-reply="Our placement rate for the batch of 2025 is 97%, with an average package of ₹32 LPA across all programmes.">What is your placement rate?</button>
+        <button class="cq-btn" data-reply="Yes! Hostel facilities are available for both boys and girls at ₹80,000/year including food and Wi-Fi.">Is hostel available?</button>
+        <button class="cq-btn" data-reply="Applications open on 1st September every year. The first round deadline is 15th October. Visit our Admissions page for full details.">When do admissions open?</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     STUDENT PORTAL — NAVIGATOR'S LOG
+════════════════════════════════════════════════════════════ -->
+<section class="portal-section" id="portal">
+  <div class="portal-inner">
+    <div class="section-heading">
+      <p class="eyebrow eyebrow-dark"><span></span>Navigator's Log</p>
+      <h2>Your <em>personal chart room.</em></h2>
+      <p>Access attendance, marks, timetable, fee dues and circulars — all in one place.</p>
+    </div>
+
+    <!-- Login / Dashboard toggle -->
+    <div class="portal-container" id="portal-container">
+
+      <!-- Login Panel -->
+      <div class="portal-login" id="portal-login">
+        <div class="login-card">
+          <div class="login-icon" aria-hidden="true">⚓</div>
+          <h3>Student Login</h3>
+          <p class="login-sub">Use your Vibe College roll number and password</p>
+          <form class="login-form" id="login-form" novalidate>
+            <div class="form-group">
+              <label for="roll-no">Roll Number</label>
+              <input type="text" id="roll-no" placeholder="e.g. VC2022CS001" autocomplete="username"/>
+            </div>
+            <div class="form-group">
+              <label for="login-pass">Password</label>
+              <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password"/>
+            </div>
+            <button type="submit" class="button button-sea login-btn">
+              Board the Ship <span>→</span>
+            </button>
+            <p class="login-hint">Demo: enter any roll no. and password to preview the dashboard</p>
+          </form>
+          <a href="#contact" class="login-forgot">Forgot password? Contact the Port Authority</a>
+        </div>
+      </div>
+
+      <!-- Dashboard Panel (shown after login) -->
+      <div class="portal-dashboard hidden" id="portal-dashboard">
+        <div class="dash-header">
+          <div class="dash-greeting">
+            <span class="dash-avatar">J</span>
+            <div>
+              <p class="dash-name">Ahoy, <strong id="dash-student-name">Crew Member</strong>!</p>
+              <p class="dash-roll" id="dash-roll">Roll No: VC2022CS001</p>
+            </div>
+          </div>
+          <button class="dash-logout" id="dash-logout" aria-label="Log out">⎋ Log out</button>
+        </div>
+
+        <div class="dash-grid">
+          <!-- Attendance -->
+          <div class="dash-card">
+            <h4 class="dash-card-title">📊 Attendance</h4>
+            <div class="attendance-ring">
+              <svg viewBox="0 0 80 80" aria-label="82% attendance">
+                <circle class="ring-bg" cx="40" cy="40" r="30"/>
+                <circle class="ring-fill" cx="40" cy="40" r="30" style="--pct:82"/>
+              </svg>
+              <span class="ring-value">82%</span>
+            </div>
+            <p class="att-note">⚠ Minimum 75% required. You're safe!</p>
+            <table class="att-table">
+              <tr><td>Mathematics</td><td class="att-good">90%</td></tr>
+              <tr><td>Data Structures</td><td class="att-good">85%</td></tr>
+              <tr><td>Physics</td><td class="att-warn">74%</td></tr>
+              <tr><td>English</td><td class="att-good">88%</td></tr>
+            </table>
+          </div>
+
+          <!-- Marks -->
+          <div class="dash-card">
+            <h4 class="dash-card-title">📝 Recent Marks</h4>
+            <div class="marks-list">
+              <div class="mark-row"><span>Mathematics — Internal 2</span><span class="mark-val good">42/50</span></div>
+              <div class="mark-row"><span>Data Structures — Quiz</span><span class="mark-val good">18/20</span></div>
+              <div class="mark-row"><span>Physics — Lab Record</span><span class="mark-val avg">28/40</span></div>
+              <div class="mark-row"><span>English — Assignment</span><span class="mark-val good">9/10</span></div>
+            </div>
+            <a class="dash-link" href="#">View full result card →</a>
+          </div>
+
+          <!-- Timetable -->
+          <div class="dash-card">
+            <h4 class="dash-card-title">🗓 Today's Timetable</h4>
+            <div class="timetable">
+              <div class="tt-row tt-done"><span class="tt-time">9:00</span><span class="tt-subj">Mathematics</span><span class="tt-room">A-101</span></div>
+              <div class="tt-row tt-done"><span class="tt-time">10:00</span><span class="tt-subj">Physics</span><span class="tt-room">Lab-3</span></div>
+              <div class="tt-row tt-now"><span class="tt-time">11:00</span><span class="tt-subj">Data Structures ← NOW</span><span class="tt-room">B-204</span></div>
+              <div class="tt-row"><span class="tt-time">14:00</span><span class="tt-subj">English</span><span class="tt-room">A-102</span></div>
+              <div class="tt-row"><span class="tt-time">15:00</span><span class="tt-subj">DS Lab</span><span class="tt-room">Lab-1</span></div>
+            </div>
+          </div>
+
+          <!-- Fee Dues -->
+          <div class="dash-card">
+            <h4 class="dash-card-title">💳 Fee Status</h4>
+            <div class="fee-status">
+              <div class="fee-paid"><span>✓</span><div><strong>Semester 1 (₹60,000)</strong><p>Paid — 10 Aug 2026</p></div></div>
+              <div class="fee-due"><span>⚠</span><div><strong>Semester 2 (₹60,000)</strong><p>Due by 15 Jan 2027</p></div></div>
+            </div>
+            <a class="button button-gold dash-pay-btn" href="#">Pay Now →</a>
+            <a class="dash-link" href="#">Download fee receipt</a>
+          </div>
+
+          <!-- Notices -->
+          <div class="dash-card dash-card-wide">
+            <h4 class="dash-card-title">📢 Recent Notices (Ship's Log)</h4>
+            <div class="notices-list">
+              <div class="notice-item"><span class="notice-date">08 Oct</span><span class="notice-dept">Exam Cell</span><p>Internal Assessment 3 schedule released. Check the academic calendar.</p></div>
+              <div class="notice-item"><span class="notice-date">06 Oct</span><span class="notice-dept">Library</span><p>New arrivals in AI and Data Science section. Reserve your copy online.</p></div>
+              <div class="notice-item"><span class="notice-date">04 Oct</span><span class="notice-dept">Student Affairs</span><p>Open Deck Day — 24 October. Register by 20 October to bring guests.</p></div>
+              <div class="notice-item"><span class="notice-date">01 Oct</span><span class="notice-dept">Hostel</span><p>Mess menu updated for October. Anti-ragging committee meeting: 12 Oct.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     CONTACT — PORT AUTHORITY
+════════════════════════════════════════════════════════════ -->
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="section-heading light-heading">
+      <p class="eyebrow"><span></span>Port Authority</p>
+      <h2>Drop us a <em>line.</em></h2>
+      <p>We're always on deck. Reach us however suits you best.</p>
+    </div>
+
+    <div class="contact-layout">
+      <div class="contact-left">
+        <div class="contact-cards">
+          <a class="contact-card" href="tel:+9100000000000">
+            <span class="cc-icon">📞</span>
+            <div><strong>Call Us</strong><p>+91 00000 00000</p><small>Mon–Sat, 9am–6pm</small></div>
+          </a>
+          <a class="contact-card" href="mailto:admissions@vibecollege.example">
+            <span class="cc-icon">✉️</span>
+            <div><strong>Email</strong><p>admissions@vibecollege.edu</p><small>Reply within 24 hours</small></div>
+          </a>
+          <a class="contact-card" href="https://wa.me/919999999999" target="_blank" rel="noopener">
+            <span class="cc-icon">💬</span>
+            <div><strong>WhatsApp</strong><p>Chat with us directly</p><small>Fastest response</small></div>
+          </a>
+          <div class="contact-card no-link">
+            <span class="cc-icon">📍</span>
+            <div><strong>Visit Us</strong><p>Vibe College, Harbour Road</p><small>Near the Lighthouse, City — 500 001</small></div>
+          </div>
+        </div>
+
+        <!-- Pirate Map placeholder -->
+        <div class="campus-map-placeholder" aria-label="Campus location map">
+          <div class="map-bg">
+            <div class="map-dot"></div>
+            <span class="map-label-text">📍 Vibe College</span>
+            <span class="map-coords-text">12.34°N, 56.78°E</span>
+            <div class="map-island island-a"></div>
+            <div class="map-island island-b"></div>
+          </div>
+          <a href="https://maps.google.com" target="_blank" rel="noopener" class="map-open-btn">Open in Maps →</a>
+        </div>
+      </div>
+
+      <div class="contact-right">
+        <form class="contact-form" id="contact-form" novalidate>
+          <h3>Send an Enquiry</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="con-name">Name *</label>
+              <input type="text" id="con-name" placeholder="Your name" required/>
+            </div>
+            <div class="form-group">
+              <label for="con-email">Email *</label>
+              <input type="email" id="con-email" placeholder="you@example.com" required/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="con-subject">Subject</label>
+            <select id="con-subject">
+              <option value="">Select a topic</option>
+              <option>Admissions enquiry</option>
+              <option>Fees &amp; scholarships</option>
+              <option>Placements &amp; recruiters</option>
+              <option>Hostel &amp; transport</option>
+              <option>Grievance / anti-ragging</option>
+              <option>Media &amp; press</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="con-message">Message *</label>
+            <textarea id="con-message" rows="4" placeholder="Tell us what you need..." required></textarea>
+          </div>
+          <button type="submit" class="button button-gold">
+            Send Message <span aria-hidden="true">→</span>
+          </button>
+          <p class="form-success" id="contact-success" hidden>✦ Message received! Our crew will respond within 24 hours.</p>
+        </form>
+
+        <!-- Anti-Ragging & Grievance -->
+        <div class="compliance-box">
+          <h4>⚖ Grievance & Anti-Ragging Cell</h4>
+          <p>Vibe College maintains a zero-tolerance policy toward ragging. Reports are handled confidentially and urgently.</p>
+          <div class="compliance-links">
+            <a href="tel:+911800000000">☎ Anti-Ragging Helpline: 1800-000-000</a>
+            <a href="mailto:grievance@vibecollege.edu">✉ grievance@vibecollege.edu</a>
+          </div>
+          <p class="compliance-note">UGC Anti-Ragging Regulations 2009 · Visible as per regulatory requirement</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SHIP RULES — THE PIRATE CODE
+════════════════════════════════════════════════════════════ -->
+<section class="shiprules-section" id="shiprules">
+  <div class="shiprules-inner">
+    <div class="shiprules-left">
+      <p class="eyebrow"><span></span>The Pirate Code</p>
+      <h2>Ship Rules:<br/><em>Code of Conduct.</em></h2>
+      <p>Every crew member aboard Vibe College abides by the Pirate Code — a set of rules born not from fear, but from respect for every sailor on this ship.</p>
+      <div class="code-seal" aria-hidden="true">
+        <span>☠</span>
+        <p>SEALED BY THE ADMIRAL</p>
+        <p>VIBE COLLEGE · EST. 2008</p>
+      </div>
+    </div>
+    <div class="shiprules-right">
+      <div class="code-scroll">
+        <div class="scroll-header">THE VIBE COLLEGE PIRATE CODE — ARTICLES OF HONOUR</div>
+        <div class="code-articles">
+          <div class="code-article">
+            <span class="art-num">I</span>
+            <div><h4>Every sailor is equal on this ship.</h4><p>No crew member shall be discriminated against on grounds of caste, creed, religion, gender or background. Ragging is a crime and will result in immediate dismissal.</p></div>
+          </div>
+          <div class="code-article">
+            <span class="art-num">II</span>
+            <div><h4>Respect the ship and those who sail it.</h4><p>College property, staff, fellow students and visitors shall be treated with dignity and care. Damage to property is grounds for disciplinary action.</p></div>
+          </div>
+          <div class="code-article">
+            <span class="art-num">III</span>
+            <div><h4>Attendance keeps the ship afloat.</h4><p>A minimum of 75% attendance is required in every subject. Academic honesty in examinations and assignments is non-negotiable.</p></div>
+          </div>
+          <div class="code-article">
+            <span class="art-num">IV</span>
+            <div><h4>Use the web wisely.</h4><p>College Wi-Fi and computing resources are for academic use. Misuse, hacking or harassment using digital means is a punishable offence.</p></div>
+          </div>
+          <div class="code-article">
+            <span class="art-num">V</span>
+            <div><h4>Every voice matters — raise it right.</h4><p>Grievances must be raised through the official Student Grievance Cell or Anti-Ragging Committee. Mob action or intimidation will not be tolerated.</p></div>
+          </div>
+        </div>
+        <div class="scroll-footer">SIGNED: THE ADMIRAL · DR. VIVEKA CHANDRA · PRINCIPAL</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     APPLY CTA
+════════════════════════════════════════════════════════════ -->
+<section class="apply-banner" id="apply">
+  <div class="apply-spark" aria-hidden="true">✳</div>
+  <div class="apply-spark apply-spark-2" aria-hidden="true">☆</div>
+  <p class="eyebrow"><span></span>Your next chapter starts here</p>
+  <h2>Ready to come <em>aboard?</em></h2>
+  <p>No peg leg required. Just a curious mind and room for a little adventure.</p>
+  <div class="apply-actions">
+    <a href="#apply-form" class="button button-gold">Apply Now <span aria-hidden="true">→</span></a>
+    <a href="#courses" class="button button-outline">Browse Courses <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand-col">
       <a class="brand footer-brand" href="#"><span class="brand-mark" aria-hidden="true">VC</span><span class="brand-name">VIBE <small>COLLEGE</small></span></a>
-      <p>Curious minds. Kind hearts. Good adventures.</p>
-      <span>© 2026 Vibe College · Made with a little mischief</span>
-    </footer>
-  </body>
+      <p class="footer-tagline">Curious minds. Kind hearts. Good adventures.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook" class="social-btn">f</a>
+        <a href="#" aria-label="Instagram" class="social-btn">ig</a>
+        <a href="#" aria-label="LinkedIn" class="social-btn">in</a>
+        <a href="#" aria-label="YouTube" class="social-btn">yt</a>
+      </div>
+    </div>
+    <div class="footer-links-col">
+      <h4>Quick Links</h4>
+      <nav aria-label="Footer quick links">
+        <a href="#about">About</a>
+        <a href="#admissions">Admissions</a>
+        <a href="#courses">Courses</a>
+        <a href="#placements">Placements</a>
+        <a href="#events">Events</a>
+        <a href="#alumni">Alumni</a>
+      </nav>
+    </div>
+    <div class="footer-links-col">
+      <h4>Students</h4>
+      <nav aria-label="Footer student links">
+        <a href="#portal">Student Portal</a>
+        <a href="#locator">Campus Map</a>
+        <a href="#shiprules">Code of Conduct</a>
+        <a href="#contact">Grievance Cell</a>
+        <a href="#">Library</a>
+        <a href="#">Academic Calendar</a>
+      </nav>
+    </div>
+    <div class="footer-links-col">
+      <h4>Legal & Disclosures</h4>
+      <nav aria-label="Footer legal links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">RTI Information</a>
+        <a href="#">AICTE Approval</a>
+        <a href="#">NAAC Certificate</a>
+        <a href="#">Annual Report</a>
+        <a href="#">Cookie Policy</a>
+      </nav>
+    </div>
+    <div class="footer-newsletter-col">
+      <h4>Ship's Newsletter</h4>
+      <p>Get updates, events and good news straight to your inbox.</p>
+      <form class="newsletter-form" id="newsletter-form">
+        <input type="email" placeholder="your@email.com" aria-label="Email for newsletter"/>
+        <button type="submit" aria-label="Subscribe">→</button>
+      </form>
+      <p class="nl-note">No spam. Unsubscribe anytime.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Vibe College · All Rights Reserved · Made with a little mischief</span>
+    <span>AICTE · UGC · NAAC A+ · NBA · NIRF Ranked</span>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="back-to-top" aria-label="Back to top" hidden>
+  <span aria-hidden="true">↑</span>
+</button>
+
+<!-- Cookie Notice -->
+<div class="cookie-notice" id="cookie-notice" role="region" aria-label="Cookie notice">
+  <p>⚓ We use cookies to keep your voyage smooth. <a href="#">Learn more</a></p>
+  <button id="cookie-accept" class="button button-gold cookie-btn">Accept</button>
+</div>
+
+</body>
 </html>
