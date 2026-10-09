@@ -107,6 +107,14 @@ h1 em, h2 em { color: var(--gold); font-weight: 600; }
 .art-coordinate { position: absolute; z-index: 4; bottom: 30px; left: 29px; color: rgba(245,233,196,.73); font-size: 7px; letter-spacing: .15em; }
 .hero-bottom { position: absolute; right: 7.2%; bottom: 22px; left: 7.2%; display: flex; justify-content: space-between; color: #819087; font-size: 8px; font-weight: 700; letter-spacing: .19em; }
 
+.stats-section { padding: 24px 7.2%; border-top: 2px solid var(--gold); border-bottom: 1px solid rgba(241,201,87,.16); background: #101b17; color: #f5f0e5; }
+.stats-grid { max-width: 1110px; display: grid; grid-template-columns: repeat(6, 1fr); margin: 0 auto; }
+.stat-item { display: grid; justify-items: center; align-content: center; gap: 5px; padding: 13px 8px; border-right: 1px solid rgba(241,201,87,.16); text-align: center; }
+.stat-item:last-child { border-right: 0; }
+.stat-icon { color: var(--gold); font-size: 15px; }
+.stat-number { color: var(--gold); font-family: var(--serif); font-size: clamp(17px, 2vw, 23px); line-height: 1.15; }
+.stat-label { margin: 0; color: #aab4a9; font-size: 8px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+
 .locator-section { padding: 88px 7.2% 92px; background: var(--cream); }
 .section-heading { margin-bottom: 34px; text-align: center; }
 .eyebrow-dark { color: #68736a; }
@@ -593,6 +601,11 @@ h1 em, h2 em { color: var(--gold); font-weight: 600; }
 
 /* RESPONSIVE QUERIES */
 @media (max-width: 900px) {
+  .stats-section { padding-right: 5%; padding-left: 5%; }
+  .stats-grid { grid-template-columns: repeat(3, 1fr); }
+  .stat-item:nth-child(3) { border-right: 0; }
+  .stat-item:nth-child(4) { border-right: 1px solid rgba(241,201,87,.16); }
+  .stat-item:nth-child(-n+3) { border-bottom: 1px solid rgba(241,201,87,.12); }
   .main-nav { gap: 16px; }
   .compass-toggle { font-size: 10px; }
   .site-header { padding: 0 5%; }
@@ -611,6 +624,10 @@ h1 em, h2 em { color: var(--gold); font-weight: 600; }
 }
 
 @media (max-width: 680px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-item, .stat-item:nth-child(4) { border-right: 0; }
+  .stat-item:nth-child(odd) { border-right: 1px solid rgba(241,201,87,.12); }
+  .stat-item:nth-child(-n+4) { border-bottom: 1px solid rgba(241,201,87,.12); }
   .announcement { min-height: 36px; gap: 6px; font-size: 8px; }
   .announcement a { margin-left: 2px; }
   .site-header { height: 66px; padding: 0 6%; }
@@ -946,7 +963,6 @@ h1 em, h2 em { color: var(--gold); font-weight: 600; }
 
 .member-status-active { color: #81c784; font-weight: 700; }
 .member-status-suspended { color: #ff8a80; font-weight: 700; }
-
 
 
 
