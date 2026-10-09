@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c1613" />
+    <meta name="description" content="Board the ship at the Vibe College gangplank. Authenticate your credentials to access the Pirate Student Deck or Captain's Headquarters." />
+    <title>The Boarding Gate — Vibe College</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body class="boarding-page">
+    <div class="announcement">
+      <span class="announcement-icon" aria-hidden="true">✦</span>
+      <p id="announcement-text">THE GANGPLANK · Sworn crew and admiralty authentication point</p>
+      <a href="index.html">Return to Public Harbor <span aria-hidden="true">→</span></a>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 6px;">
+        <span aria-hidden="true">🌐</span>
+        <select class="lang-picker-select" id="lang-picker" aria-label="Choose language">
+          <option value="en" selected>English</option>
+          <option value="pirate">🏴‍☠️ Pirate Speak</option>
+          <option value="hi">हिन्दी</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+    </div>
+
+    <header class="boarding-header">
+      <a class="brand" href="index.html" aria-label="Vibe College home">
+        <span class="brand-mark" aria-hidden="true">VC</span>
+        <span class="brand-name">VIBE <small>COLLEGE</small></span>
+      </a>
+      <nav class="main-nav" style="display: flex; gap: 18px; align-items: center;">
+        <a href="index.html">Public Harbor</a>
+        <a href="index.html#courses">Courses</a>
+        <a href="index.html#admissions">Admissions</a>
+        <a href="map.html">Treasure Map ⌖</a>
+      </nav>
+    </header>
+
+    <main class="boarding-container">
+      <!-- LEFT: THE ANIMATED NAUTICAL BOARDING STAGE -->
+      <section class="boarding-stage-card" aria-label="Interactive Boarding Scene">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <span style="font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gold);">
+            ⚓ FLAGSHIP BOARDING LADDER · HMS DISCOVERY
+          </span>
+          <span class="trust-badge" style="background: rgba(255,255,255,.05); color: #9bb09b; font-size: 8px;">
+            Watch Tide: High 12.4m
+          </span>
+        </div>
+
+        <div class="stage-sky" id="stage-sky-canvas">
+          <!-- Ship Hull & Deck -->
+          <div class="stage-ship-hull">
+            <div class="stage-ship-deck"></div>
+            <div class="stage-lantern">🏮</div>
+            <div class="stage-ship-flag">🏴‍☠️</div>
+          </div>
+
+          <!-- The Boarding Rope & Climber -->
+          <div class="stage-rope-mount"></div>
+          <div class="stage-rope-wrapper" id="rope-wrapper">
+            <div class="stage-cutlass" id="stage-cutlass" aria-hidden="true">🗡️</div>
+            <div class="stage-rope" id="stage-rope"></div>
+            <div class="stage-pirate" id="stage-pirate" role="img" aria-label="Pirate Climber">
+              🧗‍♂️
+            </div>
+          </div>
+
+          <!-- Ocean Waves & Hazards -->
+          <div class="stage-ocean">
+            <div class="stage-wave stage-wave-1"></div>
+            <div class="stage-wave stage-wave-2"></div>
+            <div class="stage-splash" id="stage-splash" aria-hidden="true">💦</div>
+            <div class="stage-shark" id="stage-shark" aria-hidden="true">🦈</div>
+          </div>
+        </div>
+
+        <!-- Flashing Alerts -->
+        <div class="boarding-alert walk-plank-alert" id="alert-failure">
+          <strong>☠ ARRR! YE WALKED THE PLANK! ☠</strong>
+          <span>Authentication Failed! By order of the Quartermaster, the rope has been cut and ye have tumbled into Davy Jones' locker!</span>
+          <div style="margin-top: 10px;">
+            <button class="button button-gold" id="btn-retry-climb" type="button" style="padding: 6px 14px; font-size: 10px;">
+              ↺ Tie New Rope & Try Again
+            </button>
+          </div>
+        </div>
+
+        <div class="boarding-alert boarding-success-alert" id="alert-success">
+          <strong>✦ WELCOME ABOARD, MATEY! ✦</strong>
+          <span id="success-welcome-msg">Rope successfully climbed! Gangplank secured. Hoisting sails and clearing deck...</span>
+        </div>
+      </section>
+
+      <!-- RIGHT: AUTHENTICATION FORM & DEMO PRESETS -->
+      <section class="stage-controls">
+        <p class="eyebrow" style="color: var(--gold);"><span></span> FLEET GANGPLANK · CREW ACCESS</p>
+        <h1 style="font-family: var(--serif); font-size: clamp(28px, 3.5vw, 40px); margin: 0 0 8px; color: #fff;">
+          Board the <em>Galleon.</em>
+        </h1>
+        <p style="margin: 0 0 24px; font-size: 12px; color: #a4b5a2; line-height: 1.7;">
+          State your crew scroll and secret counter-sign. Proper credentials permit climbing to the deck; false signs cut the rope into the briny deep!
+        </p>
+
+        <!-- 1-Click Quick Demo Presets -->
+        <p style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--gold); margin: 0 0 8px;">
+          ✦ QUICK DEMO BOARDING PASSES:
+        </p>
+        <div class="quick-auth-grid">
+          <button class="quick-auth-btn" id="btn-quick-cadet" type="button">
+            <strong>☸ Board as Cadet Jack</strong>
+            <small>Role: Student / Pirate · VC-2024</small>
+          </button>
+          <button class="quick-auth-btn" id="btn-quick-captain" type="button">
+            <strong>⚓ Board as High Admiral</strong>
+            <small>Role: Captain / Admin · Admiralty HQ</small>
+          </button>
+        </div>
+
+        <!-- Custom Login Form -->
+        <form id="boarding-login-form" style="background: rgba(255,255,255,.03); border: 1px solid rgba(241,201,87,.25); border-radius: 4px; padding: 22px;">
+          <div class="bottle-field" style="margin-bottom: 14px;">
+            <label for="login-username" style="color: #d6ded4; font-size: 11px;">Mariner Call-Sign / ID</label>
+            <input type="text" id="login-username" placeholder="E.g. cadet or captain" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+          </div>
+          <div class="bottle-field" style="margin-bottom: 14px;">
+            <label for="login-password" style="color: #d6ded4; font-size: 11px;">Secret Counter-Sign (Password)</label>
+            <input type="password" id="login-password" placeholder="Enter password (try wrong password to test rope cut!)" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+          </div>
+          <div class="bottle-field" style="margin-bottom: 20px;">
+            <label for="login-role" style="color: #d6ded4; font-size: 11px;">Claimed Station</label>
+            <select id="login-role" style="background: #14241e; border-color: rgba(241,201,87,.3); color: #fff;">
+              <option value="student">Pirate Cadet (Student Deck)</option>
+              <option value="admin">High Admiral (Captain's Headquarters)</option>
+            </select>
+          </div>
+          <button class="button button-gold" style="width: 100%; min-height: 44px; font-size: 12px;" type="submit" id="btn-submit-climb">
+            <span>Climb the Boarding Rope →</span>
+          </button>
+          <p style="margin: 12px 0 0; font-size: 9px; color: #728273; text-align: center;">
+            Valid Demo: <code>cadet</code> / <code>pirate123</code> or <code>captain</code> / <code>admin123</code>. Any incorrect phrase triggers the rope cut!
+          </p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer" style="padding: 24px 6%; margin-top: auto; border-top: 1px solid rgba(241,201,87,.2);">
+      <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; font-size: 10px; color: #728273;">
+        <span>© 2026 Vibe College · The Gangplank Security Watch. All rights reserved.</span>
+        <div style="display: flex; gap: 16px;">
+          <a href="index.html" style="color: #a4b5a2;">Public Showcase</a>
+          <a href="map.html" style="color: #a4b5a2;">Campus Chart</a>
+          <a href="index.html#ship-code" style="color: #a4b5a2;">The Pirate Code</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

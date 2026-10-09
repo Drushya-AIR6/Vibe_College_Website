@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#14211d" />
+    <meta name="description" content="Vibe College Pirate Student Deck — Cadet portal, Learning Compass, duty timetables, library scrolls, and direct queries to the Captain." />
+    <title>Pirate Student Deck — Vibe College</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body style="background: #fbf7ee;">
+    <!-- TOP ANNOUNCEMENT & LANGUAGE PICKER -->
+    <div class="announcement">
+      <span class="announcement-icon" aria-hidden="true">✦</span>
+      <p id="announcement-text">THE SHIPMATE DECK · Cadet Session Active · All Systems Clear</p>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+        <span class="trust-badge" style="background: rgba(255,255,255,.15); color: var(--ink); font-size: 8px;">
+          Rank: Quartermaster (VC-2024-TECH-042)
+        </span>
+        <select class="lang-picker-select" id="lang-picker" aria-label="Choose language">
+          <option value="en" selected>English</option>
+          <option value="pirate">🏴‍☠️ Pirate Speak</option>
+          <option value="hi">हिन्दी</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- STUDENT DECK HEADER -->
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Vibe College home">
+        <span class="brand-mark" aria-hidden="true">VC</span>
+        <span class="brand-name">VIBE <small>COLLEGE</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+      <nav class="main-nav" aria-label="Student navigation">
+        <a href="#portal">Shipmate Deck</a>
+        <a href="#compass-section">Learning Compass</a>
+        <a href="#student-life">Life in Fleet</a>
+        <a href="#student-faqs">Cadet FAQs</a>
+        <a href="#captain-query">Signal Captain HQ</a>
+        <a href="map.html" style="color: var(--gold); font-weight: 700;">Secret Treasure Map ⌖</a>
+        <a href="index.html">Public Harbor ↗</a>
+        <button class="nav-portal-btn" id="btn-logout" type="button" style="background: #9b2c2c; border-color: #d35400;">
+          Disembark (Log Out) ⏏
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- CADET HERO BANNER -->
+      <section class="student-deck-hero">
+        <div class="student-deck-hero-wrap">
+          <div style="display: flex; align-items: center; gap: 18px;">
+            <div class="portal-avatar" style="width: 56px; height: 56px; font-size: 20px;">JS</div>
+            <div>
+              <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> SWORN PIRATE CADET</p>
+              <h1 style="font-family: var(--serif); font-size: 28px; margin: 0; color: #fff;">
+                Ahoy, Cadet Jack Sparrow!
+              </h1>
+              <p style="margin: 4px 0 0; font-size: 11px; color: #a4b5a2;">
+                Roll No: <strong>VC-2024-TECH-042</strong> · 3rd Year Navigational Engineering · Division A
+              </p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a class="button button-gold" href="#captain-query">Signal Captain's HQ ✉️</a>
+            <a class="button button-dark" href="map.html">Unlock Treasure Map ⌖</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SECTION 1: THE LEARNING COMPASS (RELOCATED TO STUDENT DECK)     -->
+      <!-- ============================================================== -->
+      <section style="padding: 40px 6% 30px; max-width: 1140px; margin: 0 auto;" id="compass-section">
+        <div style="background: #fff; border: 1px solid #ded5be; border-radius: 4px; padding: 26px 30px; box-shadow: 0 10px 30px rgba(0,0,0,.04);">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+            <span style="font-size: 24px; color: var(--gold);" aria-hidden="true">✳</span>
+            <div>
+              <p class="compass-kicker" style="margin: 0; font-size: 9px; font-weight: 700; color: var(--rust);">YOUR NEXT VOYAGE STEP</p>
+              <h2 style="margin: 0; font-family: var(--serif); font-size: 22px; color: var(--sea);">The Learning Compass</h2>
+            </div>
+          </div>
+          <p style="font-size: 11px; color: #6d756b; margin: 0 0 16px;">
+            Fuzzy-search across courses, research projects, library scrolls, and duty stations.
+          </p>
+          <div class="compass-search" style="margin-bottom: 14px;">
+            <span aria-hidden="true">⌕</span>
+            <input id="compass-search" type="search" placeholder="Try “robotics”, “library”, “fee dues”, or “marks”..." autocomplete="off" />
+          </div>
+          <div class="compass-recommendations" id="compass-recommendations" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SECTION 2: THE SHIPMATE DECK (ACADEMIC PORTAL)                 -->
+      <!-- ============================================================== -->
+      <section style="padding: 20px 6% 40px; max-width: 1140px; margin: 0 auto;" id="portal">
+        <div class="query-card" style="padding: 30px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ded4bb; padding-bottom: 16px; margin-bottom: 24px;">
+            <div>
+              <span class="trust-badge" style="background:#eaf7ee; color:#21733b; margin-bottom: 4px;">Verified Cadet Portal</span>
+              <h2 style="margin: 0; font-family: var(--serif); font-size: 24px; color: var(--sea);">
+                ☸ The Shipmate Deck — Academic Console
+              </h2>
+            </div>
+            <span class="portal-badge-tier">Rank: Quartermaster</span>
+          </div>
+
+          <div class="portal-nav-tabs">
+            <button class="portal-nav-btn is-active" data-ptab="overview" type="button">Voyage Overview</button>
+            <button class="portal-nav-btn" data-ptab="grades" type="button">Marks & Transcripts</button>
+            <button class="portal-nav-btn" data-ptab="timetable" type="button">Watch Duty Timetable</button>
+            <button class="portal-nav-btn" data-ptab="fees" type="button">Fee Dues & Receipts</button>
+            <button class="portal-nav-btn" data-ptab="log" type="button">Ship's Log Circulars</button>
+          </div>
+
+          <!-- SUB-TAB 1: OVERVIEW -->
+          <div class="portal-pane" id="portal-pane-overview">
+            <div class="portal-stats-row">
+              <div class="portal-stat-box">
+                <span>Sea-Readiness Attendance</span>
+                <strong style="color: #21733b;">88.4%</strong>
+                <small>Above 75% Safe Sailing Threshold</small>
+              </div>
+              <div class="portal-stat-box">
+                <span>Cumulative GPA</span>
+                <strong style="color: var(--sea);">9.18 / 10</strong>
+                <small>First Class with High Honors</small>
+              </div>
+              <div class="portal-stat-box">
+                <span>Doubloon Dues</span>
+                <strong style="color: #21733b;">₹0.00</strong>
+                <small>All Semester Fees Cleared</small>
+              </div>
+            </div>
+            <h4 style="margin: 0 0 10px; font-family: var(--serif); font-size: 15px;">Next Lecture Duty on Deck</h4>
+            <div style="padding: 14px 18px; background: #fbf7ee; border: 1px solid #ded5be; border-radius: 3px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="font-size: 13px; font-family: var(--serif);">Advanced Astrolabe Cryptography & AI</strong>
+                <p style="margin: 3px 0 0; font-size: 10px; color: #6d756b;">Prof. Blackbeard · Founders Hall Deck 3 · 14:00 - 15:30 Tide Time</p>
+              </div>
+              <span class="badge-tag" style="background: var(--gold); color: var(--ink); padding: 4px 8px; border-radius: 2px; font-size: 9px; font-weight: 700;">IN 45 MINS</span>
+            </div>
+          </div>
+
+          <!-- SUB-TAB 2: GRADES -->
+          <div class="portal-pane" id="portal-pane-grades" style="display: none;">
+            <table class="portal-table">
+              <thead>
+                <tr>
+                  <th>Course Code</th>
+                  <th>Voyage Subject</th>
+                  <th>Credits</th>
+                  <th>Internal Marks</th>
+                  <th>Final Grade</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>NAV-301</td>
+                  <td>Celestial Navigation & Algorithms</td>
+                  <td>4.0</td>
+                  <td>48 / 50</td>
+                  <td><strong>A+ (10)</strong></td>
+                </tr>
+                <tr>
+                  <td>CSE-304</td>
+                  <td>Distributed High-Seas Networks</td>
+                  <td>4.0</td>
+                  <td>46 / 50</td>
+                  <td><strong>A (9)</strong></td>
+                </tr>
+                <tr>
+                  <td>ROB-302</td>
+                  <td>Autonomous Galleon Systems Lab</td>
+                  <td>3.0</td>
+                  <td>49 / 50</td>
+                  <td><strong>O (Outstanding)</strong></td>
+                </tr>
+                <tr>
+                  <td>ETH-201</td>
+                  <td>The Pirate Code & Engineering Ethics</td>
+                  <td>2.0</td>
+                  <td>50 / 50</td>
+                  <td><strong>O (Outstanding)</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- SUB-TAB 3: TIMETABLE -->
+          <div class="portal-pane" id="portal-pane-timetable" style="display: none;">
+            <table class="portal-table">
+              <thead>
+                <tr>
+                  <th>Day</th>
+                  <th>09:00 - 10:30</th>
+                  <th>11:00 - 12:30</th>
+                  <th>14:00 - 15:30</th>
+                  <th>16:00 - 17:30</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Monday</strong></td>
+                  <td>NAV-301 (Deck 2)</td>
+                  <td>CSE-304 (Lab 1)</td>
+                  <td>Library Study</td>
+                  <td>Rigging Drills</td>
+                </tr>
+                <tr>
+                  <td><strong>Tuesday</strong></td>
+                  <td>ROB-302 (Hangar A)</td>
+                  <td>ROB-302 (Hangar A)</td>
+                  <td>Astrolabe AI</td>
+                  <td>Crew Sports</td>
+                </tr>
+                <tr>
+                  <td><strong>Wednesday</strong></td>
+                  <td>CSE-304 (Deck 2)</td>
+                  <td>NAV-301 (Deck 2)</td>
+                  <td>Ethics & Law</td>
+                  <td>Open Deck Study</td>
+                </tr>
+                <tr>
+                  <td><strong>Thursday</strong></td>
+                  <td>Distributed AI</td>
+                  <td>DeepSea Robotics</td>
+                  <td>Project Review</td>
+                  <td>Club Meet</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- SUB-TAB 4: FEES -->
+          <div class="portal-pane" id="portal-pane-fees" style="display: none;">
+            <div style="padding: 18px; background: #fbf7ee; border: 1px solid #ded5be; border-radius: 3px; margin-bottom: 16px;">
+              <h4 style="margin: 0 0 8px; font-family: var(--serif);">Semester 5 Clearance Certificate</h4>
+              <p style="margin: 0 0 14px; font-size: 11px; color: #6d756b;">
+                Transaction ID: <strong>TXN-VC-99418294</strong> · Amount: ₹1,13,000 · Paid via Maritime NetBanking on 12 Aug 2026.
+              </p>
+              <button class="button button-gold" id="btn-portal-view-receipt" type="button">
+                View & Download Official Receipt #VC-9941 ↗
+              </button>
+            </div>
+          </div>
+
+          <!-- SUB-TAB 5: SHIP'S LOG -->
+          <div class="portal-pane" id="portal-pane-log" style="display: none;">
+            <input class="portal-filter-input" id="portal-log-search" type="search" placeholder="Search Ship's Log circulars by keyword..." />
+            <div class="portal-log-list" id="portal-log-list">
+              <!-- Dynamically populated from localStorage vc_notices -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SECTION 3: STUDENT LIFE OPERATIONS HUB                         -->
+      <!-- ============================================================== -->
+      <section class="student-life-section" id="student-life" style="border-top: none;">
+        <div class="section-heading">
+          <p class="eyebrow eyebrow-dark"><span></span> DAILY CADET LIFE · FLEET AMENITIES</p>
+          <h2>Life in the Fleet: <em>Books, Bunks & Banners.</em></h2>
+          <p>Everything a mariner needs for daily voyage operations—from e-resources and hostel berths to mess menus and bus coordinates.</p>
+        </div>
+
+        <div class="life-tabs" role="tablist">
+          <button class="life-tab-btn is-active" data-ltab="library" type="button" role="tab" aria-selected="true">
+            📖 Alexandria Library Galleon
+          </button>
+          <button class="life-tab-btn" data-ltab="hostel" type="button" role="tab" aria-selected="false">
+            🛏️ Hostel & Galley Mess
+          </button>
+          <button class="life-tab-btn" data-ltab="transport" type="button" role="tab" aria-selected="false">
+            🚌 Fleet Bus & Transport
+          </button>
+          <button class="life-tab-btn" data-ltab="clubs" type="button" role="tab" aria-selected="false">
+            ⚔️ Clubs, Regattas & Guilds
+          </button>
+        </div>
+
+        <!-- LIFE PANE 1: LIBRARY -->
+        <div class="life-pane is-active" id="life-pane-library" role="tabpanel">
+          <div style="background: #fff; padding: 28px; border: 1px solid #ded5be; border-radius: 4px; box-shadow: 0 8px 24px rgba(0,0,0,.04); margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px; margin-bottom: 20px;">
+              <div>
+                <h3 style="margin: 0 0 6px; font-family: var(--serif); font-size: 20px; color: var(--sea);">
+                  The University Library of the Seven Seas
+                </h3>
+                <p style="margin: 0; font-size: 11px; color: #6d756b;">
+                  140,000+ Printed Volumes · 2.4M E-Journals · Open 07:00 - 23:00 Tide Time Daily
+                </p>
+              </div>
+              <span class="trust-badge" style="background: #fbf7ee; border-color: #c9bea2; color: var(--ink);">
+                RFID Automated Self-Checkout Active
+              </span>
+            </div>
+
+            <div class="library-search-bar">
+              <input type="search" id="lib-search-input" placeholder="Search library catalogue by Title, Author, or ISBN..." />
+              <button class="button button-gold" id="btn-lib-search" type="button">Search Catalogue ⌕</button>
+            </div>
+
+            <table class="mess-table" id="lib-catalog-table">
+              <thead>
+                <tr>
+                  <th>Accession #</th>
+                  <th>Title & Author</th>
+                  <th>Department / Deck</th>
+                  <th>Edition</th>
+                  <th>Status / Availability</th>
+                </tr>
+              </thead>
+              <tbody id="lib-catalog-body">
+                <tr>
+                  <td><strong>LIB-8841-A</strong></td>
+                  <td><strong>Principles of Maritime Autonomous Systems</strong><br /><small>By Dr. Kenneth Vance</small></td>
+                  <td>Deck 3 · Shelf R-14</td>
+                  <td>4th Ed. (2025)</td>
+                  <td><span class="trust-badge" style="background:#eaf7ee; color:#21733b;">AVAILABLE (6 Copies)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>LIB-9012-C</strong></td>
+                  <td><strong>Distributed Cryptographic Navigations</strong><br /><small>By Prof. Maya Lin</small></td>
+                  <td>Deck 2 · Shelf C-02</td>
+                  <td>2nd Ed. (2024)</td>
+                  <td><span class="trust-badge" style="background:#fff7ea; color:#b06c00;">DUE 14 OCT 2026</span></td>
+                </tr>
+                <tr>
+                  <td><strong>LIB-7432-F</strong></td>
+                  <td><strong>Global Trade Galleons & Admiralty Law</strong><br /><small>By High Admiral Sterling</small></td>
+                  <td>Deck 1 · Special Reserve</td>
+                  <td>Rare Scroll (2023)</td>
+                  <td><span class="trust-badge" style="background:#eaf7ee; color:#21733b;">AVAILABLE (Reference Only)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>LIB-6211-B</strong></td>
+                  <td><strong>Artificial Neural Seas: Deep Reinforcement Learning</strong><br /><small>By Dr. Aris Thorne</small></td>
+                  <td>Deck 3 · Shelf A-09</td>
+                  <td>3rd Ed. (2026)</td>
+                  <td><span class="trust-badge" style="background:#eaf7ee; color:#21733b;">AVAILABLE (4 Copies)</span></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="background: #fbf7ee; border: 1px dashed #ded4bb; padding: 16px 20px; border-radius: 3px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <strong style="font-size: 12px; font-family: var(--serif); color: var(--sea);">Check Your Issued Scrolls / Fines</strong>
+                <p style="margin: 2px 0 0; font-size: 10px; color: #6d756b;">Enter Cadet ID to view return countdown and renewed book status.</p>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="lib-cadet-check" value="VC-2024-TECH-042" style="padding: 6px 12px; font-size: 11px; border: 1px solid #d5caa8; border-radius: 2px; width: 180px;" />
+                <button class="button button-dark" id="btn-check-lib-status" type="button" style="padding: 6px 14px; font-size: 10px;">Check Status</button>
+              </div>
+            </div>
+            <div id="lib-status-output" style="margin-top: 10px; font-size: 11px; color: #21733b; display: none;"></div>
+          </div>
+        </div>
+
+        <!-- LIFE PANE 2: HOSTEL & MESS -->
+        <div class="life-pane" id="life-pane-hostel" role="tabpanel">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;" class="calc-grid">
+            <div style="background: #fff; padding: 24px; border: 1px solid #ded5be; border-radius: 4px; box-shadow: 0 8px 24px rgba(0,0,0,.04);">
+              <h3 style="margin: 0 0 6px; font-family: var(--serif); font-size: 18px; color: var(--sea);">Hostel Quarters (The Barracks)</h3>
+              <p style="margin: 0 0 16px; font-size: 11px; color: #6d756b;">
+                Separate cabins for boys and girls with 24/7 watch and resident wardens.
+              </p>
+              <div style="background: #fbf7ee; padding: 14px; border: 1px solid #ded5be; border-radius: 3px; margin-bottom: 16px;">
+                <strong style="font-size: 11px; color: var(--rust);">⚓ Berth Allotment Status Lookup</strong>
+                <div style="display: flex; gap: 8px; margin-top: 8px;">
+                  <input type="text" id="hostel-roll-input" value="VC-2024-TECH-042" style="flex: 1; padding: 6px 10px; font-size: 10px; border: 1px solid #ded5be;" />
+                  <button class="button button-gold" id="btn-check-hostel" type="button" style="padding: 6px 12px; font-size: 10px;">Check Cabin</button>
+                </div>
+                <div id="hostel-result" style="margin-top: 8px; font-size: 10px; color: #14211d; display: none;"></div>
+              </div>
+              <h4 style="margin: 0 0 8px; font-family: var(--serif); font-size: 13px;">Hostel Rules & Code</h4>
+              <ul style="margin: 0; padding-left: 18px; font-size: 11px; color: #5a6157; line-height: 1.7;">
+                <li>Deck curfew at 22:00 hours for safety drills.</li>
+                <li>Biometric gate logging required for day outings.</li>
+                <li>Zero-tolerance policy for alcohol, ragging, and insubordination.</li>
+              </ul>
+            </div>
+
+            <div style="background: #fff; padding: 24px; border: 1px solid #ded5be; border-radius: 4px; box-shadow: 0 8px 24px rgba(0,0,0,.04);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3 style="margin: 0; font-family: var(--serif); font-size: 18px; color: var(--sea);">Weekly Galley Mess Menu</h3>
+                <span class="trust-badge" style="background:#fbf7ee; color:#21733b;">FSSAI 5-Star Certified</span>
+              </div>
+              <p style="margin: 0 0 14px; font-size: 11px; color: #6d756b;">Wholesome multi-cuisine nutrition curated for oceanic stamina.</p>
+              <table class="mess-table">
+                <thead>
+                  <tr>
+                    <th>Day</th>
+                    <th>Breakfast</th>
+                    <th>Lunch</th>
+                    <th>Dinner</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Mon</strong></td>
+                    <td>Idli, Sambar, Fruit & Tea</td>
+                    <td>Paneer Butter Masala, Roti, Dal, Rice</td>
+                    <td>Veg Biryani, Raita, Gulab Jamun</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Tue</strong></td>
+                    <td>Aloo Paratha, Curd & Pickle</td>
+                    <td>Rajma Masala, Steamed Basmati, Salad</td>
+                    <td>Kadai Veg, Phulkas, Moong Dal Halwa</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Wed</strong></td>
+                    <td>Poha, Boiled Eggs / Sprouts & Coffee</td>
+                    <td>South Indian Thali, Rasam, Curd Rice</td>
+                    <td>Pasta Primavera, Garlic Bread, Soup</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Thu</strong></td>
+                    <td>Masala Dosa, Chutney & Milk</td>
+                    <td>Chole Bhature, Jeera Rice, Buttermilk</td>
+                    <td>Matar Paneer, Tawa Roti, Fruit Custard</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Fri</strong></td>
+                    <td>Upma, Vada, Chutney & Tea</td>
+                    <td>Dal Makhani, Mix Veg, Naan, Rice</td>
+                    <td>Special Fleet Feast / Continental Night</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- LIFE PANE 3: TRANSPORT -->
+        <div class="life-pane" id="life-pane-transport" role="tabpanel">
+          <div style="background: #fff; padding: 28px; border: 1px solid #ded5be; border-radius: 4px; box-shadow: 0 8px 24px rgba(0,0,0,.04);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px; margin-bottom: 18px;">
+              <div>
+                <h3 style="margin: 0 0 6px; font-family: var(--serif); font-size: 20px; color: var(--sea);">
+                  Fleet Bus Network & Sailing Routes
+                </h3>
+                <p style="margin: 0; font-size: 11px; color: #6d756b;">
+                  42 GPS-Tracked Luxury Buses connecting all city ports, railway terminals, and airports.
+                </p>
+              </div>
+              <span class="trust-badge" style="background:#eaf7ee; color:#21733b; border-color:#9ed8ad;">Live GPS Tracking Online</span>
+            </div>
+
+            <table class="bus-table">
+              <thead>
+                <tr>
+                  <th>Route ID</th>
+                  <th>Fleet Name</th>
+                  <th>Key Harbor Stops</th>
+                  <th>Morning Pickup</th>
+                  <th>Evening Departure</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>ROUTE 01</strong></td>
+                  <td><strong>North Bay Galleon</strong></td>
+                  <td>Harbor Point → North Station → Old Lighthouse → Campus Gates</td>
+                  <td>07:15 Tide</td>
+                  <td>17:30 Tide</td>
+                  <td><span class="trust-badge" style="background:#eaf7ee; color:#21733b;">ON TIME · BUS #VC-04</span></td>
+                </tr>
+                <tr>
+                  <td><strong>ROUTE 02</strong></td>
+                  <td><strong>Central Marina Express</strong></td>
+                  <td>Victoria Square → City Central Metro → High Court → Campus Gates</td>
+                  <td>07:30 Tide</td>
+                  <td>17:30 Tide</td>
+                  <td><span class="trust-badge" style="background:#eaf7ee; color:#21733b;">ON TIME · BUS #VC-12</span></td>
+                </tr>
+                <tr>
+                  <td><strong>ROUTE 03</strong></td>
+                  <td><strong>Southern Archipelago Shuttle</strong></td>
+                  <td>South Ferry Dock → Ocean Drive → Palm Junction → Campus Gates</td>
+                  <td>07:20 Tide</td>
+                  <td>17:30 Tide</td>
+                  <td><span class="trust-badge" style="background:#eaf7ee; color:#21733b;">ON TIME · BUS #VC-19</span></td>
+                </tr>
+                <tr>
+                  <td><strong>ROUTE 04</strong></td>
+                  <td><strong>Eastern Harbor Line</strong></td>
+                  <td>Tech Park Terminal → Eastern Cross → Sunset Point → Campus Gates</td>
+                  <td>07:10 Tide</td>
+                  <td>17:30 Tide</td>
+                  <td><span class="trust-badge" style="background:#fff7ea; color:#b06c00;">5 MIN DELAY · BUS #VC-27</span></td>
+                </tr>
+                <tr>
+                  <td><strong>ROUTE 05</strong></td>
+                  <td><strong>Airport & Railway Cruiser</strong></td>
+                  <td>International Terminal → Grand Central Station → Campus Gates</td>
+                  <td>06:50 Tide</td>
+                  <td>18:00 Tide</td>
+                  <td><span class="trust-badge" style="background:#eaf7ee; color:#21733b;">ON TIME · BUS #VC-33</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- LIFE PANE 4: CLUBS -->
+        <div class="life-pane" id="life-pane-clubs" role="tabpanel">
+          <div class="clubs-grid">
+            <div class="club-card">
+              <span class="trust-badge" style="margin-bottom: 12px; background:#f4eedb; color:var(--sea);">Technical Society</span>
+              <h3>The Armada Robotics & AI Guild</h3>
+              <p>Designing autonomous submarines, competitive combat rovers, and nautical computer vision algorithms.</p>
+              <button class="button button-gold btn-enlist-club" style="width: 100%; font-size: 11px;" type="button" data-club="The Armada Robotics & AI Guild">Enlist in Guild →</button>
+            </div>
+            <div class="club-card">
+              <span class="trust-badge" style="margin-bottom: 12px; background:#f4eedb; color:var(--sea);">Cultural & Arts</span>
+              <h3>The Siren’s Shanties & Dramatic Arts</h3>
+              <p>Annual theater productions, high-seas music band, street plays, and traditional folk choirs.</p>
+              <button class="button button-gold btn-enlist-club" style="width: 100%; font-size: 11px;" type="button" data-club="The Siren’s Shanties & Dramatic Arts">Enlist in Guild →</button>
+            </div>
+            <div class="club-card">
+              <span class="trust-badge" style="margin-bottom: 12px; background:#f4eedb; color:var(--sea);">Sports & Athletics</span>
+              <h3>Nautical Athletics & Yachting Club</h3>
+              <p>Rowing, windsurfing, Olympic swimming, football, cricket, and basketball teams.</p>
+              <button class="button button-gold btn-enlist-club" style="width: 100%; font-size: 11px;" type="button" data-club="Nautical Athletics & Yachting Club">Enlist in Guild →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SECTION 4: CADET NAUTICAL FAQS                                 -->
+      <!-- ============================================================== -->
+      <section style="padding: 40px 6%; max-width: 1140px; margin: 0 auto;" id="student-faqs">
+        <div class="section-heading">
+          <p class="eyebrow eyebrow-dark"><span></span> CADET KNOWLEDGE BASE · SHIP'S MANUAL</p>
+          <h2>Frequently Asked Questions <em>for the Crew.</em></h2>
+          <p>Everything you need to know about navigating exams, rations, library scrolls, and hostel berths.</p>
+        </div>
+
+        <div class="faq-accordion-grid">
+          <!-- FAQ 1 -->
+          <div class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false">
+              <span>1. What is the mandatory sea-readiness attendance threshold?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </button>
+            <div class="faq-content">
+              Cadets must maintain a minimum of <strong>75% sea-readiness attendance</strong> across each voyage module to qualify for the end-semester exams and placement sea-trials. Cadets with medical leaves endorsed by the Chief Infirmary Officer receive a dispensation down to 65%.
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false">
+              <span>2. How do I request a cabin transfer or special galley dietary rations?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </button>
+            <div class="faq-content">
+              Cabin re-allocations are processed during the first two weeks of each term. Submit a formal request to the Hostel Warden Office (Barracks Deck 1) or petition via the <em>Signal Captain's HQ</em> query channel below with reason (e.g. medical AC requirement).
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false">
+              <span>3. Where do I collect mid-term examination hall tickets?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </button>
+            <div class="faq-content">
+              Digital hall tickets are published 7 tide days before examinations directly under the <em>Ship's Log Circulars</em> tab on this portal. Ensure all doubloon semester fees show ₹0.00 clearance before downloading.
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false">
+              <span>4. How can I borrow rare cartography scrolls from the special reserve?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </button>
+            <div class="faq-content">
+              Special reserve manuscripts (like High Admiral Sterling's rare maritime law scrolls) can be consulted in the Rare Chart Room on Deck 1 with your physical Cadet ID. Reference photocopies can be requested at the RFID self-service desk.
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false">
+              <span>5. What are the rules for shore leave and overnight passes?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </button>
+            <div class="faq-content">
+              Cadets seeking overnight shore leave must log their digital gate pass with their resident warden by 17:00 tide hours. The biometric scanner at the harbor gate logs departures and arrivals. Curfew for normal day outings is 22:00 hours.
+            </div>
+          </div>
+
+          <!-- FAQ 6 -->
+          <div class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false">
+              <span>6. How do I petition the Ombudsman for academic grade re-evaluation?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </button>
+            <div class="faq-content">
+              Grade contestations must be filed within 10 days of transcript release using the <em>File Grievance Scroll</em> option in the Pirate Code charter or by submitting a formal appeal through your student query channel.
+            </div>
+          </div>
+
+          <!-- FAQ 7 -->
+          <div class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false">
+              <span>7. How do I register a new technical club or naval regatta team?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </button>
+            <div class="faq-content">
+              A crew of at least 15 cadets with an endorsing faculty navigator may petition the Dean of Student Affairs. Approved guilds receive up to ₹50,000 annual activity budget and hangar space.
+            </div>
+          </div>
+
+          <!-- FAQ 8 -->
+          <div class="faq-item">
+            <button class="faq-trigger" type="button" aria-expanded="false">
+              <span>8. What emergency medical support is provided during night watch?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </button>
+            <div class="faq-content">
+              The on-deck Infirmary is staffed 24 hours daily with an on-duty surgeon and resident nurse. Emergency ambulance transport to the mainland hospital is always docked at Pier 1. Emergency hotline: +1 800-555-8423.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SECTION 5: SIGNAL THE CAPTAIN'S QUARTERS (STUDENT -> ADMIN)    -->
+      <!-- ============================================================== -->
+      <section style="padding: 40px 6% 70px; max-width: 1140px; margin: 0 auto;" id="captain-query">
+        <div class="section-heading">
+          <p class="eyebrow eyebrow-dark"><span></span> DIRECT ADMIRALTY CHANNEL · CADET DISPATCH</p>
+          <h2>Signal the Captain’s Quarters: <em>Direct Petitions.</em></h2>
+          <p>Need special guidance, academic dispensations, or research grants from High Admiral Sterling? Dispatch your petition scroll straight to his Command Bridge.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px;" class="calc-grid">
+          <!-- Left: Query Dispatch Form -->
+          <div class="query-card">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+              <span style="font-size: 22px;">📜</span>
+              <h3 style="margin: 0; font-family: var(--serif); font-size: 18px; color: var(--sea);">Draft Your Petition Scroll</h3>
+            </div>
+            <form id="cadet-query-form">
+              <div class="bottle-field" style="margin-bottom: 12px;">
+                <label for="query-category">Petition Domain</label>
+                <select id="query-category">
+                  <option value="Academic Exemption">Academic Exemption / Attendance Waiver</option>
+                  <option value="Research Grant">Crow's Nest Lab Equipment & Project Grant</option>
+                  <option value="Scholarship Appeal">Doubloon Scholarship & Emergency Fund</option>
+                  <option value="Hostel & Amenities">Hostel Barrack Re-allotment</option>
+                  <option value="Expedition Proposal">Independent Maritime Expedition Proposal</option>
+                </select>
+              </div>
+              <div class="bottle-field" style="margin-bottom: 12px;">
+                <label for="query-title">Petition Heading / Subject</label>
+                <input type="text" id="query-title" placeholder="E.g. Request for late astrolabe lab access for RoboBoat" required />
+              </div>
+              <div class="bottle-field" style="margin-bottom: 14px;">
+                <label for="query-message">Detailed Parchment Petition</label>
+                <textarea id="query-message" rows="4" placeholder="State your request clearly with rationale and details for High Admiral Sterling..." required></textarea>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px; font-size: 11px; color: #6d756b;">
+                <input type="checkbox" id="query-urgent" />
+                <label for="query-urgent">Flag as Priority Fleet Signal (Requires urgent response)</label>
+              </div>
+              <button class="button button-gold" style="width: 100%; min-height: 42px;" type="submit">
+                <span>Dispatch Petition to Captain's Command Bridge →</span>
+              </button>
+            </form>
+            <div class="bottle-success-notice" id="query-dispatch-success">
+              <h4>✦ Petition Dispatched to Admiralty Bridge! ✦</h4>
+              <p>Your signal has been delivered to High Admiral Sterling's desk. Check the query ledger on the right for updates!</p>
+            </div>
+          </div>
+
+          <!-- Right: Dispatched Queries & Captain's Rescripts -->
+          <div class="query-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h3 style="margin: 0; font-family: var(--serif); font-size: 18px; color: var(--sea);">
+                My Dispatched Petitions & Captain's Orders
+              </h3>
+              <span class="trust-badge" style="background:#f4eedb; color:var(--sea); font-size: 8px;">Live Ledger</span>
+            </div>
+            <p style="margin: 0 0 16px; font-size: 11px; color: #6d756b;">
+              Official decrees and rescripts issued by High Admiral Sterling in response to your signals.
+            </p>
+            <div id="student-query-history" style="max-height: 400px; overflow-y: auto;">
+              <!-- Populated dynamically via app.js -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div style="max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; font-size: 10px; color: #728273;">
+        <span>© 2026 Vibe College · The Pirate Student Deck. Sworn Cadet Session.</span>
+        <div style="display: flex; gap: 16px;">
+          <a href="index.html" style="color: #a4b5a2;">Public Harbor</a>
+          <a href="map.html" style="color: #a4b5a2;">Secret Treasure Map</a>
+          <a href="index.html#ship-code" style="color: #a4b5a2;">The Pirate Code</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- MODAL: RECEIPT PRINT -->
+    <div class="modal-backdrop" id="receipt-modal" role="dialog" aria-modal="true" aria-labelledby="receipt-modal-title">
+      <div class="modal-dialog" style="max-width: 620px;">
+        <div class="modal-header">
+          <h3 id="receipt-modal-title">Official Doubloon Charter</h3>
+          <button class="modal-close-btn" type="button" aria-label="Close receipt modal" data-close-modal="receipt-modal">×</button>
+        </div>
+        <div class="modal-body" id="receipt-modal-body"></div>
+      </div>
+    </div>
+
+    <!-- MODAL: CLUB REGISTRATION -->
+    <div class="modal-backdrop" id="club-modal" role="dialog" aria-modal="true" aria-labelledby="club-modal-title">
+      <div class="modal-dialog" style="max-width: 580px;">
+        <div class="modal-header">
+          <h3 id="club-modal-title">⚔️ Enlist in Campus Guild / Club</h3>
+          <button class="modal-close-btn" type="button" aria-label="Close club modal" data-close-modal="club-modal">×</button>
+        </div>
+        <div class="modal-body">
+          <form id="club-form">
+            <div class="bottle-field">
+              <label for="club-selected-name">Selected Society / Guild</label>
+              <input type="text" id="club-selected-name" readonly style="background: #f6eedb; font-weight: 700;" />
+            </div>
+            <div class="bottle-form-row">
+              <div class="bottle-field">
+                <label for="club-cadet-name">Cadet Name</label>
+                <input type="text" id="club-cadet-name" value="Cadet Jack Sparrow" required />
+              </div>
+              <div class="bottle-field">
+                <label for="club-cadet-roll">Roll No / Year</label>
+                <input type="text" id="club-cadet-roll" value="VC-2024-TECH-042" required />
+              </div>
+            </div>
+            <div class="bottle-field">
+              <label for="club-interests">Past Experience / Role of Interest</label>
+              <textarea id="club-interests" rows="2" placeholder="Tell us how you would like to contribute..." required></textarea>
+            </div>
+            <button class="button button-gold" style="width: 100%; min-height: 42px;" type="submit">
+              Sign the Guild Roll →
+            </button>
+          </form>
+          <div class="bottle-success-notice" id="club-success">
+            <h4>✦ Guild Parchment Signed! ✦</h4>
+            <p>Welcome to the crew! Your guild lead will summon you for the first council meet on Tuesday evening.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

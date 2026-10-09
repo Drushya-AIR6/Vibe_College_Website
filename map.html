@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#14211d" />
+    <meta
+      name="description"
+      content="Vibe College Secret Treasure Chart — Restricted navigational map accessible only to verified pirate crew and the Captain."
+    />
+    <title>Secret Treasure Chart — Vibe College (Members Only)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body style="background: #101c17; color: #f5eedf;">
+    <!-- TOP SECURITY BANNER -->
+    <div class="announcement" style="background: #09120e; border-bottom: 1px solid rgba(241,201,87,.2);">
+      <span class="announcement-icon" aria-hidden="true">⚓</span>
+      <p id="announcement-text">FLEET MARITIME SECURITY PROTOCOL · SECTOR 07 NAVIGATIONAL ARCHIVE</p>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 10px;">
+        <span class="trust-badge" id="security-status-badge" style="background: rgba(255,71,87,.2); color: #ff6b81; border: 1px solid #ff4757; font-size: 8px;">
+          CLASSIFICATION: TOP SECRET
+        </span>
+        <select class="lang-picker-select" id="lang-picker" aria-label="Choose language" style="background: #162922; color: #e7dfce; border-color: rgba(241,201,87,.3);">
+          <option value="en" selected>English</option>
+          <option value="pirate">🏴‍☠️ Pirate Speak</option>
+          <option value="hi">हिन्दी</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- SITE HEADER -->
+    <header class="site-header" style="background: rgba(16,28,23,.95);">
+      <a class="brand" href="index.html" aria-label="Vibe College home">
+        <span class="brand-mark" aria-hidden="true">VC</span>
+        <span class="brand-name">VIBE <small>COLLEGE</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+      <nav class="main-nav" aria-label="Map navigation">
+        <a href="index.html">Public Harbor ↗</a>
+        <a href="student.html">Pirate Student Deck</a>
+        <a href="admin.html">Captain HQ</a>
+        <a href="login.html" class="nav-portal-btn" id="nav-auth-link" style="background: var(--gold); color: var(--sea); font-weight: 700;">
+          <span aria-hidden="true">☸</span> Board the Ship
+        </a>
+      </nav>
+    </header>
+
+    <main style="padding: 40px 6% 80px; max-width: 1200px; margin: 0 auto;">
+
+      <!-- ============================================================== -->
+      <!-- 1. RESTRICTED SECURITY LOCKOUT (SHOWN WHEN UNAUTHENTICATED)     -->
+      <!-- ============================================================== -->
+      <section class="portcullis-lockout-card" id="portcullis-lockout" style="display: none;">
+        <div class="portcullis-bars" aria-hidden="true"></div>
+        <div style="position: relative; z-index: 2;">
+          <div class="portcullis-icon" aria-hidden="true">🚨</div>
+          <p class="eyebrow" style="color: #ff6b81; justify-content: center; margin-bottom: 8px;">
+            <span></span> CLASSIFIED FLEET SECTOR <span></span>
+          </p>
+          <h1 class="portcullis-title">TREASURE CHART SECURED BEHIND IRON PORTCULLIS</h1>
+          <p class="portcullis-desc">
+            <strong>Halt, Traveler!</strong> Per High Admiral Sterling’s Maritime Order #403, harbor visitors, spies, and unsworn guests are <em>strictly prohibited</em> from viewing the internal campus navigational chart, secret munitions lockers, and subterranean loot vaults.
+          </p>
+
+          <div style="background: rgba(0,0,0,.4); border: 1px dashed #ff4757; border-radius: 4px; padding: 16px 20px; max-width: 520px; margin: 0 auto 24px; text-align: left; font-size: 11px;">
+            <p style="margin: 0 0 6px; color: #ff6b81; font-weight: 700;">⚠ BREACH PREVENTION PROTOCOL:</p>
+            <ul style="margin: 0; padding-left: 18px; color: #dcd2c4; line-height: 1.6;">
+              <li>Only sworn <strong>Pirate Cadets</strong> and the <strong>High Admiral Captain</strong> possess clearance keys.</li>
+              <li>Attempting to bypass this portcullis without valid credentials risks walking the plank into shark-infested shallows!</li>
+            </ul>
+          </div>
+
+          <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 24px;">
+            <a href="login.html" class="button button-gold" style="box-shadow: 0 4px 18px rgba(241,201,87,.3);">
+              ☸ Board the Ship & Verify Credentials →
+            </a>
+            <a href="index.html" class="button button-outline" style="color: #f5eedf; border-color: rgba(255,255,255,.3);">
+              Return to Public Harbor ↗
+            </a>
+          </div>
+
+          <div style="border-top: 1px solid rgba(255,255,255,.1); padding-top: 18px; max-width: 460px; margin: 0 auto;">
+            <p style="font-size: 10px; color: #a4b5a2; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .08em;">
+              Quick Maritime Evaluation Bypass:
+            </p>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+              <button type="button" class="quick-auth-btn" id="btn-quick-unlock-cadet" style="flex: 1; padding: 8px 12px;">
+                <strong>🏴‍☠️ Verify as Cadet</strong>
+                <small>Jack Sparrow</small>
+              </button>
+              <button type="button" class="quick-auth-btn" id="btn-quick-unlock-captain" style="flex: 1; padding: 8px 12px;">
+                <strong>⚓ Verify as Captain</strong>
+                <small>High Admiral Sterling</small>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- 2. SECURED TREASURE CHART (UNLOCKED FOR CREW MEMBERS ONLY)     -->
+      <!-- ============================================================== -->
+      <section id="secured-map-content" style="display: none;">
+        
+        <!-- MEMBER BADGE STATUS BAR -->
+        <div class="member-badge-bar">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 20px;">🛡️</span>
+            <div>
+              <span style="color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: .06em;" id="member-clearance-title">
+                CREW IDENTITY VERIFIED · IRON PORTCULLIS RAISED
+              </span>
+              <p style="margin: 2px 0 0; color: #a4b5a2; font-size: 10px;" id="member-welcome-name">
+                Logged in as: Cadet Jack Sparrow (Quartermaster · VC-2024-TECH-042)
+              </p>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <a href="student.html" class="text-link" id="member-deck-link" style="color: var(--gold); font-size: 11px;">
+              Return to My Deck →
+            </a>
+            <button type="button" id="btn-map-logout" class="button button-outline" style="padding: 6px 12px; font-size: 10px; border-color: rgba(255,71,87,.4); color: #ff6b81;">
+              Disembark (Log Out) ⏏
+            </button>
+          </div>
+        </div>
+
+        <!-- MAIN LOCATOR CARD (CAMPUS TREASURE FINDER) -->
+        <div class="locator-card" style="box-shadow: 0 30px 70px rgba(0,0,0,.6); border: 2px solid var(--gold); background: #fbf7ee; color: var(--ink);">
+          <div class="locator-topline" style="background: #14251e; color: #f5eedf; border-bottom: 2px solid var(--gold);">
+            <div class="locator-title" style="color: #f5eedf;">
+              <span class="tiny-compass" style="color: var(--gold);">✳</span>
+              <span style="font-family: var(--serif); font-size: 13px; letter-spacing: .08em;">SECRET CAMPUS TREASURE FINDER · RESTRICTED ARCHIVE</span>
+            </div>
+            <span class="map-coordinate" style="color: var(--gold); font-size: 10px;">CHART NO. 07 — UPDATED LIVE</span>
+          </div>
+
+          <div class="locator-content">
+            <div class="locator-guide">
+              <div class="parrot" aria-hidden="true">🦜</div>
+              <div class="parrot-speech">
+                <span class="speech-name">CAPTAIN POLLY</span>
+                <p>“Welcome aboard, shipmate! State yer coordinates and I’ll chart the course.”</p>
+                <span class="speech-tail" aria-hidden="true"></span>
+              </div>
+
+              <form class="destination-form" id="destination-form">
+                <label for="destination">Name your destination</label>
+                <div class="search-field">
+                  <span aria-hidden="true">⌕</span>
+                  <input
+                    id="destination"
+                    name="destination"
+                    type="search"
+                    list="campus-places"
+                    placeholder="Try ‘The Old Library’"
+                    autocomplete="off"
+                    aria-describedby="search-hint"
+                  />
+                  <datalist id="campus-places">
+                    <option value="The Old Library"></option>
+                    <option value="Founders Hall"></option>
+                    <option value="The Galley Café"></option>
+                    <option value="Captain's Bridge"></option>
+                    <option value="Robotics Dock"></option>
+                    <option value="Cyber Bastion"></option>
+                    <option value="Observatory Tower"></option>
+                    <option value="Quartermaster Store"></option>
+                  </datalist>
+                  <button type="submit" aria-label="Find destination">→</button>
+                </div>
+                <span class="search-hint" id="search-hint">A building, secret dock, or fleet training bay.</span>
+                <p class="search-error" id="search-error" role="status" aria-live="polite"></p>
+              </form>
+
+              <div class="popular-destinations">
+                <span>POPULAR PORTS</span>
+                <button type="button" data-destination="The Old Library">The Old Library</button>
+                <button type="button" data-destination="Founders Hall">Founders Hall</button>
+                <button type="button" data-destination="The Galley Café">The Galley Café</button>
+                <button type="button" data-destination="Robotics Dock">Robotics Dock</button>
+              </div>
+
+              <div class="bottle-prompt">
+                <span class="bottle-mini" aria-hidden="true">♧</span>
+                <p>Send Polly on a mission<br /><strong>and crack open a clue.</strong></p>
+              </div>
+            </div>
+
+            <div class="treasure-area" aria-live="polite">
+              <div class="treasure-empty" id="treasure-empty">
+                <div class="empty-bottle" aria-hidden="true">
+                  <span class="bottle-cork"></span><span class="bottle-neck"></span>
+                  <span class="bottle-glass"><i>✉</i></span>
+                </div>
+                <p class="empty-title">A message in a bottle awaits</p>
+                <p>Pick your destination and Polly will<br />reveal the secret chart.</p>
+                <span class="empty-doodle" aria-hidden="true">↗ &nbsp; ✳</span>
+              </div>
+
+              <article class="treasure-map is-hidden" id="treasure-map" aria-labelledby="map-destination">
+                <div class="map-stamp">POLLY<br />APPROVED</div>
+                <div class="map-paper-top">
+                  <span>THE VIBE ISLES · CAMPUS CHART</span><span>NO. 01</span>
+                </div>
+                <div class="map-scene">
+                  <svg class="route-lines" viewBox="0 0 600 250" role="img" aria-label="Dotted route leading to your destination">
+                    <path d="M72 186 C130 170 114 106 198 126 S260 191 330 151 S376 78 447 104 S495 109 525 74" />
+                  </svg>
+                  <span class="map-land land-one"></span>
+                  <span class="map-land land-two"></span>
+                  <span class="map-watermark">VIBE<br />CAMPUS</span>
+                  <div class="map-location" id="map-location">
+                    <span class="map-cross" aria-hidden="true">✕</span>
+                    <span class="map-pin-label" id="map-destination">The Old Library</span>
+                  </div>
+                  <span class="map-building building-one" id="nearby-one"><i>▤</i><b>North Quad</b></span>
+                  <span class="map-building building-two" id="nearby-two"><i>⌂</i><b>The Galley</b></span>
+                  <span class="map-building building-three" id="nearby-three"><i>▥</i><b>Founders Hall</b></span>
+                  <span class="map-building building-four" id="nearby-four"><i>♜</i><b>Arts Dock</b></span>
+                  <span class="map-compass"><i>✳</i><b>N</b></span>
+                  <span class="map-scale">0 ─── 100 paces</span>
+                </div>
+                <div class="map-caption">
+                  <span class="caption-icon" aria-hidden="true">⚑</span>
+                  <p><strong id="map-caption-title">The Old Library</strong><br /><span id="map-directions">Head past North Quad and follow the story-shaped trail.</span></p>
+                  <button class="map-copy" id="copy-directions" type="button" aria-label="Copy directions" title="Copy directions">⧉</button>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="locator-foot" style="background: #e9e0cb; border-top: 1px solid #ded4bb; color: #5a6258;">
+            <span>✦ &nbsp; ENCRYPTED MARITIME CHART. CONFIDENTIAL TO VIBE COLLEGE CREW.</span>
+            <span>IF POLLY GETS LOST, REPORT TO CAPTAIN'S HEADQUARTERS.</span>
+          </div>
+        </div>
+
+        <!-- ADDITIONAL FLEET WAYFINDING DIRECTORY -->
+        <div style="margin-top: 36px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;">
+          <div style="background: #14231d; border: 1px solid rgba(241,201,87,.3); border-radius: 4px; padding: 20px;">
+            <h3 style="font-family: var(--serif); font-size: 16px; color: var(--gold); margin: 0 0 8px;">⚓ North Battery & Laboratories</h3>
+            <p style="font-size: 11px; color: #c4d4c2; line-height: 1.6; margin: 0 0 10px;">
+              Housing the Advanced Robotics Docks, Subsea Sensor Array, and Deep Learning Cyber Rig. Protected by secondary biometrics.
+            </p>
+            <span style="font-size: 9px; color: var(--gold); text-transform: uppercase; letter-spacing: .08em;">Coordinates: 12° 58' N, 77° 35' E</span>
+          </div>
+
+          <div style="background: #14231d; border: 1px solid rgba(241,201,87,.3); border-radius: 4px; padding: 20px;">
+            <h3 style="font-family: var(--serif); font-size: 16px; color: var(--gold); margin: 0 0 8px;">📜 The Central Great Archive</h3>
+            <p style="font-size: 11px; color: #c4d4c2; line-height: 1.6; margin: 0 0 10px;">
+              Four tiers of ancient scrolls, international patent journals, digital research terminals, and quiet study alcoves.
+            </p>
+            <span style="font-size: 9px; color: var(--gold); text-transform: uppercase; letter-spacing: .08em;">Coordinates: Central Citadel Deck 3</span>
+          </div>
+
+          <div style="background: #14231d; border: 1px solid rgba(241,201,87,.3); border-radius: 4px; padding: 20px;">
+            <h3 style="font-family: var(--serif); font-size: 16px; color: var(--gold); margin: 0 0 8px;">☸ High Admiral's Command Citadel</h3>
+            <p style="font-size: 11px; color: #c4d4c2; line-height: 1.6; margin: 0 0 10px;">
+              Executive council chamber, Cadet Query Command Desk, fleet registry, and institutional regulatory archives.
+            </p>
+            <span style="font-size: 9px; color: var(--gold); text-transform: uppercase; letter-spacing: .08em;">Coordinates: Top Deck Bridge</span>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <footer class="site-footer" style="margin-top: 60px; border-top: 1px solid rgba(241,201,87,.2);">
+      <div class="footer-wrap">
+        <div class="footer-bottom">
+          <p>© 2026 Vibe College of Maritime & Computational Arts. Secret Chart Room.</p>
+          <div class="footer-sublinks">
+            <a href="index.html">Public Harbor</a>
+            <a href="student.html">Pirate Student Deck</a>
+            <a href="admin.html">Captain HQ</a>
+            <a href="login.html">Boarding Gate</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

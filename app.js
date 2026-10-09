@@ -148,13 +148,16 @@ const compassDefaults = [
   },
 ];
 
-for (const place of places) {
-  const option = document.createElement("option");
-  option.value = place.name;
-  datalist.append(option);
+if (datalist) {
+  for (const place of places) {
+    const option = document.createElement("option");
+    option.value = place.name;
+    datalist.append(option);
+  }
 }
 
 function renderLearningRoutes(searchTerm = "") {
+  if (!compassRecommendations) return;
   const query = searchTerm.trim().toLocaleLowerCase();
   const matchingRoutes = query
     ? learningRoutes.filter((route) =>
@@ -187,137 +190,167 @@ function renderLearningRoutes(searchTerm = "") {
     compassRecommendations.append(link);
   }
 
-  compassHint.textContent = query && !matchingRoutes.length
-    ? "No exact bearing yet—here are a few good places to start."
-    : query
-      ? "Based on your search, these could be your next stops."
-      : "A few good next steps, picked for your search.";
+  if (compassHint) {
+    compassHint.textContent = query && !matchingRoutes.length
+      ? "No exact bearing yet—here are a few good places to start."
+      : query
+        ? "Based on your search, these could be your next stops."
+        : "A few good next steps, picked for your search.";
+  }
 }
 
 function openLearningCompass() {
-  if (!compassSearch.value.trim() || compassSearch.dataset.source === "destination") {
-    compassSearch.value = destinationInput.value;
-    compassSearch.dataset.source = destinationInput.value ? "destination" : "";
+  if (!compassPanel || !compassToggle) return;
+  if (compassSearch && destinationInput) {
+    if (!compassSearch.value.trim() || compassSearch.dataset.source === "destination") {
+      compassSearch.value = destinationInput.value;
+      compassSearch.dataset.source = destinationInput.value ? "destination" : "";
+    }
+    renderLearningRoutes(compassSearch.value);
   }
-  renderLearningRoutes(compassSearch.value);
   compassPanel.hidden = false;
   compassToggle.setAttribute("aria-expanded", "true");
 }
 
 function closeLearningCompass() {
+  if (!compassPanel || !compassToggle) return;
   compassPanel.hidden = true;
   compassToggle.setAttribute("aria-expanded", "false");
 }
 
 function revealTreasure(destination) {
-  const normalizedDestination = destination.trim().toLocaleLowerCase();
+  const normalizedDestination = (destination || "").trim().toLocaleLowerCase();
   const place = places.find((entry) => entry.name.toLocaleLowerCase() === normalizedDestination);
 
   if (!place) {
-    errorMessage.textContent = "Polly can’t find that port yet. Try one of the nearby places below.";
-    destinationInput.setAttribute("aria-invalid", "true");
+    if (errorMessage) errorMessage.textContent = "Polly can’t find that port yet. Try one of the nearby places below.";
+    if (destinationInput) destinationInput.setAttribute("aria-invalid", "true");
     return;
   }
 
-  errorMessage.textContent = "";
-  destinationInput.removeAttribute("aria-invalid");
-  document.querySelector("#map-destination").textContent = place.name;
-  document.querySelector("#map-caption-title").textContent = place.name;
-  directions.textContent = place.directions;
+  if (errorMessage) errorMessage.textContent = "";
+  if (destinationInput) destinationInput.removeAttribute("aria-invalid");
+  const destEl = document.querySelector("#map-destination");
+  const capTitleEl = document.querySelector("#map-caption-title");
+  if (destEl) destEl.textContent = place.name;
+  if (capTitleEl) capTitleEl.textContent = place.name;
+  if (directions) directions.textContent = place.directions;
   place.nearby.forEach((name, index) => {
-    document.querySelector(`#nearby-${["one", "two", "three", "four"][index]} b`).textContent = name;
+    const nearEl = document.querySelector(`#nearby-${["one", "two", "three", "four"][index]} b`);
+    if (nearEl) nearEl.textContent = name;
   });
   window.clearTimeout(revealTimer);
-  emptyState.classList.remove("is-hidden");
-  emptyState.classList.add("bottle-opening");
-  map.classList.add("is-hidden");
-  revealTimer = window.setTimeout(() => {
-    emptyState.classList.remove("bottle-opening");
-    emptyState.classList.add("is-hidden");
-    map.classList.remove("is-hidden");
-    map.classList.remove("treasure-map");
-    void map.offsetWidth;
-    map.classList.add("treasure-map");
-  }, 520);
-  copyButton.textContent = "⧉";
-  copyButton.setAttribute("aria-label", "Copy directions");
+  if (emptyState && map) {
+    emptyState.classList.remove("is-hidden");
+    emptyState.classList.add("bottle-opening");
+    map.classList.add("is-hidden");
+    revealTimer = window.setTimeout(() => {
+      emptyState.classList.remove("bottle-opening");
+      emptyState.classList.add("is-hidden");
+      map.classList.remove("is-hidden");
+      map.classList.remove("treasure-map");
+      void map.offsetWidth;
+      map.classList.add("treasure-map");
+    }, 520);
+  }
+  if (copyButton) {
+    copyButton.textContent = "⧉";
+    copyButton.setAttribute("aria-label", "Copy directions");
+  }
 }
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  revealTreasure(destinationInput.value);
-});
+if (form) {
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (destinationInput) revealTreasure(destinationInput.value);
+  });
+}
 
 document.querySelectorAll("[data-destination]").forEach((button) => {
   button.addEventListener("click", () => {
     const destination = button.dataset.destination;
-    destinationInput.value = destination;
+    if (destinationInput) destinationInput.value = destination;
     revealTreasure(destination);
   });
 });
 
-compassToggle.addEventListener("click", () => {
-  if (compassPanel.hidden) {
-    openLearningCompass();
-    compassSearch.focus();
-  } else {
-    closeLearningCompass();
-  }
-});
+if (compassToggle && compassPanel) {
+  compassToggle.addEventListener("click", () => {
+    if (compassPanel.hidden) {
+      openLearningCompass();
+      if (compassSearch) compassSearch.focus();
+    } else {
+      closeLearningCompass();
+    }
+  });
+}
 
-compassClose.addEventListener("click", closeLearningCompass);
-compassSearch.addEventListener("input", () => {
-  compassSearch.dataset.source = "compass";
-  renderLearningRoutes(compassSearch.value);
-});
+if (compassClose) {
+  compassClose.addEventListener("click", closeLearningCompass);
+}
+if (compassSearch) {
+  compassSearch.addEventListener("input", () => {
+    compassSearch.dataset.source = "compass";
+    renderLearningRoutes(compassSearch.value);
+  });
+}
 
-destinationInput.addEventListener("input", () => {
-  compassSearch.value = destinationInput.value;
-  compassSearch.dataset.source = destinationInput.value ? "destination" : "";
-  renderLearningRoutes(compassSearch.value);
-});
+if (destinationInput) {
+  destinationInput.addEventListener("input", () => {
+    if (compassSearch) {
+      compassSearch.value = destinationInput.value;
+      compassSearch.dataset.source = destinationInput.value ? "destination" : "";
+      renderLearningRoutes(compassSearch.value);
+    }
+  });
+}
 
 document.addEventListener("click", (event) => {
-  if (!compassPanel.hidden && !compassPanel.contains(event.target) && !compassToggle.contains(event.target)) {
+  if (compassPanel && compassToggle && !compassPanel.hidden && !compassPanel.contains(event.target) && !compassToggle.contains(event.target)) {
     closeLearningCompass();
   }
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !compassPanel.hidden) {
+  if (event.key === "Escape" && compassPanel && !compassPanel.hidden) {
     closeLearningCompass();
-    compassToggle.focus();
+    if (compassToggle) compassToggle.focus();
   }
 });
 
-copyButton.addEventListener("click", async () => {
-  const destination = document.querySelector("#map-caption-title").textContent;
-  const text = `${destination}: ${directions.textContent}`;
-  try {
-    await navigator.clipboard.writeText(text);
-    copyButton.textContent = "✓";
-    copyButton.setAttribute("aria-label", "Directions copied");
-  } catch {
-    copyButton.textContent = "!";
-    copyButton.setAttribute("aria-label", "Unable to copy directions");
-  }
-});
-
-menuButton.addEventListener("click", () => {
-  const isOpen = menuButton.getAttribute("aria-expanded") === "true";
-  menuButton.setAttribute("aria-expanded", String(!isOpen));
-  menuButton.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
-  nav.classList.toggle("is-open", !isOpen);
-});
-
-nav.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    closeLearningCompass();
-    menuButton.setAttribute("aria-expanded", "false");
-    menuButton.setAttribute("aria-label", "Open navigation");
-    nav.classList.remove("is-open");
+if (copyButton) {
+  copyButton.addEventListener("click", async () => {
+    const destEl = document.querySelector("#map-caption-title");
+    const destination = destEl ? destEl.textContent : "";
+    const text = `${destination}: ${directions ? directions.textContent : ""}`;
+    try {
+      await navigator.clipboard.writeText(text);
+      copyButton.textContent = "✓";
+      copyButton.setAttribute("aria-label", "Directions copied");
+    } catch {
+      copyButton.textContent = "!";
+      copyButton.setAttribute("aria-label", "Unable to copy directions");
+    }
   });
-});
+}
+
+if (menuButton && nav) {
+  menuButton.addEventListener("click", () => {
+    const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+    menuButton.setAttribute("aria-expanded", String(!isOpen));
+    menuButton.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
+    nav.classList.toggle("is-open", !isOpen);
+  });
+
+  nav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      closeLearningCompass();
+      menuButton.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-label", "Open navigation");
+      nav.classList.remove("is-open");
+    });
+  });
+}
 
 /* ============================================================== */
 /* MODAL SYSTEM CONTROLLER                                        */
@@ -808,11 +841,6 @@ document.querySelectorAll(".wanted-btn[data-legend]").forEach((btn) => {
   });
 });
 
-const btnAlumniJoin = document.querySelector("#btn-alumni-join");
-if (btnAlumniJoin) {
-  btnAlumniJoin.addEventListener("click", () => openModal("enlist-modal"));
-}
-
 /* ============================================================== */
 /* COURSE CHARTER DETAIL MODALS                                   */
 /* ============================================================== */
@@ -952,12 +980,1135 @@ if (enlistForm) {
   });
 }
 
-// Mandatory disclosures alert / view
-const btnViewDisclosures = document.querySelector("#btn-view-disclosures");
-if (btnViewDisclosures) {
-  btnViewDisclosures.addEventListener("click", (e) => {
-    e.preventDefault();
-    alert("✦ VIBE COLLEGE MANDATORY STATUTORY CHARTERS ✦\n\n• UGC 2(f) & 12(B) Recognition: F. No. 8-12/2018 (CPP-I/C)\n• AICTE Permanent Approval: F. No. South-West/1-93214981\n• NAAC Accreditation: Grade A++ (Score: 3.82/4.00)\n• Anti-Ragging National Monitoring Cell: www.antiragging.in\n• Ombudsman & Grievance Cell: grievances@vibecollege.edu\n\nAll statutory scrolls and audited finance statements are accessible at the Registrar's Port.");
+/* ============================================================== */
+/* LANGUAGE SWITCHER                                              */
+/* ============================================================== */
+const langPicker = document.querySelector("#lang-picker");
+const langTranslations = {
+  en: {
+    announcement: "OPEN DECK DAY · Saturday, 24 October · All hands welcome",
+    claim: "Claim your place →",
+    heroEyebrow: "A college for curious souls",
+    heroH1: "Chart your<br />own <em>course.</em>",
+    heroIntro: "Big ideas. Good people. A little salt in the air. Find your crew and make a future worth sailing toward.",
+  },
+  pirate: {
+    announcement: "OPEN DECK DAY · Saturday, 24 October · All hands ahoy, ye hearty mariners!",
+    claim: "Stake yer claim on deck →",
+    heroEyebrow: "A buccaneer haven for daring rogues",
+    heroH1: "Chart yer<br />own <em>course, matey.</em>",
+    heroIntro: "Grand dreams. Fearless scalawags. Salt in the gale. Rally yer crew and forge a destiny on high seas.",
+  },
+  hi: {
+    announcement: "ओपन डेक दिवस · शनिवार, 24 अक्टूबर · सभी नाविकों का स्वागत है",
+    claim: "अपना स्थान सुरक्षित करें →",
+    heroEyebrow: "जिज्ञासु आत्माओं के लिए एक अनूठा महाविद्यालय",
+    heroH1: "तय करें अपना<br />खुद का <em>मार्ग।</em>",
+    heroIntro: "बड़े विचार। सच्चे साथी। हवा में ताजगी। अपनी टीम चुनें और भविष्य की ओर आगे बढ़ें।",
+  },
+  es: {
+    announcement: "DÍA DE CUBIERTA ABIERTA · Sábado, 24 de octubre · Bienvenidos a bordo",
+    claim: "Reclama tu lugar →",
+    heroEyebrow: "Una universidad para almas curiosas",
+    heroH1: "Traza tu<br />propio <em>rumbo.</em>",
+    heroIntro: "Grandes ideas. Buena tripulación. Viento a favor. Encuentra a tu equipo y navega hacia el futuro.",
+  },
+};
+
+if (langPicker) {
+  langPicker.addEventListener("change", (e) => {
+    const lang = e.target.value;
+    const trans = langTranslations[lang];
+    if (!trans) return;
+
+    const annText = document.querySelector("#announcement-text");
+    if (annText) annText.textContent = trans.announcement;
+
+    const heroH1 = document.querySelector(".hero-copy h1");
+    if (heroH1) heroH1.innerHTML = trans.heroH1;
+
+    const heroIntro = document.querySelector(".hero-intro");
+    if (heroIntro) heroIntro.textContent = trans.heroIntro;
+
+    const heroEyebrow = document.querySelector(".hero-copy .eyebrow");
+    if (heroEyebrow) heroEyebrow.innerHTML = `<span></span> ${trans.heroEyebrow}`;
   });
 }
+
+/* ============================================================== */
+/* ISLAND HOPPING DEPARTMENT DOSSIERS                            */
+/* ============================================================== */
+const islandDossiers = {
+  cs: {
+    title: "Computing Atoll — School of Navigational Tech",
+    coord: "ISLE 01 · 12° 34' N",
+    head: "Dr. Alistair Finch (Ph.D. Cambridge, F.R.G.S.)",
+    headMsg: "“In the digital fog, algorithms are the stars by which we steer. Our students master high-performance computing, distributed networks, and maritime artificial intelligence.”",
+    facultyRoster: [
+      { name: "Prof. Maya Lin", role: "Chair of Astrolabe AI & Cryptography", hours: "Mon & Wed 14:00 - 16:00" },
+      { name: "Dr. Kenji Sato", role: "Associate Dean of Autonomous Maritime Systems", hours: "Tue & Thu 10:00 - 12:00" },
+      { name: "Prof. Helena Vance", role: "Lead Researcher in High-Seas Satellite Mesh", hours: "Fri 11:00 - 13:00" },
+    ],
+    labs: ["Quantum Astrolabe Supercomputing Cluster", "Neural Surface Navigation Hangar", "Distributed Edge Cyber-Defense Lab"],
+    projects: ["ReefClean Autonomous Vision Skiffs", "Sub-Surface Acoustic Swarm Routing ($1.4M Grant)"],
+  },
+  robotics: {
+    title: "Mechanics Isle — Marine Robotics & Naval Systems",
+    coord: "ISLE 02 · 12° 36' N",
+    head: "Dr. Evelyn Drake (Ph.D. MIT Robotics, Former DARPA Fellow)",
+    headMsg: "“We combine classical naval architecture with cutting-edge mechatronics to engineer vessels that brave any storm.”",
+    facultyRoster: [
+      { name: "Cmdr. Sean O'Connor", role: "Professor of Hydrodynamics & Propulsion", hours: "Mon & Fri 09:00 - 11:00" },
+      { name: "Dr. Amara Sen", role: "Director of Autonomous Submersibles", hours: "Wed 13:00 - 15:00" },
+    ],
+    labs: ["100-Meter Towing Wave Basin", "CAD Rigging & 3D Metal Fabrication Dock", "Autonomous Galleon Hangar"],
+    projects: ["Wave-Powered Cargo Galleon", "Bio-mimetic Manta Ray Reconnaissance Sub ($2.1M DST Grant)"],
+  },
+  commerce: {
+    title: "Commerce Atoll — International Trade & Admiralty Finance",
+    coord: "ISLE 03 · 12° 38' N",
+    head: "Capt. Marcus Sterling (MBA Wharton, Ex-Director Mediterranean Shipping)",
+    headMsg: "“Commerce is the bloodstream of global trade. We forge commanders who negotiate multi-million doubloon charters and build enduring enterprises.”",
+    facultyRoster: [
+      { name: "Prof. Ronald Sterling", role: "Professor of Maritime Law & Sovereign Charters", hours: "Tue & Thu 11:00 - 13:00" },
+      { name: "Dr. Priya Nair", role: "Chair of Global Commodity Trading & Derivatives", hours: "Mon 14:00 - 16:00" },
+    ],
+    labs: ["High-Seas Bloomberg & FinTech Trading Floor", "Global Supply Chain Logistics Simulation Hub"],
+    projects: ["Sovereign Carbon Credit Maritime Exchange", "Maritime Blockchain Bills of Lading Standard"],
+  },
+  arts: {
+    title: "Creative Isle — Humanities, Cartography & Maritime Lore",
+    coord: "ISLE 04 · 12° 40' N",
+    head: "Dame Cordelia Vane (M.A. Oxford, Poet Laureate of the Admiralty)",
+    headMsg: "“Without stories, art, and philosophy, a voyage has direction but no purpose. We illuminate the human soul against the backdrop of the sea.”",
+    facultyRoster: [
+      { name: "Dr. Julian Black", role: "Reader in Maritime Historical Cartography", hours: "Wed & Fri 10:00 - 12:00" },
+      { name: "Maestro Gabriel Costa", role: "Director of Nautical Soundscapes & Drama", hours: "Tue 15:00 - 17:00" },
+    ],
+    labs: ["Historical Cartographic Lithography Press", "Acoustics & Shanty Soundstage", "Digital Humanities Archive"],
+    projects: ["Oral History of the High Seas", "The Illustrated Encyclopedia of Nautical Folklore"],
+  },
+};
+
+document.querySelectorAll(".island-btn[data-island]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const key = btn.dataset.island;
+    const isle = islandDossiers[key];
+    if (!isle) return;
+
+    const body = document.querySelector("#island-modal-body");
+    if (body) {
+      body.innerHTML = `
+        <div>
+          <span style="font-size: 8px; font-weight: bold; letter-spacing: .12em; text-transform: uppercase; color: var(--rust);">${isle.coord}</span>
+          <h2 style="margin: 4px 0 10px; font-family: var(--serif); font-size: 24px; color: var(--sea);">${isle.title}</h2>
+          
+          <div style="padding: 14px 18px; background: #fbf7ee; border-left: 3px solid var(--gold); border-radius: 2px; margin-bottom: 20px;">
+            <strong style="display: block; font-size: 11px; color: var(--sea); margin-bottom: 4px;">Message from the Head of Isle — ${isle.head}:</strong>
+            <p style="margin: 0; font-size: 11px; line-height: 1.6; color: #5a6258; font-style: italic;">${isle.headMsg}</p>
+          </div>
+
+          <h4 style="margin: 0 0 10px; font-family: var(--serif); font-size: 15px;">Distinguished Faculty & Office Hours</h4>
+          <table class="mess-table" style="margin-bottom: 20px;">
+            <thead>
+              <tr>
+                <th>Faculty Officer</th>
+                <th>Academic Domain</th>
+                <th>Consultation Office Hours</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${isle.facultyRoster.map(f => `
+                <tr>
+                  <td><strong>${f.name}</strong></td>
+                  <td>${f.role}</td>
+                  <td><span class="trust-badge" style="background:#f4eedb; color:var(--sea);">${f.hours}</span></td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;" class="calc-grid">
+            <div style="padding: 14px; background: #fff; border: 1px solid #ded5be; border-radius: 3px;">
+              <strong style="display: block; font-size: 11px; color: var(--sea); margin-bottom: 6px;">Specialized Research Labs:</strong>
+              <ul style="margin: 0; padding-left: 16px; font-size: 10px; color: #6d756b; line-height: 1.6;">
+                ${isle.labs.map(l => `<li>${l}</li>`).join("")}
+              </ul>
+            </div>
+            <div style="padding: 14px; background: #fff; border: 1px solid #ded5be; border-radius: 3px;">
+              <strong style="display: block; font-size: 11px; color: var(--sea); margin-bottom: 6px;">Flagship Funded Projects:</strong>
+              <ul style="margin: 0; padding-left: 16px; font-size: 10px; color: #6d756b; line-height: 1.6;">
+                ${isle.projects.map(p => `<li>${p}</li>`).join("")}
+              </ul>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end;">
+            <button class="button button-gold" onclick="closeModal('island-modal'); openModal('enlist-modal');">Enlist in this Department →</button>
+          </div>
+        </div>
+      `;
+    }
+    openModal("island-modal");
+  });
+});
+
+/* ============================================================== */
+/* VIRTUAL TOUR & VIDEO WALKTHROUGH                              */
+/* ============================================================== */
+const btnDroneTour = document.querySelector("#btn-drone-tour");
+const btnCaptainVideo = document.querySelector("#btn-captain-video");
+const btnPlayVideoSim = document.querySelector("#btn-play-video-sim");
+
+if (btnDroneTour) {
+  btnDroneTour.addEventListener("click", () => openModal("tour-video-modal"));
+}
+if (btnCaptainVideo) {
+  btnCaptainVideo.addEventListener("click", () => openModal("tour-video-modal"));
+}
+document.querySelectorAll(".tour-btn[data-tour]").forEach((btn) => {
+  btn.addEventListener("click", () => openModal("tour-video-modal"));
+});
+
+if (btnPlayVideoSim) {
+  btnPlayVideoSim.addEventListener("click", () => {
+    const display = document.querySelector("#tour-video-display");
+    if (!display) return;
+    display.innerHTML = `
+      <div style="padding: 24px; text-align: center; color: var(--gold);">
+        <div style="font-size: 40px; margin-bottom: 12px; animation: pulse 1s infinite;">🛰️</div>
+        <h4 style="font-family: var(--serif); font-size: 18px; margin: 0 0 6px; color: #fff;">Streaming Live Campus Drone Stream (1080p 60fps)</h4>
+        <p style="font-size: 11px; color: #a4b5a2; margin: 0 0 14px;">Passing over High Admiral Sterling’s Deck, Old Library Cliffs, and Robotics Towing Basin...</p>
+        <div style="width: 240px; height: 6px; background: rgba(255,255,255,.2); border-radius: 3px; margin: 0 auto; overflow: hidden;">
+          <div style="width: 70%; height: 100%; background: var(--gold); border-radius: 3px;"></div>
+        </div>
+        <p style="margin-top: 10px; font-size: 9px; color: #728273;">360° Gyro Tracking Active · Compass Heading 042° NNE</p>
+      </div>
+    `;
+  });
+}
+
+document.querySelectorAll(".btn-tour-chapter[data-chapter]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const ch = btn.dataset.chapter;
+    const title = document.querySelector("#video-sim-title");
+    const desc = document.querySelector("#video-sim-desc");
+    if (ch === "library") {
+      if (title) title.textContent = "Chapter 1: The University Library of the Seven Seas & Reading Cliffs";
+      if (desc) desc.textContent = "140,000+ volumes, RFID automated stacks, and ocean-facing reading carrels.";
+    } else if (ch === "robotics") {
+      if (title) title.textContent = "Chapter 2: Autonomous Robotics & AI Naval Hangar";
+      if (desc) desc.textContent = "100m wave basin, autonomous surface skiffs, and edge computing labs.";
+    } else {
+      if (title) title.textContent = "Chapter 3: North Quad & Campus Harbor Anchorage";
+      if (desc) desc.textContent = "Student amphitheater, Siren's shanty stage, and residential barracks.";
+    }
+  });
+});
+
+/* ============================================================== */
+/* STUDENT LIFE HUB: TABS, LIBRARY SEARCH, HOSTEL, CLUBS          */
+/* ============================================================== */
+document.querySelectorAll(".life-tab-btn[data-ltab]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".life-tab-btn").forEach((b) => {
+      b.classList.remove("is-active");
+      b.setAttribute("aria-selected", "false");
+    });
+    document.querySelectorAll(".life-pane").forEach((p) => p.classList.remove("is-active"));
+
+    btn.classList.add("is-active");
+    btn.setAttribute("aria-selected", "true");
+    const pane = document.querySelector(`#life-pane-${btn.dataset.ltab}`);
+    if (pane) pane.classList.add("is-active");
+  });
+});
+
+// Library search filter
+const libSearchInput = document.querySelector("#lib-search-input");
+const btnLibSearch = document.querySelector("#btn-lib-search");
+function filterLibrary() {
+  const query = (libSearchInput ? libSearchInput.value : "").toLowerCase().trim();
+  const rows = document.querySelectorAll("#lib-catalog-body tr");
+  rows.forEach((row) => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(query) ? "" : "none";
+  });
+}
+if (libSearchInput) libSearchInput.addEventListener("input", filterLibrary);
+if (btnLibSearch) btnLibSearch.addEventListener("click", filterLibrary);
+
+// Library cadet status check
+const btnCheckLibStatus = document.querySelector("#btn-check-lib-status");
+if (btnCheckLibStatus) {
+  btnCheckLibStatus.addEventListener("click", () => {
+    const id = (document.querySelector("#lib-cadet-check")?.value || "").trim();
+    const out = document.querySelector("#lib-status-output");
+    if (!out) return;
+    out.style.display = "block";
+    if (id) {
+      out.innerHTML = `<strong>⚓ Registry for Cadet ${id}:</strong> 2 Scrolls Issued · <em>"Principles of Autonomous Systems"</em> (Due 24 Oct) · <em>"Admiralty Law"</em> (Due 30 Oct) · Outstanding Fines: ₹0.00 (All Clear).`;
+    } else {
+      out.innerHTML = `Please enter your Cadet Roll ID to check book status.`;
+    }
+  });
+}
+
+// Hostel cabin check
+const btnCheckHostel = document.querySelector("#btn-check-hostel");
+if (btnCheckHostel) {
+  btnCheckHostel.addEventListener("click", () => {
+    const roll = (document.querySelector("#hostel-roll-input")?.value || "").trim();
+    const res = document.querySelector("#hostel-result");
+    if (!res) return;
+    res.style.display = "block";
+    if (roll) {
+      res.innerHTML = `<strong>Berth Allotment for ${roll}:</strong> Barrack Galleon HMS Victory · Deck 3, Cabin 304 (AC 2-Sharing, Ocean View) · Resident Warden: Capt. Sterling. Gate clearance biometric active.`;
+    } else {
+      res.innerHTML = `Please enter a Cadet Roll Number.`;
+    }
+  });
+}
+
+// Club enlistment
+document.querySelectorAll(".btn-enlist-club[data-club]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const club = btn.dataset.club;
+    const input = document.querySelector("#club-selected-name");
+    if (input) input.value = club;
+    openModal("club-modal");
+  });
+});
+
+const clubForm = document.querySelector("#club-form");
+if (clubForm) {
+  clubForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const success = document.querySelector("#club-success");
+    if (success) success.classList.add("is-visible");
+    clubForm.reset();
+  });
+}
+
+/* ============================================================== */
+/* RESEARCH DOWNLOADS                                             */
+/* ============================================================== */
+document.querySelectorAll(".download-btn[data-dl]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const title = btn.dataset.dl;
+    alert(`✦ PARCHMENT DISPATCHED ✦\n\n"${title}" has been downloaded to your device storage.\nOfficial digital verification seal: VC-HASH-99824`);
+  });
+});
+
+const btnPitchStartup = document.querySelector("#btn-pitch-startup");
+if (btnPitchStartup) {
+  btnPitchStartup.addEventListener("click", () => {
+    alert("✦ CROW'S NEST INCUBATION CELL ✦\n\nPitch rounds for Spring 2027 are now accepting proposals!\nSeed Grant: Up to ₹50 Lakhs + Wet Lab Allocation.\nSubmit pitch decks to: crowsnest@vibecollege.edu");
+  });
+}
+
+/* ============================================================== */
+/* CREW RECRUITMENT & JOB BERTH APPLICATIONS                      */
+/* ============================================================== */
+document.querySelectorAll(".btn-open-job-modal[data-role]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const role = btn.dataset.role;
+    const pos = document.querySelector("#job-position");
+    if (pos) pos.value = role;
+    openModal("job-modal");
+  });
+});
+
+const jobForm = document.querySelector("#job-form");
+if (jobForm) {
+  jobForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const success = document.querySelector("#job-success");
+    if (success) success.classList.add("is-visible");
+    jobForm.reset();
+  });
+}
+
+/* ============================================================== */
+/* ALUMNI GUILD & ENDOWMENT                                       */
+/* ============================================================== */
+const alumniData = [
+  { name: "Captain Ananya Roy", year: "2021", prog: "B.Tech Navigational Tech", role: "CEO, SkyCorsair AI ($40M Series B)", fleet: "San Francisco / Bangalore" },
+  { name: "Cmdr. Vikram Malhotra", year: "2019", prog: "B.Tech Computer Science", role: "Principal Architect, CloudGalleon", fleet: "London / Seattle" },
+  { name: "Cmdr. Elara Vance", year: "2022", prog: "B.S. Oceanics", role: "Climate Cartographer, World Oceanic Institute", fleet: "Geneva / Tokyo" },
+  { name: "Capt. Tariq Al-Mansoor", year: "2020", prog: "B.B.A. Maritime Commerce", role: "Managing Partner, Clean Ocean Ventures ($120M)", fleet: "Dubai / Singapore" },
+  { name: "Lt. Samantha Reed", year: "2018", prog: "B.A. Nautical Literature", role: "Senior Editor, Royal Geographical Journal", fleet: "Edinburgh" },
+  { name: "David Kim", year: "2023", prog: "B.Tech Robotics", role: "Senior Robotics Lead, DeepSea Dynamics", fleet: "Seoul / Boston" },
+];
+
+function renderAlumni(filter = "") {
+  const container = document.querySelector("#alumni-results-list");
+  if (!container) return;
+  const q = filter.toLowerCase().trim();
+  const matched = alumniData.filter(a => a.name.toLowerCase().includes(q) || a.role.toLowerCase().includes(q) || a.year.includes(q) || a.fleet.toLowerCase().includes(q));
+
+  container.innerHTML = matched.map(a => `
+    <div style="padding: 12px 14px; background: #fff; border: 1px solid #ded5be; border-radius: 3px; display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <strong style="font-family: var(--serif); font-size: 13px; color: var(--sea);">${a.name} (Class of '${a.year.slice(2)})</strong>
+        <p style="margin: 2px 0 0; font-size: 10px; color: #6d756b;">${a.role} · ${a.fleet}</p>
+      </div>
+      <span class="trust-badge" style="background:#f4eedb; color:var(--sea); font-size: 8px;">VERIFIED ALUMNUS</span>
+    </div>
+  `).join("");
+}
+
+const btnAlumniJoin = document.querySelector("#btn-alumni-join");
+if (btnAlumniJoin) {
+  btnAlumniJoin.addEventListener("click", () => {
+    renderAlumni();
+    openModal("alumni-modal");
+  });
+}
+const footerLinkAlumni = document.querySelector("#footer-link-alumni");
+if (footerLinkAlumni) {
+  footerLinkAlumni.addEventListener("click", () => {
+    renderAlumni();
+    openModal("alumni-modal");
+  });
+}
+
+const alumniSearchInput = document.querySelector("#alumni-search-input");
+if (alumniSearchInput) {
+  alumniSearchInput.addEventListener("input", (e) => renderAlumni(e.target.value));
+}
+
+// Alumni modal tabs
+const atabBtnDir = document.querySelector("#atab-btn-dir");
+const atabBtnEndow = document.querySelector("#atab-btn-endow");
+const atabPaneDir = document.querySelector("#atab-pane-dir");
+const atabPaneEndow = document.querySelector("#atab-pane-endow");
+
+if (atabBtnDir && atabBtnEndow) {
+  atabBtnDir.addEventListener("click", () => {
+    atabBtnDir.classList.add("is-active");
+    atabBtnEndow.classList.remove("is-active");
+    if (atabPaneDir) atabPaneDir.style.display = "block";
+    if (atabPaneEndow) atabPaneEndow.style.display = "none";
+  });
+  atabBtnEndow.addEventListener("click", () => {
+    atabBtnEndow.classList.add("is-active");
+    atabBtnDir.classList.remove("is-active");
+    if (atabPaneDir) atabPaneDir.style.display = "none";
+    if (atabPaneEndow) atabPaneEndow.style.display = "block";
+  });
+}
+
+const donationForm = document.querySelector("#donation-form");
+if (donationForm) {
+  donationForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const donor = (document.querySelector("#don-donor")?.value || "Distinguished Mariner").trim();
+    const amt = document.querySelector("#don-amount")?.value || "100000";
+    const success = document.querySelector("#don-success");
+    const msg = document.querySelector("#don-success-msg");
+    if (msg) {
+      msg.innerHTML = `Thank you, <strong>${donor}</strong>! Your endowment of <strong>₹${Number(amt).toLocaleString('en-IN')}</strong> has been received by the Scholar's Chest. Official 80G Tax Exemption Receipt <strong>#80G-VC-2026-992</strong> has been generated and dispatched to your email.`;
+    }
+    if (success) success.classList.add("is-visible");
+    donationForm.reset();
+  });
+}
+
+/* ============================================================== */
+/* GRIEVANCE, COUNSELLOR, DISCLOSURES & POLICIES MODALS           */
+/* ============================================================== */
+const btnOpenGrievance = document.querySelector("#btn-open-grievance");
+const footerLinkGrievance = document.querySelector("#footer-link-grievance");
+if (btnOpenGrievance) btnOpenGrievance.addEventListener("click", () => openModal("grievance-modal"));
+if (footerLinkGrievance) footerLinkGrievance.addEventListener("click", () => openModal("grievance-modal"));
+
+const grievanceForm = document.querySelector("#grievance-form");
+if (grievanceForm) {
+  grievanceForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const success = document.querySelector("#griev-success");
+    if (success) success.classList.add("is-visible");
+    grievanceForm.reset();
+  });
+}
+
+const btnOpenCounsellor = document.querySelector("#btn-open-counsellor");
+const footerLinkCounsellor = document.querySelector("#footer-link-counsellor");
+if (btnOpenCounsellor) btnOpenCounsellor.addEventListener("click", () => openModal("counsellor-modal"));
+if (footerLinkCounsellor) footerLinkCounsellor.addEventListener("click", () => openModal("counsellor-modal"));
+
+const counsellorForm = document.querySelector("#counsellor-form");
+if (counsellorForm) {
+  counsellorForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const success = document.querySelector("#couns-success");
+    if (success) success.classList.add("is-visible");
+    counsellorForm.reset();
+  });
+}
+
+const btnViewDisclosures = document.querySelector("#btn-view-disclosures");
+const footerLinkDisclosures = document.querySelector("#footer-link-disclosures");
+const footerLinkRti = document.querySelector("#footer-link-rti");
+if (btnViewDisclosures) btnViewDisclosures.addEventListener("click", () => openModal("disclosure-modal"));
+if (footerLinkDisclosures) footerLinkDisclosures.addEventListener("click", () => openModal("disclosure-modal"));
+if (footerLinkRti) footerLinkRti.addEventListener("click", () => openModal("disclosure-modal"));
+
+const linkPrivacy = document.querySelector("#link-privacy");
+const linkCookies = document.querySelector("#link-cookies");
+const linkAccessibility = document.querySelector("#link-accessibility");
+const btnCookiePrivacy = document.querySelector("#btn-cookie-privacy");
+
+if (linkPrivacy) linkPrivacy.addEventListener("click", () => openModal("privacy-modal"));
+if (linkCookies) linkCookies.addEventListener("click", () => openModal("privacy-modal"));
+if (linkAccessibility) linkAccessibility.addEventListener("click", () => openModal("privacy-modal"));
+if (btnCookiePrivacy) btnCookiePrivacy.addEventListener("click", () => openModal("privacy-modal"));
+
+// Cookie banner dismiss
+const cookieBanner = document.querySelector("#cookie-banner");
+const btnCookieAccept = document.querySelector("#btn-cookie-accept");
+if (btnCookieAccept && cookieBanner) {
+  btnCookieAccept.addEventListener("click", () => {
+    cookieBanner.classList.add("is-hidden");
+    try { localStorage.setItem("vc_cookies_accepted", "true"); } catch (e) {}
+  });
+}
+try {
+  if (localStorage.getItem("vc_cookies_accepted") === "true" && cookieBanner) {
+    cookieBanner.classList.add("is-hidden");
+  }
+} catch (e) {}
+
+// Newsletter signup form
+const newsletterForm = document.querySelector("#newsletter-form");
+if (newsletterForm) {
+  newsletterForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const msg = document.querySelector("#newsletter-msg");
+    if (msg) msg.style.display = "block";
+    newsletterForm.reset();
+  });
+}
+
+/* ============================================================== */
+/* VIBE COLLEGE MULTI-PAGE PIRATE ENGINE                          */
+/* Shared State, Auth, Animations, Queries & Security Gate       */
+/* ============================================================== */
+
+// 1. Session & Auth Helpers
+function getAuth() {
+  try {
+    const raw = localStorage.getItem("vc_currentUser");
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function setAuth(user) {
+  try {
+    localStorage.setItem("vc_currentUser", JSON.stringify(user));
+  } catch (e) {}
+}
+
+function clearAuth() {
+  try {
+    localStorage.removeItem("vc_currentUser");
+  } catch (e) {}
+}
+
+// 2. Default Seed Data: Queries & Circulars
+const DEFAULT_QUERIES = [
+  {
+    id: "Q-1042",
+    studentName: "Cadet Jack Sparrow",
+    roll: "VC-2024-TECH-042",
+    category: "Academic Exemption",
+    title: "Night Watch Waiver for Autonomous Hull Regatta Trials",
+    message: "High Admiral Sterling, requesting dispensation from the 21:00 curfew on Thursday to calibrate the subsea lidar in Dock 3 before the fleet trials.",
+    urgent: true,
+    date: "08 Oct 2026",
+    status: "answered",
+    captainReply: "Dispensation granted, Cadet Sparrow. The Night Watch Lantern officer has been notified. Maintain safety tether at all times while at the docks. — High Admiral Sterling",
+    replyDate: "08 Oct 2026"
+  },
+  {
+    id: "Q-1088",
+    studentName: "Cadet Jack Sparrow",
+    roll: "VC-2024-TECH-042",
+    category: "Research Grant",
+    title: "Additional Micro-Sensors for RoboBoat Hull",
+    message: "Requesting allocation of 4 ultrasonic hydrophone transducers from Crow's Nest Inventory for our semester capstone project.",
+    urgent: false,
+    date: "09 Oct 2026",
+    status: "pending",
+    captainReply: null,
+    replyDate: null
+  }
+];
+
+const DEFAULT_NOTICES = [
+  {
+    id: "NOT-201",
+    title: "Annual Hack-the-Armada Regatta 2026 Registration Open",
+    dept: "Office of the High Admiral & Student Fleet Affairs",
+    category: "Regatta & Drills",
+    date: "09 Oct 2026",
+    content: "All pirate crews across computer science, navigation, and nautical design are invited to form teams of 4. Cash bounty of ₹1,50,000 in doubloons!"
+  },
+  {
+    id: "NOT-202",
+    title: "End-Term Sea-Trial Examination Timetable Released",
+    dept: "Controller of Fleet Examinations",
+    category: "Academic Notice",
+    date: "07 Oct 2026",
+    content: "Theory and practical assessment scrolls are now posted on the Shipmate Deck. Verify your examination berth numbers by 15 Oct."
+  }
+];
+
+function getStoredQueries() {
+  try {
+    const raw = localStorage.getItem("vc_queries");
+    if (raw) return JSON.parse(raw);
+    localStorage.setItem("vc_queries", JSON.stringify(DEFAULT_QUERIES));
+    return DEFAULT_QUERIES;
+  } catch (e) {
+    return DEFAULT_QUERIES;
+  }
+}
+
+function saveStoredQueries(queries) {
+  try {
+    localStorage.setItem("vc_queries", JSON.stringify(queries));
+  } catch (e) {}
+}
+
+function getStoredNotices() {
+  try {
+    const raw = localStorage.getItem("vc_notices");
+    if (raw) return JSON.parse(raw);
+    localStorage.setItem("vc_notices", JSON.stringify(DEFAULT_NOTICES));
+    return DEFAULT_NOTICES;
+  } catch (e) {
+    return DEFAULT_NOTICES;
+  }
+}
+
+function saveStoredNotices(notices) {
+  try {
+    localStorage.setItem("vc_notices", JSON.stringify(notices));
+  } catch (e) {}
+}
+
+// ==============================================================
+// 3. LOGIN PAGE: THE BOARDING GATE ANIMATED SCENE (login.html)
+// ==============================================================
+const boardingForm = document.querySelector("#boarding-login-form");
+const ropeWrapper = document.querySelector("#rope-wrapper");
+const alertFailure = document.querySelector("#alert-failure");
+const alertSuccess = document.querySelector("#alert-success");
+const successWelcomeMsg = document.querySelector("#success-welcome-msg");
+const btnRetryClimb = document.querySelector("#btn-retry-climb");
+const btnQuickCadet = document.querySelector("#btn-quick-cadet");
+const btnQuickCaptain = document.querySelector("#btn-quick-captain");
+
+function playBoardingSuccess(role, name, roll, rank) {
+  if (ropeWrapper) {
+    ropeWrapper.classList.remove("is-cutting", "is-severed");
+    ropeWrapper.classList.add("is-success");
+  }
+  if (alertFailure) alertFailure.classList.remove("is-active");
+  if (alertSuccess) {
+    if (successWelcomeMsg) {
+      successWelcomeMsg.textContent = `Permission to board granted! Welcome aboard, ${name} (${rank} · ${roll}). Hoisting the gangplank...`;
+    }
+    alertSuccess.classList.add("is-active");
+  }
+
+  setAuth({ role, name, roll, rank });
+
+  // Play boarding transition and redirect
+  setTimeout(() => {
+    if (role === "admin") {
+      window.location.href = "admin.html";
+    } else {
+      window.location.href = "student.html";
+    }
+  }, 2200);
+}
+
+function playBoardingFailure() {
+  if (ropeWrapper) {
+    ropeWrapper.classList.remove("is-success");
+    ropeWrapper.classList.add("is-cutting");
+
+    // Blade strikes rope and severs it
+    setTimeout(() => {
+      ropeWrapper.classList.add("is-severed");
+    }, 550);
+  }
+
+  if (alertSuccess) alertSuccess.classList.remove("is-active");
+  if (alertFailure) {
+    setTimeout(() => {
+      alertFailure.classList.add("is-active");
+    }, 700);
+  }
+}
+
+function resetBoardingStage() {
+  if (ropeWrapper) {
+    ropeWrapper.classList.remove("is-cutting", "is-severed", "is-success");
+  }
+  if (alertFailure) alertFailure.classList.remove("is-active");
+  if (alertSuccess) alertSuccess.classList.remove("is-active");
+}
+
+if (btnRetryClimb) {
+  btnRetryClimb.addEventListener("click", resetBoardingStage);
+}
+
+if (btnQuickCadet) {
+  btnQuickCadet.addEventListener("click", () => {
+    playBoardingSuccess("student", "Cadet Jack Sparrow", "VC-2024-TECH-042", "Quartermaster");
+  });
+}
+
+if (btnQuickCaptain) {
+  btnQuickCaptain.addEventListener("click", () => {
+    playBoardingSuccess("admin", "High Admiral Sterling", "VC-ADM-001", "Fleet Commander");
+  });
+}
+
+if (boardingForm) {
+  boardingForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const username = (document.querySelector("#login-username")?.value || "").trim().toLowerCase();
+    const password = (document.querySelector("#login-password")?.value || "").trim();
+    const selectedRole = document.querySelector("#login-role")?.value || "student";
+
+    // Authentication verification
+    const isCadet = (username === "cadet" || username === "sparrow" || selectedRole === "student") && password === "pirate123";
+    const isCaptain = (username === "captain" || username === "sterling" || selectedRole === "admin") && (password === "admin123" || password === "captain123");
+
+    if (isCaptain) {
+      playBoardingSuccess("admin", "High Admiral Sterling", "VC-ADM-001", "Fleet Commander");
+    } else if (isCadet) {
+      playBoardingSuccess("student", "Cadet Jack Sparrow", "VC-2024-TECH-042", "Quartermaster");
+    } else {
+      playBoardingFailure();
+    }
+  });
+}
+
+// ==============================================================
+// 4. STUDENT DECK: FAQS, QUERIES & TABS (student.html)
+// ==============================================================
+const btnLogout = document.querySelector("#btn-logout");
+if (btnLogout) {
+  btnLogout.addEventListener("click", () => {
+    clearAuth();
+    window.location.href = "login.html";
+  });
+}
+
+// Cadet FAQs Accordion
+document.querySelectorAll(".faq-trigger").forEach((trigger) => {
+  trigger.addEventListener("click", () => {
+    const parentItem = trigger.closest(".faq-item");
+    if (!parentItem) return;
+    const isOpen = parentItem.classList.contains("is-open");
+    // Close sibling accordions in same group for crisp UX
+    const parentGrid = parentItem.closest(".faq-accordion-grid");
+    if (parentGrid) {
+      parentGrid.querySelectorAll(".faq-item").forEach((item) => {
+        item.classList.remove("is-open");
+        const btn = item.querySelector(".faq-trigger");
+        if (btn) btn.setAttribute("aria-expanded", "false");
+      });
+    }
+    if (!isOpen) {
+      parentItem.classList.add("is-open");
+      trigger.setAttribute("aria-expanded", "true");
+    }
+  });
+});
+
+// Render Student Query Ledger
+function renderStudentQueryHistory() {
+  const container = document.querySelector("#student-query-history");
+  if (!container) return;
+
+  const queries = getStoredQueries();
+  if (!queries || queries.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 28px 12px; color: #889487;">
+        <span style="font-size: 32px; display: block; margin-bottom: 8px;">📭</span>
+        <p style="margin: 0; font-size: 11px;">No signals dispatched yet. Use the parchment form on the left to petition the Captain!</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = queries
+    .map((q) => {
+      const isAnswered = q.status === "answered";
+      const statusBadge = isAnswered
+        ? `<span class="query-status-badge query-status-answered">✓ ADMIRAL DISPATCHED REPLY</span>`
+        : `<span class="query-status-badge query-status-pending">⏳ PENDING ADMIRAL REVIEW</span>`;
+      const urgentBadge = q.urgent
+        ? `<span class="trust-badge" style="background: rgba(255,71,87,.2); color: #ff4757; font-size: 8px; margin-left: 6px;">⚡ PRIORITY SIGNAL</span>`
+        : ``;
+
+      const replyHtml = isAnswered
+        ? `
+          <div style="margin-top: 10px; padding: 12px 14px; background: #fffcf2; border-left: 3px solid var(--gold); border-radius: 2px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <strong style="font-size: 10px; color: var(--sea); text-transform: uppercase; letter-spacing: .06em;">
+                ⚓ High Admiral's Rescript (${q.replyDate || "Recorded"}):
+              </strong>
+              <span style="font-size: 9px; color: var(--gold); font-weight: 700;">ADMIRALTY SEAL 🔏</span>
+            </div>
+            <p style="margin: 0; font-size: 11px; color: #3d433b; line-height: 1.6; font-style: italic;">
+              "${q.captainReply}"
+            </p>
+          </div>
+        `
+        : `
+          <div style="margin-top: 8px; font-size: 10px; color: #889487; display: flex; align-items: center; gap: 6px;">
+            <span>⏱ Transmitted to Command Bridge. Awaiting High Admiral's quill...</span>
+          </div>
+        `;
+
+      return `
+        <div class="query-item-card">
+          <div class="query-item-head">
+            <div>
+              <span style="font-size: 9px; color: var(--sea); font-weight: 700; text-transform: uppercase;">${q.category}</span>
+              ${urgentBadge}
+            </div>
+            ${statusBadge}
+          </div>
+          <h4 style="margin: 0 0 6px; font-family: var(--serif); font-size: 14px; color: var(--sea);">${q.title}</h4>
+          <p style="margin: 0; font-size: 11px; color: #5a6258; line-height: 1.5;">${q.message}</p>
+          <div style="margin-top: 6px; font-size: 9px; color: #8c9789;">
+            Dispatched on: ${q.date} · Ref: ${q.id}
+          </div>
+          ${replyHtml}
+        </div>
+      `;
+    })
+    .join("");
+}
+
+// Student Query Form Submission
+const cadetQueryForm = document.querySelector("#cadet-query-form");
+if (cadetQueryForm) {
+  renderStudentQueryHistory();
+
+  cadetQueryForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const cat = document.querySelector("#query-category")?.value || "Academic Exemption";
+    const title = (document.querySelector("#query-title")?.value || "").trim();
+    const msg = (document.querySelector("#query-message")?.value || "").trim();
+    const urgent = !!document.querySelector("#query-urgent")?.checked;
+
+    if (!title || !msg) return;
+
+    const currentAuth = getAuth() || { name: "Cadet Jack Sparrow", roll: "VC-2024-TECH-042" };
+    const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+
+    const newQuery = {
+      id: "Q-" + Math.floor(1000 + Math.random() * 9000),
+      studentName: currentAuth.name,
+      roll: currentAuth.roll,
+      category: cat,
+      title: title,
+      message: msg,
+      urgent: urgent,
+      date: today,
+      status: "pending",
+      captainReply: null,
+      replyDate: null
+    };
+
+    const queries = getStoredQueries();
+    queries.unshift(newQuery);
+    saveStoredQueries(queries);
+
+    const successNotice = document.querySelector("#query-dispatch-success");
+    if (successNotice) {
+      successNotice.style.display = "block";
+      setTimeout(() => {
+        successNotice.style.display = "none";
+      }, 4500);
+    }
+
+    cadetQueryForm.reset();
+    renderStudentQueryHistory();
+  });
+}
+
+// ==============================================================
+// 5. CAPTAIN'S HEADQUARTERS ADMIN DESK (admin.html)
+// ==============================================================
+const btnAdminLogout = document.querySelector("#btn-admin-logout");
+if (btnAdminLogout) {
+  btnAdminLogout.addEventListener("click", () => {
+    clearAuth();
+    window.location.href = "login.html";
+  });
+}
+
+let adminFilter = "all";
+function renderAdminQueries() {
+  const container = document.querySelector("#admin-queries-container");
+  if (!container) return;
+
+  const queries = getStoredQueries();
+  const pendingCount = queries.filter((q) => q.status === "pending").length;
+  const pendingBadge = document.querySelector("#admin-pending-count");
+  if (pendingBadge) pendingBadge.textContent = `${pendingCount} PENDING`;
+
+  const filtered = adminFilter === "pending"
+    ? queries.filter((q) => q.status === "pending")
+    : queries;
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 36px 14px; color: #a4b5a2;">
+        <span style="font-size: 36px; display: block; margin-bottom: 8px;">⚓</span>
+        <p style="margin: 0; font-size: 12px;">All cadet petitions in this sector have been resolved. The fleet rests easy!</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered
+    .map((q) => {
+      const isPending = q.status === "pending";
+      const urgentBadge = q.urgent
+        ? `<span class="trust-badge" style="background: rgba(255,71,87,.2); color: #ff6b81; font-size: 8px;">PRIORITY</span>`
+        : ``;
+
+      const actionArea = isPending
+        ? `
+          <div class="admin-reply-box">
+            <label for="reply-${q.id}" style="display: block; font-size: 10px; color: var(--gold); text-transform: uppercase; margin-bottom: 4px;">
+              Dispatch High Admiral Decree / Decision:
+            </label>
+            <textarea id="reply-${q.id}" rows="2" placeholder="State your command or approval for this cadet..."></textarea>
+            <button class="button button-gold btn-send-reply" data-qid="${q.id}" style="padding: 6px 14px; font-size: 10px;" type="button">
+              📜 Seal & Transmit Decree →
+            </button>
+          </div>
+        `
+        : `
+          <div style="margin-top: 10px; padding: 10px 14px; background: rgba(241,201,87,.08); border-left: 3px solid var(--gold); border-radius: 2px;">
+            <strong style="display: block; font-size: 10px; color: var(--gold); margin-bottom: 2px;">
+              Dispatched Decree (${q.replyDate || "Recorded"}):
+            </strong>
+            <p style="margin: 0; font-size: 11px; color: #f5eedf; font-style: italic;">
+              "${q.captainReply}"
+            </p>
+          </div>
+        `;
+
+      return `
+        <div style="background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 3px; padding: 16px 20px; margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <strong style="color: #fff; font-size: 13px;">${q.studentName}</strong>
+              <small style="color: #a4b5a2; margin-left: 8px; font-size: 10px;">Roll: ${q.roll} · Ref: ${q.id}</small>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="trust-badge" style="background: rgba(241,201,87,.15); color: var(--gold); font-size: 9px;">${q.category}</span>
+              ${urgentBadge}
+              <span class="query-status-badge ${isPending ? "query-status-pending" : "query-status-answered"}">
+                ${isPending ? "Pending Review" : "Resolved"}
+              </span>
+            </div>
+          </div>
+          <h4 style="margin: 0 0 6px; font-family: var(--serif); font-size: 15px; color: var(--gold);">${q.title}</h4>
+          <p style="margin: 0; font-size: 11px; color: #d6ded4; line-height: 1.6;">${q.message}</p>
+          <div style="margin-top: 6px; font-size: 9px; color: #889487;">Dispatched by cadet: ${q.date}</div>
+          ${actionArea}
+        </div>
+      `;
+    })
+    .join("");
+
+  // Attach reply dispatch listeners
+  container.querySelectorAll(".btn-send-reply").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const qid = btn.dataset.qid;
+      const textEl = document.querySelector(`#reply-${qid}`);
+      const replyText = textEl?.value?.trim();
+      if (!replyText) {
+        alert("Please write the Admiral decree before dispatching.");
+        return;
+      }
+
+      const allQueries = getStoredQueries();
+      const target = allQueries.find((item) => item.id === qid);
+      if (target) {
+        target.status = "answered";
+        target.captainReply = replyText;
+        target.replyDate = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+        saveStoredQueries(allQueries);
+        renderAdminQueries();
+      }
+    });
+  });
+}
+
+const btnFilterAll = document.querySelector("#btn-filter-all-queries");
+const btnFilterPending = document.querySelector("#btn-filter-pending-queries");
+if (btnFilterAll) {
+  btnFilterAll.addEventListener("click", () => {
+    adminFilter = "all";
+    btnFilterAll.classList.replace("button-dark", "button-gold");
+    if (btnFilterPending) btnFilterPending.classList.replace("button-gold", "button-dark");
+    renderAdminQueries();
+  });
+}
+if (btnFilterPending) {
+  btnFilterPending.addEventListener("click", () => {
+    adminFilter = "pending";
+    btnFilterPending.classList.replace("button-dark", "button-gold");
+    if (btnFilterAll) btnFilterAll.classList.replace("button-gold", "button-dark");
+    renderAdminQueries();
+  });
+}
+
+// Admin Circular Broadcast Form
+const adminBroadcastForm = document.querySelector("#admin-broadcast-form");
+if (adminBroadcastForm) {
+  adminBroadcastForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const title = (document.querySelector("#notice-title")?.value || "").trim();
+    const dept = (document.querySelector("#notice-dept")?.value || "").trim();
+    const cat = document.querySelector("#notice-category")?.value || "Academic Notice";
+    const date = (document.querySelector("#notice-date")?.value || "Today").trim();
+    const content = (document.querySelector("#notice-content")?.value || "").trim();
+
+    if (!title || !content) return;
+
+    const notices = getStoredNotices();
+    notices.unshift({
+      id: "NOT-" + Math.floor(200 + Math.random() * 800),
+      title,
+      dept,
+      category: cat,
+      date,
+      content
+    });
+    saveStoredNotices(notices);
+
+    const successNotice = document.querySelector("#broadcast-success");
+    if (successNotice) {
+      successNotice.style.display = "block";
+      setTimeout(() => {
+        successNotice.style.display = "none";
+      }, 4500);
+    }
+    adminBroadcastForm.reset();
+  });
+}
+
+// Initial admin desk render if on admin page
+if (document.querySelector("#admin-queries-container")) {
+  renderAdminQueries();
+}
+
+// Sound quarters & alert fleet action buttons
+const btnSoundQuarters = document.querySelector("#btn-sound-quarters");
+const btnAlertFleet = document.querySelector("#btn-alert-fleet");
+if (btnSoundQuarters) {
+  btnSoundQuarters.addEventListener("click", () => {
+    alert("🔔 SHIP'S BELL SOUNDED: All Cadet monitors signaled for quarters muster!");
+  });
+}
+if (btnAlertFleet) {
+  btnAlertFleet.addEventListener("click", () => {
+    alert("🚨 RED MARITIME ADVISORY: Fleet-wide urgent signal transmitted to all consoles!");
+  });
+}
+
+// ==============================================================
+// 6. SECRET TREASURE MAP SECURITY ACCESS GATE (map.html)
+// ==============================================================
+function initMapSecurity() {
+  const lockoutEl = document.querySelector("#portcullis-lockout");
+  const securedMapEl = document.querySelector("#secured-map-content");
+  if (!lockoutEl || !securedMapEl) return;
+
+  const auth = getAuth();
+  if (auth && (auth.role === "student" || auth.role === "admin" || auth.name)) {
+    // Member authorized! Raise portcullis
+    lockoutEl.style.display = "none";
+    securedMapEl.style.display = "block";
+
+    const nameEl = document.querySelector("#member-welcome-name");
+    const titleEl = document.querySelector("#member-clearance-title");
+    const deckLink = document.querySelector("#member-deck-link");
+
+    if (nameEl) {
+      nameEl.textContent = `Logged in as: ${auth.name} (${auth.rank || auth.role} · ${auth.roll || "FLEET-HQ"})`;
+    }
+    if (titleEl) {
+      titleEl.textContent = "CREW IDENTITY VERIFIED · IRON PORTCULLIS RAISED";
+    }
+    if (deckLink) {
+      deckLink.href = auth.role === "admin" ? "admin.html" : "student.html";
+      deckLink.textContent = auth.role === "admin" ? "Return to Command Bridge →" : "Return to Student Deck →";
+    }
+  } else {
+    // Unauthenticated guest: Portcullis locked!
+    lockoutEl.style.display = "block";
+    securedMapEl.style.display = "none";
+  }
+}
+
+// Wire Map Quick-Unlock and Logout buttons
+const btnQuickUnlockCadet = document.querySelector("#btn-quick-unlock-cadet");
+const btnQuickUnlockCaptain = document.querySelector("#btn-quick-unlock-captain");
+const btnMapLogout = document.querySelector("#btn-map-logout");
+
+if (btnQuickUnlockCadet) {
+  btnQuickUnlockCadet.addEventListener("click", () => {
+    setAuth({
+      role: "student",
+      name: "Cadet Jack Sparrow",
+      roll: "VC-2024-TECH-042",
+      rank: "Quartermaster"
+    });
+    initMapSecurity();
+  });
+}
+
+if (btnQuickUnlockCaptain) {
+  btnQuickUnlockCaptain.addEventListener("click", () => {
+    setAuth({
+      role: "admin",
+      name: "High Admiral Sterling",
+      roll: "VC-ADM-001",
+      rank: "Fleet Commander"
+    });
+    initMapSecurity();
+  });
+}
+
+if (btnMapLogout) {
+  btnMapLogout.addEventListener("click", () => {
+    clearAuth();
+    initMapSecurity();
+  });
+}
+
+if (document.querySelector("#portcullis-lockout")) {
+  initMapSecurity();
+}
+
 

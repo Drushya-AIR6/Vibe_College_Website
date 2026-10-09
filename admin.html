@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c1512" />
+    <meta name="description" content="Captain's Headquarters & Command Bridge — Administrative oversight, student query resolution desk, and fleet circulars broadcast station." />
+    <title>Captain's Headquarters (Admin Bridge) — Vibe College</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body style="background: #0d1714; color: #f5eedf;">
+    <!-- TOP ANNOUNCEMENT & LANGUAGE PICKER -->
+    <div class="announcement" style="background: #1a0f08; border-bottom: 2px solid var(--gold); color: #f9e2af;">
+      <span class="announcement-icon" aria-hidden="true">⚓</span>
+      <p id="announcement-text">CAPTAIN'S HEADQUARTERS · High Admiralty Command Bridge · Level 5 Sovereign Access</p>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+        <span class="trust-badge" style="background: rgba(241,201,87,.2); color: var(--gold); border-color: var(--gold); font-size: 8px;">
+          Commander: High Admiral Sterling
+        </span>
+        <select class="lang-picker-select" id="lang-picker" aria-label="Choose language">
+          <option value="en" selected>English</option>
+          <option value="pirate">🏴‍☠️ Pirate Speak</option>
+          <option value="hi">हिन्दी</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ADMIN HEADER -->
+    <header class="boarding-header">
+      <a class="brand" href="index.html" aria-label="Vibe College home">
+        <span class="brand-mark" aria-hidden="true" style="background: var(--gold); color: #0c1512;">VC</span>
+        <span class="brand-name" style="color: #fff;">VIBE <small style="color: var(--gold);">ADMIRALTY HQ</small></span>
+      </a>
+      <nav class="main-nav" style="display: flex; gap: 18px; align-items: center;">
+        <a href="#query-desk">Cadet Query Desk</a>
+        <a href="#notice-station">Circulars Dispatch</a>
+        <a href="#fleet-ops">Fleet Overview</a>
+        <a href="map.html" style="color: var(--gold); font-weight: 700;">Secret Treasure Map ⌖</a>
+        <a href="student.html">View Student Deck ↗</a>
+        <a href="index.html">Public Harbor ↗</a>
+        <button class="nav-portal-btn" id="btn-admin-logout" type="button" style="background: #9b2c2c; border-color: #d35400;">
+          Log Out Bridge ⏏
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- COMMAND BRIDGE HERO BANNER -->
+      <section class="admin-bridge-hero">
+        <div style="max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+          <div style="display: flex; align-items: center; gap: 20px;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; border: 2px solid var(--gold); overflow: hidden; background: #26160c;">
+              <img src="assets/principal_sterling.jpg" alt="High Admiral Sterling" style="width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <div>
+              <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> SOVEREIGN QUARTERS · HIGH ADMIRAL</p>
+              <h1 style="font-family: var(--serif); font-size: 32px; margin: 0; color: #fff;">
+                Captain's Command Bridge
+              </h1>
+              <p style="margin: 4px 0 0; font-size: 11px; color: #a4b5a2;">
+                Flagship HMS Discovery · Coordinates: 12° 34' N, 56° 78' W · Administrative Bridge Console
+              </p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="button button-gold" id="btn-alert-fleet" type="button">📢 Broadcast Fleet Alarm</button>
+            <button class="button button-dark" id="btn-sound-quarters" type="button">🔔 Sound General Quarters</button>
+          </div>
+        </div>
+
+        <div class="admin-stat-bar" style="margin-top: 32px;">
+          <div class="res-stat-card">
+            <strong>2,418</strong>
+            <span>Active Enlisted Cadets</span>
+          </div>
+          <div class="res-stat-card">
+            <strong id="admin-pending-count" style="color: #ff6b81;">2</strong>
+            <span>Pending Cadet Queries</span>
+          </div>
+          <div class="res-stat-card">
+            <strong>142</strong>
+            <span>Faculty Navigators</span>
+          </div>
+          <div class="res-stat-card">
+            <strong>₹18.4 Cr</strong>
+            <span>Active Research Grants</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SECTION 1: CADET PETITIONS & QUERY COMMAND DESK                -->
+      <!-- ============================================================== -->
+      <section style="padding: 40px 6%; max-width: 1140px; margin: 0 auto;" id="query-desk">
+        <div class="admin-desk-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(241,201,87,.25); padding-bottom: 16px; margin-bottom: 20px;">
+            <div>
+              <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> CADET SIGNALS · TWO-WAY DESK</p>
+              <h2 style="font-family: var(--serif); font-size: 24px; margin: 0; color: #fff;">
+                Cadet Petition Resolution Desk
+              </h2>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="button button-gold" id="btn-filter-all-queries" style="padding: 6px 12px; font-size: 10px;" type="button">All Signals</button>
+              <button class="button button-dark" id="btn-filter-pending-queries" style="padding: 6px 12px; font-size: 10px;" type="button">Pending Only</button>
+            </div>
+          </div>
+
+          <p style="font-size: 11px; color: #a4b5a2; margin: 0 0 18px; line-height: 1.6;">
+            Review direct petitions dispatched from the Pirate Student Deck. Type your official High Admiral Order below any query to transmit your decision straight back to the cadet's console.
+          </p>
+
+          <div id="admin-queries-container">
+            <!-- Dynamically populated from localStorage vc_queries -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SECTION 2: SHIP'S LOG CIRCULARS BROADCAST STATION              -->
+      <!-- ============================================================== -->
+      <section style="padding: 0 6% 40px; max-width: 1140px; margin: 0 auto;" id="notice-station">
+        <div class="admin-desk-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(241,201,87,.25); padding-bottom: 14px; margin-bottom: 20px;">
+            <div>
+              <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> SHIP'S LOG · FLEET BROADCAST</p>
+              <h2 style="font-family: var(--serif); font-size: 24px; margin: 0; color: #fff;">
+                Publish Official Circular to Ship’s Log
+              </h2>
+            </div>
+            <span class="trust-badge" style="background: rgba(241,201,87,.15); color: var(--gold); font-size: 9px;">
+              Transmits to All Cadet Screens
+            </span>
+          </div>
+
+          <form id="admin-broadcast-form">
+            <div class="bottle-form-row">
+              <div class="bottle-field">
+                <label for="notice-title" style="color: #d6ded4; font-size: 11px;">Circular Title / Heading</label>
+                <input type="text" id="notice-title" placeholder="E.g. Schedule for Annual Hack-the-Armada Regatta 2026" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+              </div>
+              <div class="bottle-field">
+                <label for="notice-dept" style="color: #d6ded4; font-size: 11px;">Issuing Harbor Department</label>
+                <input type="text" id="notice-dept" value="Office of the High Admiral & Controller of Examinations" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+              </div>
+            </div>
+            <div class="bottle-form-row">
+              <div class="bottle-field">
+                <label for="notice-category" style="color: #d6ded4; font-size: 11px;">Category Tag</label>
+                <select id="notice-category" style="background: #14241e; border-color: rgba(241,201,87,.3); color: #fff;">
+                  <option value="Urgent Circular">Urgent Circular (Red Alert)</option>
+                  <option value="Academic Notice" selected>Academic Notice</option>
+                  <option value="Regatta & Drills">Regatta & Drills</option>
+                  <option value="Hostel & Harbor">Hostel & Harbor Life</option>
+                </select>
+              </div>
+              <div class="bottle-field">
+                <label for="notice-date" style="color: #d6ded4; font-size: 11px;">Dispatch Date</label>
+                <input type="text" id="notice-date" value="09 Oct 2026" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+              </div>
+            </div>
+            <div class="bottle-field" style="margin-bottom: 18px;">
+              <label for="notice-content" style="color: #d6ded4; font-size: 11px;">Circular Decree Body</label>
+              <textarea id="notice-content" rows="3" placeholder="Enter decree details, deadlines, and instructions for all hands on deck..." required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;"></textarea>
+            </div>
+            <button class="button button-gold" style="min-height: 42px; font-size: 11px;" type="submit">
+              <span>📢 Transmit Decree to Ship's Log →</span>
+            </button>
+          </form>
+          <div class="bottle-success-notice" id="broadcast-success">
+            <h4>✦ Decree Transmitted to the Ship's Log! ✦</h4>
+            <p>Your circular has been recorded into the admiralty ledger and is now visible on the Student Portal feed.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- SECTION 3: FLEET OPERATIONS & APPLICATIONS QUEUE               -->
+      <!-- ============================================================== -->
+      <section style="padding: 0 6% 60px; max-width: 1140px; margin: 0 auto;" id="fleet-ops">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;" class="calc-grid">
+          <div class="admin-desk-card">
+            <h3 style="font-family: var(--serif); font-size: 18px; margin: 0 0 12px; color: var(--gold);">
+              Enlistment Dossiers Queue
+            </h3>
+            <p style="font-size: 10px; color: #a4b5a2; margin: 0 0 14px;">Recent candidate applications under review for 2026-27 admission.</p>
+            <div style="display: grid; gap: 8px;">
+              <div style="padding: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 2px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <strong style="font-size: 11px; color: #fff;">Jennifer Hawk (#VC-2027-APP-9182)</strong>
+                  <small style="display: block; font-size: 9px; color: #a4b5a2;">B.Tech Science & Tech · VIBE-SAT Score: 94th Percentile</small>
+                </div>
+                <span class="trust-badge" style="background: rgba(46,125,50,.2); color: #81c784;">PROVISIONAL ADMIT</span>
+              </div>
+              <div style="padding: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 2px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <strong style="font-size: 11px; color: #fff;">David Sterling (#VC-2027-APP-8841)</strong>
+                  <small style="display: block; font-size: 9px; color: #a4b5a2;">B.B.A. Maritime Commerce · 12th Board: 91.2%</small>
+                </div>
+                <span class="trust-badge" style="background: rgba(241,201,87,.2); color: var(--gold);">UNDER REVIEW</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-desk-card">
+            <h3 style="font-family: var(--serif); font-size: 18px; margin: 0 0 12px; color: var(--gold);">
+              Faculty Berth Vacancies & Applications
+            </h3>
+            <p style="font-size: 10px; color: #a4b5a2; margin: 0 0 14px;">Scholarly credentials submitted for academic berths.</p>
+            <div style="display: grid; gap: 8px;">
+              <div style="padding: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 2px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <strong style="font-size: 11px; color: #fff;">Dr. Nathan Ross, Ph.D. Imperial</strong>
+                  <small style="display: block; font-size: 9px; color: #a4b5a2;">Applied for: Professor in Autonomous Maritime AI</small>
+                </div>
+                <span class="trust-badge" style="background: rgba(46,125,50,.2); color: #81c784;">INVITED TO COLLOQUIUM</span>
+              </div>
+              <div style="padding: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 2px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <strong style="font-size: 11px; color: #fff;">Dr. Serena Hayes, Ph.D. Scripps</strong>
+                  <small style="display: block; font-size: 9px; color: #a4b5a2;">Applied for: Senior Research Scientist in Ocean Climate</small>
+                </div>
+                <span class="trust-badge" style="background: rgba(241,201,87,.2); color: var(--gold);">DOSSIER SCREENING</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div style="max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; font-size: 10px; color: #728273;">
+        <span>© 2026 Vibe College · Captain's Headquarters & Sovereign Admiralty Bridge.</span>
+        <div style="display: flex; gap: 16px;">
+          <a href="index.html" style="color: #a4b5a2;">Public Harbor</a>
+          <a href="student.html" style="color: #a4b5a2;">Student Deck</a>
+          <a href="map.html" style="color: #a4b5a2;">Secret Treasure Map</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
