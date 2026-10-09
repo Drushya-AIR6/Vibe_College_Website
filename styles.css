@@ -28,9 +28,32 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .brand-mark { width: 35px; height: 35px; display: grid; place-items: center; border: 1px solid rgba(241,201,87,.7); border-radius: 50%; color: var(--gold); font-family: var(--serif); font-size: 12px; font-weight: 700; }
 .brand-name { display: grid; gap: 2px; font-size: 14px; line-height: 1; font-weight: 700; letter-spacing: .18em; }
 .brand-name small { font-size: 8px; font-weight: 500; letter-spacing: .32em; }
-.main-nav { display: flex; gap: 37px; color: #d7ddd4; font-size: 12px; }
+.main-nav { position: relative; display: flex; gap: 28px; align-items: center; color: #d7ddd4; font-size: 12px; }
 .main-nav a { transition: color .2s ease; }
 .main-nav a:hover { color: var(--gold); }
+.compass-toggle { display: inline-flex; align-items: center; gap: 7px; padding: 0; border: 0; background: transparent; color: var(--gold); cursor: pointer; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.compass-toggle > span { font-size: 16px; transition: transform .35s ease; }
+.compass-toggle:hover > span, .compass-toggle[aria-expanded="true"] > span { transform: rotate(45deg); }
+.learning-compass[hidden] { display: none; }
+.learning-compass:not([hidden]) { position: absolute; z-index: 20; top: calc(100% + 18px); right: -85px; width: 350px; padding: 21px; border: 1px solid #d8d1bf; background: #fffcf4; box-shadow: 0 15px 40px rgba(0,0,0,.2); color: var(--ink); }
+.compass-panel-heading { display: flex; align-items: center; gap: 11px; margin-bottom: 18px; }
+.compass-rose { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid #c9a94f; border-radius: 50%; color: #b38732; font-size: 25px; }
+.compass-kicker { margin: 0 0 3px; color: #9c8051; font-size: 7px; font-weight: 700; letter-spacing: .17em; }
+.compass-panel-heading h2 { margin: 0; font-family: var(--serif); font-size: 19px; font-weight: 600; }
+.compass-close { width: 26px; height: 26px; margin-left: auto; border: 1px solid #e4ddce; border-radius: 50%; background: transparent; color: #657064; cursor: pointer; font-size: 17px; line-height: 1; }
+.compass-search-label { display: block; margin-bottom: 7px; font-size: 9px; font-weight: 700; }
+.compass-search { display: flex; height: 39px; align-items: center; gap: 8px; padding: 0 10px; border: 1px solid #d8d2c4; background: #fffdf8; }
+.compass-search:focus-within { border-color: #a17b3a; box-shadow: 0 0 0 2px rgba(241,201,87,.18); }
+.compass-search > span { color: #a28a67; font-size: 20px; }
+.compass-search input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--ink); font-size: 9px; }
+.compass-hint { margin: 9px 0 7px; color: #85877d; font-size: 8px; line-height: 1.5; }
+.compass-recommendations { display: grid; gap: 6px; }
+.compass-recommendation { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; padding: 9px 10px; border: 1px solid #eae4d8; background: #f8f4e9; transition: border-color .2s, background .2s; }
+.compass-recommendation:hover { border-color: #c5a752; background: #f8f0d8; }
+.compass-recommendation strong { display: block; margin-bottom: 3px; font-family: var(--serif); font-size: 11px; }
+.compass-recommendation small { display: block; color: #74786f; font-size: 8px; line-height: 1.45; }
+.compass-recommendation > span:last-child { color: #9f7734; font-size: 14px; }
+.compass-privacy { margin: 11px 0 0; color: #98968b; font-size: 7px; }
 .nav-cta { padding: 11px 16px; border: 1px solid rgba(241,201,87,.66); border-radius: 3px; color: var(--gold); font-size: 11px; font-weight: 600; }
 .nav-cta span { padding-left: 9px; }
 .menu-toggle { display: none; }
@@ -226,6 +249,7 @@ h1 em, h2 em { color: var(--gold); font-weight: 600; }
 
 @media (max-width: 900px) {
   .main-nav { gap: 18px; }
+  .compass-toggle { font-size: 10px; }
   .site-header { padding: 0 5%; }
   .hero { padding-right: 5%; padding-left: 5%; grid-template-columns: 48% 52%; }
   .hero-art { margin-right: -6vw; }
@@ -243,6 +267,8 @@ h1 em, h2 em { color: var(--gold); font-weight: 600; }
   .main-nav { position: absolute; z-index: 10; top: 102px; right: 0; left: 0; display: none; gap: 0; padding: 8px 6% 15px; background: #192a24; }
   .main-nav.is-open { display: grid; }
   .main-nav a { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .compass-toggle { justify-self: start; padding: 12px 0; font-size: 12px; }
+  .learning-compass:not([hidden]) { position: static; width: 100%; margin: 0 0 10px; padding: 17px; }
   .hero { min-height: 760px; display: flex; flex-direction: column; padding: 51px 7% 62px; }
   .hero-copy { padding-top: 0; }
   .hero h1 { font-size: clamp(57px,14vw,76px); }

@@ -38,7 +38,28 @@
         <a href="#courses">Courses</a>
         <a href="#locator">Campus map</a>
         <a href="#events">Crew life</a>
+        <button class="compass-toggle" type="button" aria-expanded="false" aria-controls="learning-compass">
+          <span aria-hidden="true">✳</span> Learning compass
+        </button>
       </nav>
+      <section class="learning-compass" id="learning-compass" aria-labelledby="compass-title" hidden>
+        <div class="compass-panel-heading">
+          <span class="compass-rose" aria-hidden="true">✳</span>
+          <div>
+            <p class="compass-kicker">YOUR NEXT PORT</p>
+            <h2 id="compass-title">Learning compass</h2>
+          </div>
+          <button class="compass-close" type="button" aria-label="Close learning compass">×</button>
+        </div>
+        <label class="compass-search-label" for="compass-search">What are you curious about?</label>
+        <div class="compass-search">
+          <span aria-hidden="true">⌕</span>
+          <input id="compass-search" type="search" placeholder="Try “design”, “science”, or “library”" autocomplete="off" />
+        </div>
+        <p class="compass-hint" id="compass-hint" aria-live="polite">A few good next steps, picked for your search.</p>
+        <div class="compass-recommendations" id="compass-recommendations" aria-live="polite"></div>
+        <p class="compass-privacy">Just a helpful guide—your searches stay on this page.</p>
+      </section>
       <a class="nav-cta" href="#apply">Come aboard <span aria-hidden="true">↗</span></a>
     </header>
 
