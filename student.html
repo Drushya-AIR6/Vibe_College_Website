@@ -12,7 +12,12 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
+    <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="audio-weather.js" defer></script>
+    <script src="polly-companion.js" defer></script>
+    <script src="quiz-gamification.js" defer></script>
+    <script src="admin-suite.js" defer></script>
     <script src="app.js" defer></script>
   </head>
   <body style="background: #fbf7ee;">
@@ -124,10 +129,18 @@
             <button class="portal-nav-btn" data-ptab="fees" type="button">Fee Dues & Receipts</button>
             <button class="portal-nav-btn" data-ptab="log" type="button">Ship's Log Circulars</button>
             <button class="portal-nav-btn" data-ptab="courses" type="button" style="color: var(--gold); font-weight: 700;">Course Enrollment & Electives ✦</button>
+            <button class="portal-nav-btn" data-ptab="assignments" type="button" style="color: #27ae60; font-weight: 700;">Drop Scrolls (Assignments) 📜</button>
           </div>
 
           <!-- SUB-TAB 1: OVERVIEW -->
           <div class="portal-pane" id="portal-pane-overview">
+            <!-- CADET XP PRESTIGE & NAUTICAL BADGES -->
+            <div id="cadet-xp-hub"></div>
+            <div style="margin-bottom: 24px;">
+              <h4 style="margin: 0 0 10px; font-family: var(--serif); font-size: 15px; color: var(--sea);">Awarded Nautical Badges & Honors</h4>
+              <div id="cadet-badges-hub"></div>
+            </div>
+
             <div class="portal-stats-row">
               <div class="portal-stat-box">
                 <span>Sea-Readiness Attendance</span>
@@ -327,6 +340,47 @@
               <div class="course-enroll-grid" id="available-courses-catalog">
                 <!-- Rendered dynamically via app.js -->
               </div>
+          </div>
+
+          <!-- SUB-TAB 7: DROP SCROLLS (ASSIGNMENT DESK) -->
+          <div class="portal-pane" id="portal-pane-assignments" style="display: none;">
+            <div style="padding: 24px; background: #fffcf4; border: 2px solid #b8974d; border-radius: 6px;">
+              <div style="border-bottom: 2px solid #ded5be; padding-bottom: 12px; margin-bottom: 20px;">
+                <span class="trust-badge" style="background: rgba(46, 204, 113, 0.2); color: #27ae60; font-size: 9px;">ACADEMIC DISPATCH</span>
+                <h3 style="margin: 6px 0 0; font-family: var(--serif); font-size: 20px; color: var(--sea);">📜 Drop Scrolls Assignment Submission Desk</h3>
+                <small style="color: #6d756b;">Submit your voyage folios, lab sketches, and research logs for Admiralty faculty appraisal (+150 XP per submission).</small>
+              </div>
+
+              <form id="scroll-drop-form">
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 14px; margin-bottom: 14px;">
+                  <div>
+                    <label style="display: block; font-size: 11px; font-weight: 700; color: #14211d; margin-bottom: 4px;">Select Subject Berth</label>
+                    <select id="scroll-course" style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; background: #fff;">
+                      <option value="CS-301">CS-301: Subsea Autonomous Systems</option>
+                      <option value="CS-302">CS-302: Maritime Cryptography & Cyber Rig</option>
+                      <option value="NA-101">NA-101: Advanced Naval Architecture</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="display: block; font-size: 11px; font-weight: 700; color: #14211d; margin-bottom: 4px;">Assignment Title & Milestone</label>
+                    <input type="text" id="scroll-title" placeholder="e.g. Milestone 2: Wave Drift Algorithmic Model" required style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px;" />
+                  </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: #14211d; margin-bottom: 4px;">Voyage Submission Log & Code Scroll</label>
+                  <textarea id="scroll-content" rows="4" placeholder="Paste your algorithm analysis, voyage notes, or GitHub repository link..." required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; font-family: monospace;"></textarea>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span style="font-size: 10px; color: #6d756b;">🛡️ Encrypted with RSA-4096 Admiralty Signet</span>
+                  <button type="submit" class="button button-gold" style="font-size: 12px; padding: 10px 20px;">
+                    Cast Scroll into the Admiralty Tide 📜
+                  </button>
+                </div>
+              </form>
+
+              <div id="scroll-receipt-box"></div>
             </div>
           </div>
         </div>
@@ -839,5 +893,14 @@
         </div>
       </div>
     </div>
+
+    <!-- PWA SERVICE WORKER REGISTRATION -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

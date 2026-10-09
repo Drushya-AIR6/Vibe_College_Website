@@ -15,7 +15,11 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
+    <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="audio-weather.js" defer></script>
+    <script src="polly-companion.js" defer></script>
+    <script src="admin-suite.js" defer></script>
     <script src="app.js" defer></script>
   </head>
   <body style="background: #09120e; color: #f5eedf;">
@@ -46,6 +50,7 @@
         <span></span><span></span>
       </button>
       <nav class="main-nav" aria-label="Admin navigation">
+        <a href="#admiralty-analytics-desk" style="color: var(--gold); font-weight: 700;">Fleet Analytics 📊</a>
         <a href="#course-approval-desk">Course Approvals</a>
         <a href="#direct-course-registration">Direct Registration</a>
         <a href="#member-directory">Member Manifest</a>
@@ -149,6 +154,37 @@
             <div class="res-stat-card">
               <strong id="stat-active-courses">6</strong>
               <span>Registered Fleet Subjects</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- FLEET VISUAL ANALYTICS & MANIFEST EXPORT DECK -->
+        <section style="padding: 24px 6%; max-width: 1140px; margin: 0 auto;" id="admiralty-analytics-desk">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <span class="trust-badge" style="background: rgba(241, 201, 87, 0.2); color: var(--gold); font-size: 8px;">LIVE ADMIRALTY TELEMETRY</span>
+              <h2 style="margin: 4px 0 0; font-family: var(--serif); font-size: 24px; color: #fff;">
+                📊 Fleet Telemetry & Manifest Export
+              </h2>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button class="button button-gold" id="btn-export-manifest-csv" type="button" style="font-size: 11px;">
+                📥 Export Member Manifest (CSV)
+              </button>
+              <button class="button button-dark" id="btn-export-enrollments-csv" type="button" style="font-size: 11px;">
+                📥 Export Subject Decrees (CSV)
+              </button>
+            </div>
+          </div>
+
+          <div class="charts-grid">
+            <div class="chart-card">
+              <h3>Department Capacity & Enrollment Share</h3>
+              <canvas id="chart-dept-donut" style="width: 100%; max-width: 280px; height: 180px; display: block; margin: 0 auto;"></canvas>
+            </div>
+            <div class="chart-card">
+              <h3>Admissions Commissioning Velocity</h3>
+              <canvas id="chart-admissions-bar" style="width: 100%; max-width: 300px; height: 180px; display: block; margin: 0 auto;"></canvas>
             </div>
           </div>
         </section>
@@ -514,5 +550,14 @@
         </div>
       </div>
     </footer>
+
+    <!-- PWA SERVICE WORKER REGISTRATION -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

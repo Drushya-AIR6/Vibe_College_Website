@@ -15,7 +15,12 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
+    <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="audio-weather.js" defer></script>
+    <script src="polly-companion.js" defer></script>
+    <script src="treasure-canvas-map.js" defer></script>
+    <script src="quiz-gamification.js" defer></script>
     <script src="app.js" defer></script>
   </head>
   <body>
@@ -47,6 +52,7 @@
         <a href="#captain">Captain's Quarters</a>
         <a href="#tour">Campus Tour</a>
         <a href="#island-hopping">Island Hopping</a>
+        <a href="#astrolabe-quiz-section" style="color: var(--gold); font-weight: 600;">Astrolabe Quiz ✳</a>
         <a href="#courses">Courses</a>
         <a href="#admissions">Admissions</a>
         <a href="#placements">Placements</a>
@@ -291,6 +297,14 @@
             <button class="island-btn" type="button" data-island="comm">Explore Reef Dossier ↗</button>
           </div>
         </div>
+      <!-- ASTROLABE DEPARTMENT SORTING QUIZ -->
+      <section class="quiz-section-wrap" id="astrolabe-quiz-section">
+        <div style="text-align: center; max-width: 680px; margin: 0 auto 28px;">
+          <p class="eyebrow" style="justify-content: center;"><span></span> The Astrolabe Sorting Trial</p>
+          <h2 style="font-family: var(--serif); font-size: 32px; color: #fff; margin: 6px 0 10px;">Which Isle of the Fleet Be <em>Your True Home?</em></h2>
+          <p style="color: #a4b5a2; font-size: 14px;">Answer 4 nautical quandaries to calibrate your internal compass and discover your ideal academic department.</p>
+        </div>
+        <div id="astrolabe-quiz-container"></div>
       </section>
 
       <!-- COURSES & PROGRAMS -->
@@ -2304,5 +2318,14 @@
         <button class="cookie-btn cookie-btn-settings" id="btn-cookie-privacy" type="button">Privacy Charter</button>
       </div>
     </div>
+
+    <!-- PWA SERVICE WORKER REGISTRATION -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

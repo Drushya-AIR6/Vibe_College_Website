@@ -15,7 +15,11 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
+    <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="audio-weather.js" defer></script>
+    <script src="polly-companion.js" defer></script>
+    <script src="treasure-canvas-map.js" defer></script>
     <script src="app.js" defer></script>
   </head>
   <body style="background: #101c17; color: #f5eedf;">
@@ -116,6 +120,30 @@
             <button type="button" id="btn-map-logout" class="button button-outline" style="padding: 6px 12px; font-size: 10px; border-color: rgba(255,71,87,.4); color: #ff6b81;">
               Disembark (Log Out) ⏏
             </button>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE CANVAS NAUTICAL CHART WITH PAN/ZOOM & PATHFINDER -->
+        <div style="margin-bottom: 24px; background: #fffcf4; border: 2.5px solid var(--gold); border-radius: 8px; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <span class="trust-badge" style="background: rgba(241, 201, 87, 0.2); color: var(--gold); font-size: 8px;">SECTOR 07 INTERACTIVE CARTOGRAPHY</span>
+              <h3 style="margin: 4px 0 0; font-family: var(--serif); font-size: 22px; color: var(--sea);">
+                🗺️ Antique Parchment Chart & Route Pathfinder
+              </h3>
+              <small style="color: #6d756b;">Drag to pan · Scroll to zoom · Click any landmark pin to chart glowing trails & summon the sailing skiff.</small>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button type="button" class="button button-gold" id="btn-chart-route-lib-galley" style="font-size: 10px; padding: 6px 12px;">
+                ⛵ Chart Route: Library → Galley
+              </button>
+              <button type="button" class="button button-dark" id="btn-chart-route-quad-arts" style="font-size: 10px; padding: 6px 12px;">
+                ⛵ Chart Route: Quad → Arts Dock
+              </button>
+            </div>
+          </div>
+          <div style="width: 100%; height: 500px; border-radius: 6px; overflow: hidden; border: 1.5px solid #d4cca8; position: relative; background: #ede0c4;">
+            <canvas id="interactive-treasure-canvas" style="display: block; width: 100%; height: 100%;"></canvas>
           </div>
         </div>
 
@@ -274,5 +302,35 @@
         </div>
       </div>
     </footer>
+
+    <!-- INTERACTIVE CANVAS MAP INIT & PWA REGISTRATION -->
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.querySelector('#interactive-treasure-canvas');
+        if (canvas && window.VibeTreasureMap) {
+          const mapInstance = new window.VibeTreasureMap(canvas);
+
+          const btnRoute1 = document.querySelector('#btn-chart-route-lib-galley');
+          if (btnRoute1) {
+            btnRoute1.addEventListener('click', () => {
+              mapInstance.setPath('library', 'galley');
+            });
+          }
+
+          const btnRoute2 = document.querySelector('#btn-chart-route-quad-arts');
+          if (btnRoute2) {
+            btnRoute2.addEventListener('click', () => {
+              mapInstance.setPath('quad', 'arts');
+            });
+          }
+        }
+      });
+
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

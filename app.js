@@ -416,6 +416,7 @@ const portalPanes = {
   fees: document.querySelector("#portal-pane-fees"),
   log: document.querySelector("#portal-pane-log"),
   courses: document.querySelector("#portal-pane-courses"),
+  assignments: document.querySelector("#portal-pane-assignments"),
 };
 
 portalNavBtns.forEach((btn) => {
@@ -2562,11 +2563,19 @@ const btnSoundQuarters = document.querySelector("#btn-sound-quarters");
 const btnAlertFleet = document.querySelector("#btn-alert-fleet");
 if (btnSoundQuarters) {
   btnSoundQuarters.addEventListener("click", () => {
+    if (window.VibeAtmosphere && typeof window.VibeAtmosphere.playShipBell === "function") {
+      window.VibeAtmosphere.playShipBell();
+    }
     alert("🔔 SHIP'S BELL SOUNDED: All Cadet monitors signaled for quarters muster!");
   });
 }
 if (btnAlertFleet) {
   btnAlertFleet.addEventListener("click", () => {
+    if (window.VibeAdminSuite && window.VibeAdminSuite.broadcast) {
+      window.VibeAdminSuite.broadcast('FLEET_NOTICE', {
+        text: "RED MARITIME ADVISORY: Fleet-wide urgent signal transmitted by High Admiral!"
+      });
+    }
     alert("🚨 RED MARITIME ADVISORY: Fleet-wide urgent signal transmitted to all consoles!");
   });
 }
@@ -2970,6 +2979,11 @@ function renderAdminAdmissionsDesk() {
         renderAdminMembersRoster();
         populateDirectRegForm();
         if (typeof renderAdminEnrollmentsDesk === "function") renderAdminEnrollmentsDesk();
+        if (window.VibeAdminSuite && window.VibeAdminSuite.broadcast) {
+          window.VibeAdminSuite.broadcast('ADMISSION_PROCESSED', {
+            message: `Cadet ${res.member.name} (${res.member.roll}) commissioned into Fleet!`
+          });
+        }
       }
     });
   });
@@ -3119,6 +3133,11 @@ function renderAdminEnrollmentsDesk() {
 
         renderAdminEnrollmentsDesk();
         renderAdminMembersRoster();
+        if (window.VibeAdminSuite && window.VibeAdminSuite.broadcast) {
+          window.VibeAdminSuite.broadcast('ENROLLMENT_PROCESSED', {
+            message: `Subject berth for ${target.studentName} (${target.courseCode}) approved!`
+          });
+        }
       }
     });
   });
