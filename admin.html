@@ -78,11 +78,11 @@
         <form id="admin-gate-login-form" style="background: rgba(255,255,255,.03); border: 1px solid rgba(241,201,87,.25); border-radius: 4px; padding: 22px; text-align: left; margin-bottom: 20px;">
           <div class="bottle-field" style="margin-bottom: 12px;">
             <label for="admin-login-id" style="color: #d6ded4; font-size: 11px;">Admiralty ID / Call-Sign</label>
-            <input type="text" id="admin-login-id" value="captain" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+            <input type="text" id="admin-login-id" placeholder="Enter captain or call-sign" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
           </div>
           <div class="bottle-field" style="margin-bottom: 18px;">
             <label for="admin-login-key" style="color: #d6ded4; font-size: 11px;">Secret Counter-Sign (Password)</label>
-            <input type="password" id="admin-login-key" placeholder="Enter admin123" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+            <input type="password" id="admin-login-key" placeholder="Enter secret password" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
           </div>
           <button class="button button-gold" style="width: 100%; min-height: 42px; font-size: 11px;" type="submit">
             <span>Enter Sovereign Bridge ⚓ →</span>
@@ -90,14 +90,10 @@
           <p class="search-error" id="admin-gate-error" style="margin-top: 8px; color: #ff6b81; font-size: 10px;"></p>
         </form>
 
-        <div style="border-top: 1px solid rgba(255,255,255,.1); padding-top: 18px;">
-          <p style="font-size: 10px; color: #a4b5a2; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .08em;">
-            1-Click Administrative Evaluation Pass:
+        <div style="border-top: 1px solid rgba(255,255,255,.1); padding-top: 16px;">
+          <p style="font-size: 10px; color: #8fa08e; margin: 0; line-height: 1.5;">
+            ⚓ <strong>Admiralty Credentials:</strong> ID: <code>captain</code> · Secret Counter-Sign: <code>admin123</code>
           </p>
-          <button class="quick-auth-btn" id="btn-quick-admin-unlock" type="button" style="width: 100%; text-align: center;">
-            <strong>⚓ Quick Unlock as High Admiral Sterling</strong>
-            <small>Role: Captain / Admin · Admiralty HQ</small>
-          </button>
         </div>
 
         <div style="margin-top: 18px;">
@@ -133,10 +129,14 @@
             </div>
           </div>
 
-          <div class="admin-stat-bar" style="margin-top: 32px;">
+          <div class="admin-stat-bar" style="margin-top: 32px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
             <div class="res-stat-card">
               <strong id="stat-total-cadets">2,418</strong>
               <span>Central Manifest Cadets</span>
+            </div>
+            <div class="res-stat-card">
+              <strong id="stat-pending-admissions" style="color: #4cd964;">2</strong>
+              <span>Pending Enlistments</span>
             </div>
             <div class="res-stat-card">
               <strong id="stat-pending-enrollments" style="color: var(--gold);">3</strong>
@@ -149,6 +149,34 @@
             <div class="res-stat-card">
               <strong id="stat-active-courses">6</strong>
               <span>Registered Fleet Subjects</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- SECTION 0: ADMISSIONS & CADET ENLISTMENT APPROVALS             -->
+        <!-- ============================================================== -->
+        <section style="padding: 40px 6% 20px; max-width: 1140px; margin: 0 auto;" id="admissions-approval-desk">
+          <div class="admin-desk-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(241,201,87,.25); padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> CREW ENLISTMENT · RECRUITMENT TRIBUNAL</p>
+                <h2 style="font-family: var(--serif); font-size: 24px; margin: 0; color: #fff;">
+                  Prospective Cadet Enlistment Applications
+                </h2>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="button button-gold" id="btn-filter-pending-admissions" style="padding: 6px 12px; font-size: 10px;" type="button">Pending Enlistments Only</button>
+                <button class="button button-dark" id="btn-filter-all-admissions" style="padding: 6px 12px; font-size: 10px;" type="button">All Enlistment Scrolls</button>
+              </div>
+            </div>
+
+            <p style="font-size: 11px; color: #a4b5a2; margin: 0 0 18px; line-height: 1.6;">
+              Review prospective student enlistment scrolls dispatched from the Harbor Admissions Gate (<code>index.html</code>). Approving an application officially commissions the candidate into the Central Fleet Manifest, mints their official Mariner Roll Number, and grants them credentials to board the ship.
+            </p>
+
+            <div id="admin-admissions-container">
+              <!-- Dynamically populated from localStorage vc_admissions_db -->
             </div>
           </div>
         </section>

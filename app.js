@@ -965,19 +965,32 @@ if (btnBannerEnlist) {
 if (enlistForm) {
   enlistForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    const name = document.querySelector("#enlist-name").value.trim();
-    const prog = document.querySelector("#enlist-program").options[document.querySelector("#enlist-program").selectedIndex].text;
-    const appId = "VC-2027-APP-" + Math.floor(1000 + Math.random() * 9000);
+    const name = (document.querySelector("#enlist-name")?.value || "").trim();
+    const dob = document.querySelector("#enlist-dob")?.value || "";
+    const email = (document.querySelector("#enlist-email")?.value || "").trim();
+    const phone = (document.querySelector("#enlist-phone")?.value || "").trim();
+    const progSelect = document.querySelector("#enlist-program");
+    const prog = progSelect ? progSelect.options[progSelect.selectedIndex].text : "Science & Technology (B.Tech)";
+    const examSelect = document.querySelector("#enlist-exam");
+    const exam = examSelect ? examSelect.options[examSelect.selectedIndex].text : "Standard Evaluation";
+    const statement = (document.querySelector("#enlist-statement")?.value || "").trim();
+
+    const newApp = typeof submitAdmissionApplication === "function"
+      ? submitAdmissionApplication({ name, dob, email, phone, program: prog, exam, statement })
+      : { id: "APP-2026-" + Math.floor(1000 + Math.random() * 9000) };
 
     const msgEl = document.querySelector("#enlist-success-msg");
     if (msgEl) {
       msgEl.innerHTML = `
-        Congratulations, <strong>${name}</strong>! Your application for <strong>${prog}</strong> has been logged in the Admiralty Roll.
-        <br />Your Application Scroll ID is <strong>#${appId}</strong>. Your provisional trial hall ticket and entrance syllabus have been sent to your inbox. Welcome aboard!
+        Ahoy, <strong>${name}</strong>! Your application for <strong>${prog}</strong> has been transmitted to High Admiral Sterling's Command Bridge.
+        <br /><br />
+        <span class="trust-badge" style="background:#f4eedb; color:var(--sea); font-size:10px; padding:4px 10px;">Scroll Reference: #${newApp.id} · Status: Awaiting Admiralty Approval</span>
+        <br /><br />
+        High Admiral Sterling reviews incoming scrolls from the Sovereign Bridge. Upon the Captain's approval decree, your official Mariner Roll No. will be minted and activated for Galleon Boarding!
       `;
     }
 
-    enlistSuccess.classList.add("is-visible");
+    if (enlistSuccess) enlistSuccess.classList.add("is-visible");
     enlistForm.reset();
   });
 }
@@ -1054,7 +1067,7 @@ const islandDossiers = {
     labs: ["Quantum Astrolabe Supercomputing Cluster", "Neural Surface Navigation Hangar", "Distributed Edge Cyber-Defense Lab"],
     projects: ["ReefClean Autonomous Vision Skiffs", "Sub-Surface Acoustic Swarm Routing ($1.4M Grant)"],
   },
-  robotics: {
+  mech: {
     title: "Mechanics Isle — Marine Robotics & Naval Systems",
     coord: "ISLE 02 · 12° 36' N",
     head: "Dr. Evelyn Drake (Ph.D. MIT Robotics, Former DARPA Fellow)",
@@ -1066,9 +1079,9 @@ const islandDossiers = {
     labs: ["100-Meter Towing Wave Basin", "CAD Rigging & 3D Metal Fabrication Dock", "Autonomous Galleon Hangar"],
     projects: ["Wave-Powered Cargo Galleon", "Bio-mimetic Manta Ray Reconnaissance Sub ($2.1M DST Grant)"],
   },
-  commerce: {
-    title: "Commerce Atoll — International Trade & Admiralty Finance",
-    coord: "ISLE 03 · 12° 38' N",
+  comm: {
+    title: "Commerce Reef — Global Maritime Logistics & Sovereign Trade",
+    coord: "ISLE 04 · 12° 40' N",
     head: "Capt. Marcus Sterling (MBA Wharton, Ex-Director Mediterranean Shipping)",
     headMsg: "“Commerce is the bloodstream of global trade. We forge commanders who negotiate multi-million doubloon charters and build enduring enterprises.”",
     facultyRoster: [
@@ -1079,9 +1092,9 @@ const islandDossiers = {
     projects: ["Sovereign Carbon Credit Maritime Exchange", "Maritime Blockchain Bills of Lading Standard"],
   },
   arts: {
-    title: "Creative Isle — Humanities, Cartography & Maritime Lore",
-    coord: "ISLE 04 · 12° 40' N",
-    head: "Dame Cordelia Vane (M.A. Oxford, Poet Laureate of the Admiralty)",
+    title: "Cartography Cay — Humanities, Cartography & Maritime Lore",
+    coord: "ISLE 03 · 12° 38' N",
+    head: "Prof. Corinne Beaufort (D.Litt. Sorbonne)",
     headMsg: "“Without stories, art, and philosophy, a voyage has direction but no purpose. We illuminate the human soul against the backdrop of the sea.”",
     facultyRoster: [
       { name: "Dr. Julian Black", role: "Reader in Maritime Historical Cartography", hours: "Wed & Fri 10:00 - 12:00" },
@@ -1091,6 +1104,8 @@ const islandDossiers = {
     projects: ["Oral History of the High Seas", "The Illustrated Encyclopedia of Nautical Folklore"],
   },
 };
+islandDossiers.robotics = islandDossiers.mech;
+islandDossiers.commerce = islandDossiers.comm;
 
 document.querySelectorAll(".island-btn[data-island]").forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -1603,6 +1618,479 @@ function saveStoredNotices(notices) {
   } catch (e) {}
 }
 
+/* ============================================================== */
+/* CENTRAL DATABASE & COURSE ENROLLMENT ENGINE                    */
+/* Unified Manifest, Subject Registry, Approvals & Direct Admin   */
+/* ============================================================== */
+
+// 1. DEFAULT SEED DATABASE
+const DEFAULT_MEMBERS_DB = [
+  {
+    roll: "VC-2024-TECH-042",
+    name: "Cadet Jack Sparrow",
+    role: "student",
+    rank: "Quartermaster",
+    program: "B.Tech Computer Science & Maritime AI",
+    batch: "2024-2028",
+    email: "sparrow.j@vibe.edu",
+    gpa: 9.18,
+    enrolledCourses: ["CS-301", "CS-302", "NV-201", "AI-405"],
+    status: "Active"
+  },
+  {
+    roll: "VC-2024-NAV-018",
+    name: "Cadet Jennifer Hawk",
+    role: "student",
+    rank: "First Mate",
+    program: "B.Sc Celestial Astrogation",
+    batch: "2024-2028",
+    email: "hawk.j@vibe.edu",
+    gpa: 9.42,
+    enrolledCourses: ["NV-201", "AI-405", "NA-101"],
+    status: "Active"
+  },
+  {
+    roll: "VC-2024-COMM-099",
+    name: "Cadet David Sterling",
+    role: "student",
+    rank: "Cadet Midshipman",
+    program: "B.B.A. Maritime Commerce & Logistics",
+    batch: "2024-2028",
+    email: "sterling.d@vibe.edu",
+    gpa: 8.75,
+    enrolledCourses: ["BM-401", "NA-101"],
+    status: "Active"
+  },
+  {
+    roll: "VC-2024-TECH-055",
+    name: "Cadet Morgan Drake",
+    role: "student",
+    rank: "Boatswain",
+    program: "B.Tech Subsea Robotics & Automation",
+    batch: "2024-2028",
+    email: "drake.m@vibe.edu",
+    gpa: 8.94,
+    enrolledCourses: ["CS-301", "NA-101"],
+    status: "Active"
+  },
+  {
+    roll: "FAC-CS-01",
+    name: "Dr. Alistair Roy",
+    role: "faculty",
+    rank: "Professor Navigator",
+    program: "Computer Science & Cryptography",
+    batch: "Faculty",
+    email: "roy.a@vibe.edu",
+    gpa: null,
+    enrolledCourses: ["CS-302"],
+    status: "Active"
+  },
+  {
+    roll: "FAC-NAV-02",
+    name: "Captain Sarah Vance",
+    role: "faculty",
+    rank: "Master Navigator",
+    program: "Celestial Astrogation & Cartography",
+    batch: "Faculty",
+    email: "vance.s@vibe.edu",
+    gpa: null,
+    enrolledCourses: ["NV-201"],
+    status: "Active"
+  },
+  {
+    roll: "FAC-ROB-03",
+    name: "Dr. Priya Malhotra",
+    role: "faculty",
+    rank: "Dean of Subsea Robotics",
+    program: "Robotics & AI Systems",
+    batch: "Faculty",
+    email: "malhotra.p@vibe.edu",
+    gpa: null,
+    enrolledCourses: ["CS-301", "AI-405"],
+    status: "Active"
+  },
+  {
+    roll: "VC-ADM-001",
+    name: "High Admiral Sterling",
+    role: "admin",
+    rank: "Fleet Commander",
+    program: "Admiralty Command",
+    batch: "Admiralty",
+    email: "admiral.sterling@vibe.edu",
+    gpa: null,
+    enrolledCourses: [],
+    status: "Active"
+  }
+];
+
+const DEFAULT_COURSES_DB = [
+  {
+    code: "CS-301",
+    title: "Subsea Autonomous Systems & Robotics",
+    credits: 4,
+    dept: "Computer Science & Robotics",
+    instructor: "Dr. Priya Malhotra",
+    capacity: 40,
+    enrolledCount: 34,
+    schedule: "Mon & Wed 09:00 - 11:00 Tide",
+    description: "Underwater localization, lidar point clouds, hydrophone telemetry, and ROS2 navigation stacks."
+  },
+  {
+    code: "CS-302",
+    title: "Maritime Cryptography & Cyber Rig",
+    credits: 4,
+    dept: "Computer Science & Cyber Defense",
+    instructor: "Dr. Alistair Roy",
+    capacity: 35,
+    enrolledCount: 29,
+    schedule: "Tue & Thu 10:00 - 12:00 Tide",
+    description: "Elliptic curve naval comms, vessel telemetry zero-knowledge proofs, and sovereign quantum rig defense."
+  },
+  {
+    code: "NV-201",
+    title: "Celestial Astrogation & Satellite Lidar",
+    credits: 3,
+    dept: "Navigation & Nautical Science",
+    instructor: "Captain Sarah Vance",
+    capacity: 50,
+    enrolledCount: 42,
+    schedule: "Mon & Fri 14:00 - 15:30 Tide",
+    description: "Deep sea astronomical bearings, sextant precision, satellite geodesy, and oceanic current mapping."
+  },
+  {
+    code: "BM-401",
+    title: "High-Seas Trade Law & Maritime Logistics",
+    credits: 3,
+    dept: "Maritime Commerce",
+    instructor: "Commander Tariq",
+    capacity: 45,
+    enrolledCount: 38,
+    schedule: "Wed & Fri 11:30 - 13:00 Tide",
+    description: "Admiralty charter contracts, bill of lading protocols, international salvage treaties, and port economics."
+  },
+  {
+    code: "NA-101",
+    title: "Advanced Naval Architecture & Hydrodynamics",
+    credits: 4,
+    dept: "Naval Architecture",
+    instructor: "Prof. Elena Rostova",
+    capacity: 30,
+    enrolledCount: 22,
+    schedule: "Tue & Thu 14:00 - 16:00 Tide",
+    description: "Hull wave resistance, computational fluid dynamics, composite hull stress analysis, and trim modeling."
+  },
+  {
+    code: "AI-405",
+    title: "Fleet Predictive Navigation & Machine Learning",
+    credits: 3,
+    dept: "Applied AI",
+    instructor: "Dr. Priya Malhotra",
+    capacity: 40,
+    enrolledCount: 31,
+    schedule: "Wed & Fri 16:00 - 17:30 Tide",
+    description: "Neural storm trajectory forecasting, AIS collision prediction, and reinforcement learning fleet routing."
+  }
+];
+
+const DEFAULT_ENROLLMENTS_DB = [
+  {
+    id: "ENR-8101",
+    studentRoll: "VC-2024-TECH-042",
+    studentName: "Cadet Jack Sparrow",
+    courseCode: "CS-301",
+    courseTitle: "Subsea Autonomous Systems & Robotics",
+    credits: 4,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "06 Oct 2026",
+    status: "approved",
+    approvalDate: "07 Oct 2026",
+    adminDecree: "Approved for Quartermaster capstone research."
+  },
+  {
+    id: "ENR-8102",
+    studentRoll: "VC-2024-TECH-042",
+    studentName: "Cadet Jack Sparrow",
+    courseCode: "CS-302",
+    courseTitle: "Maritime Cryptography & Cyber Rig",
+    credits: 4,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "06 Oct 2026",
+    status: "approved",
+    approvalDate: "07 Oct 2026",
+    adminDecree: "Approved for cyber track."
+  },
+  {
+    id: "ENR-8103",
+    studentRoll: "VC-2024-TECH-042",
+    studentName: "Cadet Jack Sparrow",
+    courseCode: "NV-201",
+    courseTitle: "Celestial Astrogation & Satellite Lidar",
+    credits: 3,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "07 Oct 2026",
+    status: "approved",
+    approvalDate: "08 Oct 2026",
+    adminDecree: "Approved core requirement."
+  },
+  {
+    id: "ENR-8104",
+    studentRoll: "VC-2024-TECH-042",
+    studentName: "Cadet Jack Sparrow",
+    courseCode: "AI-405",
+    courseTitle: "Fleet Predictive Navigation & Machine Learning",
+    credits: 3,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "07 Oct 2026",
+    status: "approved",
+    approvalDate: "08 Oct 2026",
+    adminDecree: "Approved elective."
+  },
+  {
+    id: "ENR-8105",
+    studentRoll: "VC-2024-TECH-042",
+    studentName: "Cadet Jack Sparrow",
+    courseCode: "NA-101",
+    courseTitle: "Advanced Naval Architecture & Hydrodynamics",
+    credits: 4,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "09 Oct 2026",
+    status: "pending_approval",
+    approvalDate: null,
+    adminDecree: null
+  },
+  {
+    id: "ENR-8106",
+    studentRoll: "VC-2024-NAV-018",
+    studentName: "Cadet Jennifer Hawk",
+    courseCode: "CS-302",
+    courseTitle: "Maritime Cryptography & Cyber Rig",
+    credits: 4,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "09 Oct 2026",
+    status: "pending_approval",
+    approvalDate: null,
+    adminDecree: null
+  },
+  {
+    id: "ENR-8107",
+    studentRoll: "VC-2024-COMM-099",
+    studentName: "Cadet David Sterling",
+    courseCode: "CS-301",
+    courseTitle: "Subsea Autonomous Systems & Robotics",
+    credits: 4,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "09 Oct 2026",
+    status: "pending_approval",
+    approvalDate: null,
+    adminDecree: null
+  }
+];
+
+function getMembersDb() {
+  try {
+    const raw = localStorage.getItem("vc_members_db");
+    if (raw) return JSON.parse(raw);
+    localStorage.setItem("vc_members_db", JSON.stringify(DEFAULT_MEMBERS_DB));
+    return DEFAULT_MEMBERS_DB;
+  } catch (e) {
+    return DEFAULT_MEMBERS_DB;
+  }
+}
+
+function saveMembersDb(members) {
+  try {
+    localStorage.setItem("vc_members_db", JSON.stringify(members));
+  } catch (e) {}
+}
+
+function getCoursesDb() {
+  try {
+    const raw = localStorage.getItem("vc_courses_db");
+    if (raw) return JSON.parse(raw);
+    localStorage.setItem("vc_courses_db", JSON.stringify(DEFAULT_COURSES_DB));
+    return DEFAULT_COURSES_DB;
+  } catch (e) {
+    return DEFAULT_COURSES_DB;
+  }
+}
+
+function saveCoursesDb(courses) {
+  try {
+    localStorage.setItem("vc_courses_db", JSON.stringify(courses));
+  } catch (e) {}
+}
+
+function getEnrollmentsDb() {
+  try {
+    const raw = localStorage.getItem("vc_enrollments_db");
+    if (raw) return JSON.parse(raw);
+    localStorage.setItem("vc_enrollments_db", JSON.stringify(DEFAULT_ENROLLMENTS_DB));
+    return DEFAULT_ENROLLMENTS_DB;
+  } catch (e) {
+    return DEFAULT_ENROLLMENTS_DB;
+  }
+}
+
+function saveEnrollmentsDb(enrollments) {
+  try {
+    localStorage.setItem("vc_enrollments_db", JSON.stringify(enrollments));
+  } catch (e) {}
+}
+
+// 4. CENTRAL ADMISSIONS & ENLISTMENT DATABASE
+const DEFAULT_ADMISSIONS_DB = [
+  {
+    id: "APP-2026-8812",
+    name: "Morgan Vance",
+    dob: "2005-06-14",
+    email: "morgan.vance@highseas.edu",
+    phone: "+1 (555) 723-9941",
+    program: "Science & Technology (B.Tech)",
+    exam: "Qualified in JEE Main / CET",
+    statement: "I have built autonomous marine sonar models and wish to apprentice under Dr. Alistair Finch.",
+    appliedAt: "08 Oct 2026",
+    status: "pending",
+    decreeNote: "",
+    assignedRoll: null
+  },
+  {
+    id: "APP-2026-9043",
+    name: "Caleb Drake",
+    dob: "2004-11-22",
+    email: "caleb.drake@maritime.org",
+    phone: "+1 (555) 891-2304",
+    program: "Business & Leadership (B.B.A.)",
+    exam: "Qualified in CUET",
+    statement: "Aiming to establish sovereign high-seas charter routes and master international maritime trade law.",
+    appliedAt: "09 Oct 2026",
+    status: "pending",
+    decreeNote: "",
+    assignedRoll: null
+  },
+  {
+    id: "APP-2026-7102",
+    name: "Jennifer Hawk",
+    dob: "2004-03-18",
+    email: "hawk.j@vibe.edu",
+    phone: "+1 (555) 345-6789",
+    program: "Science & Technology (B.Tech)",
+    exam: "Taking VIBE-SAT Navigator Trials",
+    statement: "Celestial astrogation and deep-sea algorithmic chart plotting.",
+    appliedAt: "01 Oct 2026",
+    status: "approved",
+    decreeNote: "Commissioned into Fleet by High Admiral Sterling.",
+    assignedRoll: "VC-2024-NAV-018"
+  }
+];
+
+function getAdmissionsDb() {
+  try {
+    const raw = localStorage.getItem("vc_admissions_db");
+    if (raw) return JSON.parse(raw);
+    localStorage.setItem("vc_admissions_db", JSON.stringify(DEFAULT_ADMISSIONS_DB));
+    return DEFAULT_ADMISSIONS_DB;
+  } catch (e) {
+    return DEFAULT_ADMISSIONS_DB;
+  }
+}
+
+function saveAdmissionsDb(admissions) {
+  try {
+    localStorage.setItem("vc_admissions_db", JSON.stringify(admissions));
+  } catch (e) {}
+}
+
+function submitAdmissionApplication(appData) {
+  const db = getAdmissionsDb();
+  const appId = "APP-2026-" + Math.floor(1000 + Math.random() * 9000);
+  const newApp = {
+    id: appId,
+    name: appData.name,
+    dob: appData.dob,
+    email: appData.email,
+    phone: appData.phone,
+    program: appData.program,
+    exam: appData.exam,
+    statement: appData.statement,
+    appliedAt: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
+    status: "pending",
+    decreeNote: "",
+    assignedRoll: null
+  };
+  db.unshift(newApp);
+  saveAdmissionsDb(db);
+  return newApp;
+}
+
+function approveAdmissionApplication(appId, decreeNote) {
+  const db = getAdmissionsDb();
+  const app = db.find((a) => a.id === appId);
+  if (!app) return null;
+
+  // Generate unique roll number based on chosen program
+  let progCode = "CAD";
+  let progFull = app.program || "Maritime Science";
+  if (/tech|science|ai/i.test(app.program)) {
+    progCode = "TECH";
+    progFull = "B.Tech Computer Science & Maritime AI";
+  } else if (/business|commerce|leadership|b\.b\.a/i.test(app.program)) {
+    progCode = "COMM";
+    progFull = "B.B.A. Maritime Commerce & Logistics";
+  } else if (/art|humanities|cartography/i.test(app.program)) {
+    progCode = "ARTS";
+    progFull = "B.A. Hons Maritime Lore & Cartography";
+  }
+
+  const randomSuffix = Math.floor(100 + Math.random() * 900);
+  const newRoll = `VC-2026-${progCode}-${randomSuffix}`;
+
+  app.status = "approved";
+  app.assignedRoll = newRoll;
+  app.decreeNote = decreeNote || "Commissioned into Fleet by High Admiral Sterling";
+  saveAdmissionsDb(db);
+
+  // Automatically induct into vc_members_db so the cadet can board the ship!
+  const newCadet = {
+    roll: newRoll,
+    name: "Cadet " + app.name,
+    role: "student",
+    rank: "Apprentice Mariner",
+    program: progFull,
+    batch: "2026-2030",
+    email: app.email,
+    phone: app.phone,
+    gpa: 8.00,
+    attendance: "100%",
+    status: "Active",
+    enrolledCourses: ["CS-301"],
+    password: "pirate123"
+  };
+
+  addMemberToDb(newCadet);
+  return { application: app, member: newCadet };
+}
+
+function rejectAdmissionApplication(appId, decreeNote) {
+  const db = getAdmissionsDb();
+  const app = db.find((a) => a.id === appId);
+  if (!app) return null;
+  app.status = "rejected";
+  app.decreeNote = decreeNote || "Application deferred by Admiralty review";
+  saveAdmissionsDb(db);
+  return app;
+}
+
+function addMemberToDb(newMember) {
+  const members = getMembersDb();
+  const idx = members.findIndex((m) => m.roll === newMember.roll);
+  if (idx >= 0) {
+    members[idx] = newMember;
+  } else {
+    members.unshift(newMember);
+  }
+  saveMembersDb(members);
+}
+
 // ==============================================================
 // 3. LOGIN PAGE: THE BOARDING GATE ANIMATED SCENE (login.html)
 // ==============================================================
@@ -1612,10 +2100,6 @@ const alertFailure = document.querySelector("#alert-failure");
 const alertSuccess = document.querySelector("#alert-success");
 const successWelcomeMsg = document.querySelector("#success-welcome-msg");
 const btnRetryClimb = document.querySelector("#btn-retry-climb");
-const btnQuickCadet = document.querySelector("#btn-quick-cadet");
-const btnQuickHawk = document.querySelector("#btn-quick-hawk");
-const btnQuickDavid = document.querySelector("#btn-quick-david");
-const btnQuickCaptain = document.querySelector("#btn-quick-captain");
 
 function playBoardingSuccess(role, name, roll, rank, program) {
   if (ropeWrapper) {
@@ -1673,54 +2157,32 @@ if (btnRetryClimb) {
   btnRetryClimb.addEventListener("click", resetBoardingStage);
 }
 
-if (btnQuickCadet) {
-  btnQuickCadet.addEventListener("click", () => {
-    playBoardingSuccess("student", "Cadet Jack Sparrow", "VC-2024-TECH-042", "Quartermaster", "B.Tech Computer Science & Maritime AI");
-  });
-}
-
-if (btnQuickHawk) {
-  btnQuickHawk.addEventListener("click", () => {
-    playBoardingSuccess("student", "Cadet Jennifer Hawk", "VC-2024-NAV-018", "First Mate", "B.Sc Celestial Astrogation");
-  });
-}
-
-if (btnQuickDavid) {
-  btnQuickDavid.addEventListener("click", () => {
-    playBoardingSuccess("student", "Cadet David Sterling", "VC-2024-COMM-099", "Cadet Midshipman", "B.B.A. Maritime Commerce & Logistics");
-  });
-}
-
-if (btnQuickCaptain) {
-  btnQuickCaptain.addEventListener("click", () => {
-    playBoardingSuccess("admin", "High Admiral Sterling", "VC-ADM-001", "Fleet Commander", "Admiralty Command");
-  });
-}
-
 if (boardingForm) {
   boardingForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const username = (document.querySelector("#login-username")?.value || "").trim().toLowerCase();
     const password = (document.querySelector("#login-password")?.value || "").trim();
-    const selectedRole = document.querySelector("#login-role")?.value || "student";
 
     const members = typeof getMembersDb === "function" ? getMembersDb() : [];
     const matchedMember = members.find(
       (m) =>
         m.roll.toLowerCase() === username ||
+        m.name.toLowerCase() === username ||
         m.name.toLowerCase().includes(username) ||
         (username.length >= 3 && m.email && m.email.toLowerCase().includes(username))
     );
 
-    // Authentication verification
-    const isCaptain = (username === "captain" || username === "sterling" || selectedRole === "admin" || (matchedMember && matchedMember.role === "admin")) && (password === "admin123" || password === "captain123");
-    const isCadetPass = password === "pirate123";
+    // Authentication verification (No bypass - must match credentials)
+    const isCaptain = (username === "captain" || username === "sterling" || (matchedMember && matchedMember.role === "admin")) && (password === "admin123" || password === "captain123");
+    const isCadet = matchedMember
+      ? (password === (matchedMember.password || "pirate123"))
+      : ((username === "cadet" || username === "jack") && password === "pirate123");
 
     if (isCaptain) {
       playBoardingSuccess("admin", "High Admiral Sterling", "VC-ADM-001", "Fleet Commander", "Admiralty Command");
-    } else if (matchedMember && isCadetPass) {
+    } else if (matchedMember && isCadet) {
       playBoardingSuccess(matchedMember.role, matchedMember.name, matchedMember.roll, matchedMember.rank, matchedMember.program);
-    } else if (isCadetPass) {
+    } else if (isCadet) {
       playBoardingSuccess("student", "Cadet Jack Sparrow", "VC-2024-TECH-042", "Quartermaster", "B.Tech Computer Science & Maritime AI");
     } else {
       playBoardingFailure();
@@ -2144,34 +2606,8 @@ function initMapSecurity() {
   }
 }
 
-// Wire Map Quick-Unlock and Logout buttons
-const btnQuickUnlockCadet = document.querySelector("#btn-quick-unlock-cadet");
-const btnQuickUnlockCaptain = document.querySelector("#btn-quick-unlock-captain");
+// Map Logout button
 const btnMapLogout = document.querySelector("#btn-map-logout");
-
-if (btnQuickUnlockCadet) {
-  btnQuickUnlockCadet.addEventListener("click", () => {
-    setAuth({
-      role: "student",
-      name: "Cadet Jack Sparrow",
-      roll: "VC-2024-TECH-042",
-      rank: "Quartermaster"
-    });
-    initMapSecurity();
-  });
-}
-
-if (btnQuickUnlockCaptain) {
-  btnQuickUnlockCaptain.addEventListener("click", () => {
-    setAuth({
-      role: "admin",
-      name: "High Admiral Sterling",
-      roll: "VC-ADM-001",
-      rank: "Fleet Commander"
-    });
-    initMapSecurity();
-  });
-}
 
 if (btnMapLogout) {
   btnMapLogout.addEventListener("click", () => {
@@ -2184,324 +2620,7 @@ if (document.querySelector("#portcullis-lockout")) {
   initMapSecurity();
 }
 
-/* ============================================================== */
-/* CENTRAL DATABASE & COURSE ENROLLMENT ENGINE                    */
-/* Unified Manifest, Subject Registry, Approvals & Direct Admin   */
-/* ============================================================== */
 
-// 1. DEFAULT SEED DATABASE
-const DEFAULT_MEMBERS_DB = [
-  {
-    roll: "VC-2024-TECH-042",
-    name: "Cadet Jack Sparrow",
-    role: "student",
-    rank: "Quartermaster",
-    program: "B.Tech Computer Science & Maritime AI",
-    batch: "2024-2028",
-    email: "sparrow.j@vibe.edu",
-    gpa: 9.18,
-    enrolledCourses: ["CS-301", "CS-302", "NV-201", "AI-405"],
-    status: "Active"
-  },
-  {
-    roll: "VC-2024-NAV-018",
-    name: "Cadet Jennifer Hawk",
-    role: "student",
-    rank: "First Mate",
-    program: "B.Sc Celestial Astrogation",
-    batch: "2024-2028",
-    email: "hawk.j@vibe.edu",
-    gpa: 9.42,
-    enrolledCourses: ["NV-201", "AI-405", "NA-101"],
-    status: "Active"
-  },
-  {
-    roll: "VC-2024-COMM-099",
-    name: "Cadet David Sterling",
-    role: "student",
-    rank: "Cadet Midshipman",
-    program: "B.B.A. Maritime Commerce & Logistics",
-    batch: "2024-2028",
-    email: "sterling.d@vibe.edu",
-    gpa: 8.75,
-    enrolledCourses: ["BM-401", "NA-101"],
-    status: "Active"
-  },
-  {
-    roll: "VC-2024-TECH-055",
-    name: "Cadet Morgan Drake",
-    role: "student",
-    rank: "Boatswain",
-    program: "B.Tech Subsea Robotics & Automation",
-    batch: "2024-2028",
-    email: "drake.m@vibe.edu",
-    gpa: 8.94,
-    enrolledCourses: ["CS-301", "NA-101"],
-    status: "Active"
-  },
-  {
-    roll: "FAC-CS-01",
-    name: "Dr. Alistair Roy",
-    role: "faculty",
-    rank: "Professor Navigator",
-    program: "Computer Science & Cryptography",
-    batch: "Faculty",
-    email: "roy.a@vibe.edu",
-    gpa: null,
-    enrolledCourses: ["CS-302"],
-    status: "Active"
-  },
-  {
-    roll: "FAC-NAV-02",
-    name: "Captain Sarah Vance",
-    role: "faculty",
-    rank: "Master Navigator",
-    program: "Celestial Astrogation & Cartography",
-    batch: "Faculty",
-    email: "vance.s@vibe.edu",
-    gpa: null,
-    enrolledCourses: ["NV-201"],
-    status: "Active"
-  },
-  {
-    roll: "FAC-ROB-03",
-    name: "Dr. Priya Malhotra",
-    role: "faculty",
-    rank: "Dean of Subsea Robotics",
-    program: "Robotics & AI Systems",
-    batch: "Faculty",
-    email: "malhotra.p@vibe.edu",
-    gpa: null,
-    enrolledCourses: ["CS-301", "AI-405"],
-    status: "Active"
-  },
-  {
-    roll: "VC-ADM-001",
-    name: "High Admiral Sterling",
-    role: "admin",
-    rank: "Fleet Commander",
-    program: "Admiralty Command",
-    batch: "Admiralty",
-    email: "admiral.sterling@vibe.edu",
-    gpa: null,
-    enrolledCourses: [],
-    status: "Active"
-  }
-];
-
-const DEFAULT_COURSES_DB = [
-  {
-    code: "CS-301",
-    title: "Subsea Autonomous Systems & Robotics",
-    credits: 4,
-    dept: "Computer Science & Robotics",
-    instructor: "Dr. Priya Malhotra",
-    capacity: 40,
-    enrolledCount: 34,
-    schedule: "Mon & Wed 09:00 - 11:00 Tide",
-    description: "Underwater localization, lidar point clouds, hydrophone telemetry, and ROS2 navigation stacks."
-  },
-  {
-    code: "CS-302",
-    title: "Maritime Cryptography & Cyber Rig",
-    credits: 4,
-    dept: "Computer Science & Cyber Defense",
-    instructor: "Dr. Alistair Roy",
-    capacity: 35,
-    enrolledCount: 29,
-    schedule: "Tue & Thu 10:00 - 12:00 Tide",
-    description: "Elliptic curve naval comms, vessel telemetry zero-knowledge proofs, and sovereign quantum rig defense."
-  },
-  {
-    code: "NV-201",
-    title: "Celestial Astrogation & Satellite Lidar",
-    credits: 3,
-    dept: "Navigation & Nautical Science",
-    instructor: "Captain Sarah Vance",
-    capacity: 50,
-    enrolledCount: 42,
-    schedule: "Mon & Fri 14:00 - 15:30 Tide",
-    description: "Deep sea astronomical bearings, sextant precision, satellite geodesy, and oceanic current mapping."
-  },
-  {
-    code: "BM-401",
-    title: "High-Seas Trade Law & Maritime Logistics",
-    credits: 3,
-    dept: "Maritime Commerce",
-    instructor: "Commander Tariq",
-    capacity: 45,
-    enrolledCount: 38,
-    schedule: "Wed & Fri 11:30 - 13:00 Tide",
-    description: "Admiralty charter contracts, bill of lading protocols, international salvage treaties, and port economics."
-  },
-  {
-    code: "NA-101",
-    title: "Advanced Naval Architecture & Hydrodynamics",
-    credits: 4,
-    dept: "Naval Architecture",
-    instructor: "Prof. Elena Rostova",
-    capacity: 30,
-    enrolledCount: 22,
-    schedule: "Tue & Thu 14:00 - 16:00 Tide",
-    description: "Hull wave resistance, computational fluid dynamics, composite hull stress analysis, and trim modeling."
-  },
-  {
-    code: "AI-405",
-    title: "Fleet Predictive Navigation & Machine Learning",
-    credits: 3,
-    dept: "Applied AI",
-    instructor: "Dr. Priya Malhotra",
-    capacity: 40,
-    enrolledCount: 31,
-    schedule: "Wed & Fri 16:00 - 17:30 Tide",
-    description: "Neural storm trajectory forecasting, AIS collision prediction, and reinforcement learning fleet routing."
-  }
-];
-
-const DEFAULT_ENROLLMENTS_DB = [
-  {
-    id: "ENR-8101",
-    studentRoll: "VC-2024-TECH-042",
-    studentName: "Cadet Jack Sparrow",
-    courseCode: "CS-301",
-    courseTitle: "Subsea Autonomous Systems & Robotics",
-    credits: 4,
-    term: "Term 2026-27 (Autumn)",
-    requestDate: "06 Oct 2026",
-    status: "approved",
-    approvalDate: "07 Oct 2026",
-    adminDecree: "Approved for Quartermaster capstone research."
-  },
-  {
-    id: "ENR-8102",
-    studentRoll: "VC-2024-TECH-042",
-    studentName: "Cadet Jack Sparrow",
-    courseCode: "CS-302",
-    courseTitle: "Maritime Cryptography & Cyber Rig",
-    credits: 4,
-    term: "Term 2026-27 (Autumn)",
-    requestDate: "06 Oct 2026",
-    status: "approved",
-    approvalDate: "07 Oct 2026",
-    adminDecree: "Approved for cyber track."
-  },
-  {
-    id: "ENR-8103",
-    studentRoll: "VC-2024-TECH-042",
-    studentName: "Cadet Jack Sparrow",
-    courseCode: "NV-201",
-    courseTitle: "Celestial Astrogation & Satellite Lidar",
-    credits: 3,
-    term: "Term 2026-27 (Autumn)",
-    requestDate: "07 Oct 2026",
-    status: "approved",
-    approvalDate: "08 Oct 2026",
-    adminDecree: "Approved core requirement."
-  },
-  {
-    id: "ENR-8104",
-    studentRoll: "VC-2024-TECH-042",
-    studentName: "Cadet Jack Sparrow",
-    courseCode: "AI-405",
-    courseTitle: "Fleet Predictive Navigation & Machine Learning",
-    credits: 3,
-    term: "Term 2026-27 (Autumn)",
-    requestDate: "07 Oct 2026",
-    status: "approved",
-    approvalDate: "08 Oct 2026",
-    adminDecree: "Approved elective."
-  },
-  {
-    id: "ENR-8105",
-    studentRoll: "VC-2024-TECH-042",
-    studentName: "Cadet Jack Sparrow",
-    courseCode: "NA-101",
-    courseTitle: "Advanced Naval Architecture & Hydrodynamics",
-    credits: 4,
-    term: "Term 2026-27 (Autumn)",
-    requestDate: "09 Oct 2026",
-    status: "pending_approval",
-    approvalDate: null,
-    adminDecree: null
-  },
-  {
-    id: "ENR-8106",
-    studentRoll: "VC-2024-NAV-018",
-    studentName: "Cadet Jennifer Hawk",
-    courseCode: "CS-302",
-    courseTitle: "Maritime Cryptography & Cyber Rig",
-    credits: 4,
-    term: "Term 2026-27 (Autumn)",
-    requestDate: "09 Oct 2026",
-    status: "pending_approval",
-    approvalDate: null,
-    adminDecree: null
-  },
-  {
-    id: "ENR-8107",
-    studentRoll: "VC-2024-COMM-099",
-    studentName: "Cadet David Sterling",
-    courseCode: "CS-301",
-    courseTitle: "Subsea Autonomous Systems & Robotics",
-    credits: 4,
-    term: "Term 2026-27 (Autumn)",
-    requestDate: "09 Oct 2026",
-    status: "pending_approval",
-    approvalDate: null,
-    adminDecree: null
-  }
-];
-
-function getMembersDb() {
-  try {
-    const raw = localStorage.getItem("vc_members_db");
-    if (raw) return JSON.parse(raw);
-    localStorage.setItem("vc_members_db", JSON.stringify(DEFAULT_MEMBERS_DB));
-    return DEFAULT_MEMBERS_DB;
-  } catch (e) {
-    return DEFAULT_MEMBERS_DB;
-  }
-}
-
-function saveMembersDb(members) {
-  try {
-    localStorage.setItem("vc_members_db", JSON.stringify(members));
-  } catch (e) {}
-}
-
-function getCoursesDb() {
-  try {
-    const raw = localStorage.getItem("vc_courses_db");
-    if (raw) return JSON.parse(raw);
-    localStorage.setItem("vc_courses_db", JSON.stringify(DEFAULT_COURSES_DB));
-    return DEFAULT_COURSES_DB;
-  } catch (e) {
-    return DEFAULT_COURSES_DB;
-  }
-}
-
-function saveCoursesDb(courses) {
-  try {
-    localStorage.setItem("vc_courses_db", JSON.stringify(courses));
-  } catch (e) {}
-}
-
-function getEnrollmentsDb() {
-  try {
-    const raw = localStorage.getItem("vc_enrollments_db");
-    if (raw) return JSON.parse(raw);
-    localStorage.setItem("vc_enrollments_db", JSON.stringify(DEFAULT_ENROLLMENTS_DB));
-    return DEFAULT_ENROLLMENTS_DB;
-  } catch (e) {
-    return DEFAULT_ENROLLMENTS_DB;
-  }
-}
-
-function saveEnrollmentsDb(enrollments) {
-  try {
-    localStorage.setItem("vc_enrollments_db", JSON.stringify(enrollments));
-  } catch (e) {}
-}
 
 // ==============================================================
 // 2. ADMIRALTY SECURITY GATE HANDLERS (ADMIN.HTML)
@@ -2518,6 +2637,7 @@ function initAdminSecurity() {
     bridgeEl.style.display = "block";
 
     // Initialize all admin bridge desks
+    if (typeof renderAdminAdmissionsDesk === "function") renderAdminAdmissionsDesk();
     renderAdminEnrollmentsDesk();
     populateDirectRegForm();
     renderAdminMembersRoster();
@@ -2530,7 +2650,6 @@ function initAdminSecurity() {
 }
 
 const adminGateForm = document.querySelector("#admin-gate-login-form");
-const btnQuickAdminUnlock = document.querySelector("#btn-quick-admin-unlock");
 
 if (adminGateForm) {
   adminGateForm.addEventListener("submit", (e) => {
@@ -2555,18 +2674,6 @@ if (adminGateForm) {
         errorEl.textContent = "☠ Sovereign Clearance Denied! Invalid Captain ID or counter-sign.";
       }
     }
-  });
-}
-
-if (btnQuickAdminUnlock) {
-  btnQuickAdminUnlock.addEventListener("click", () => {
-    setAuth({
-      role: "admin",
-      name: "High Admiral Sterling",
-      roll: "VC-ADM-001",
-      rank: "Fleet Commander"
-    });
-    initAdminSecurity();
   });
 }
 
@@ -2753,6 +2860,152 @@ function renderStudentCoursesPane() {
 
 if (document.querySelector("#portal-pane-courses")) {
   renderStudentCoursesPane();
+}
+
+// ==============================================================
+// 3.5. ADMIN ADMISSIONS & ENLISTMENT DESK (ADMIN.HTML)
+// ==============================================================
+let adminAdmissionsFilter = "pending";
+
+function renderAdminAdmissionsDesk() {
+  const container = document.querySelector("#admin-admissions-container");
+  if (!container) return;
+
+  const applications = getAdmissionsDb();
+  const pendingCount = applications.filter((a) => a.status === "pending").length;
+
+  const statPendingAdm = document.querySelector("#stat-pending-admissions");
+  if (statPendingAdm) statPendingAdm.textContent = String(pendingCount);
+
+  const filtered = adminAdmissionsFilter === "pending"
+    ? applications.filter((a) => a.status === "pending")
+    : applications;
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 32px 14px; color: #a4b5a2;">
+        <span style="font-size: 32px; display: block; margin-bottom: 8px;">⚓</span>
+        <strong style="font-family: var(--serif); color: var(--gold); font-size: 14px;">No Enlistment Applications Pending Review</strong>
+        <p style="margin: 4px 0 0; font-size: 11px;">All prospective cadet scrolls have been decreed. New submissions from index.html will arrive here.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = `
+    <div style="overflow-x: auto;">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Scroll ID</th>
+            <th>Candidate Details</th>
+            <th>Desired Program & Exam</th>
+            <th>Statement of Voyage</th>
+            <th>Date Dispatched</th>
+            <th>Admiralty Status</th>
+            <th style="text-align: right;">Tribunal Decree</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${filtered.map((a) => {
+            const isPending = a.status === "pending";
+            const isApproved = a.status === "approved";
+            return `
+              <tr>
+                <td><code style="color: var(--gold); font-weight: 700;">#${a.id}</code></td>
+                <td>
+                  <strong style="color: #fff; font-size: 12px; display: block;">${a.name}</strong>
+                  <small style="color: #a4b5a2;">${a.email}</small><br />
+                  <small style="color: #7f8e7e;">DOB: ${a.dob || "N/A"} · ${a.phone || ""}</small>
+                </td>
+                <td>
+                  <strong style="color: #e9dec9; display: block;">${a.program}</strong>
+                  <span class="trust-badge" style="background: rgba(241,201,87,.15); color: var(--gold); font-size: 8px; margin-top: 3px;">
+                    ${a.exam || "Standard Evaluation"}
+                  </span>
+                </td>
+                <td style="max-width: 220px; font-size: 10px; color: #c0cbbe; font-style: italic;">
+                  “${a.statement || "No statement provided."}”
+                </td>
+                <td style="font-size: 10px; color: #a4b5a2;">${a.appliedAt}</td>
+                <td>
+                  <span class="course-status-pill status-${a.status}">
+                    ${a.status === "approved" ? "Inducted Cadet" : (a.status === "pending" ? "Pending Decree" : "Deferred")}
+                  </span>
+                  ${a.assignedRoll ? `<small style="display:block; color:var(--gold); font-size:9px; margin-top:3px;">Roll: <strong>${a.assignedRoll}</strong></small>` : ""}
+                  ${a.decreeNote ? `<small style="display:block; color:#8fa08e; font-size:8px;">${a.decreeNote}</small>` : ""}
+                </td>
+                <td style="text-align: right; white-space: nowrap;">
+                  ${isPending ? `
+                    <div style="display: flex; gap: 6px; justify-content: flex-end;">
+                      <button class="btn-approve-berth btn-approve-admission" data-appid="${a.id}" type="button" title="Approve and induct into crew manifest">
+                        ⚓ Approve & Induct
+                      </button>
+                      <button class="btn-reject-berth btn-reject-admission" data-appid="${a.id}" type="button" title="Reject / defer application">
+                        ✖ Defer
+                      </button>
+                    </div>
+                  ` : (isApproved ? `
+                    <span style="font-size: 10px; color: #81c784; font-weight: 700;">✦ Enlisted on Manifest</span>
+                  ` : `
+                    <span style="font-size: 10px; color: #ff8a80;">✖ Deferred</span>
+                  `)}
+                </td>
+              </tr>
+            `;
+          }).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  // Attach decree button listeners
+  container.querySelectorAll(".btn-approve-admission").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const appId = btn.dataset.appid;
+      const res = approveAdmissionApplication(appId);
+      if (res) {
+        alert(`✦ High Admiral Sterling's Decree Issued!\nCandidate ${res.application.name} has been inducted into the Fleet as Cadet ${res.member.roll}!\nThey may now board the ship using Roll "${res.member.roll}" and counter-sign "pirate123".`);
+        renderAdminAdmissionsDesk();
+        renderAdminMembersRoster();
+        populateDirectRegForm();
+        if (typeof renderAdminEnrollmentsDesk === "function") renderAdminEnrollmentsDesk();
+      }
+    });
+  });
+
+  container.querySelectorAll(".btn-reject-admission").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const appId = btn.dataset.appid;
+      const note = prompt("Enter decree note for deferring this application:", "Application deferred for next voyage intake");
+      if (note !== null) {
+        rejectAdmissionApplication(appId, note);
+        renderAdminAdmissionsDesk();
+      }
+    });
+  });
+}
+
+// Wire Admissions Filter Buttons
+const btnFilterPendingAdm = document.querySelector("#btn-filter-pending-admissions");
+const btnFilterAllAdm = document.querySelector("#btn-filter-all-admissions");
+
+if (btnFilterPendingAdm) {
+  btnFilterPendingAdm.addEventListener("click", () => {
+    adminAdmissionsFilter = "pending";
+    btnFilterPendingAdm.className = "button button-gold";
+    if (btnFilterAllAdm) btnFilterAllAdm.className = "button button-dark";
+    renderAdminAdmissionsDesk();
+  });
+}
+
+if (btnFilterAllAdm) {
+  btnFilterAllAdm.addEventListener("click", () => {
+    adminAdmissionsFilter = "all";
+    btnFilterAllAdm.className = "button button-gold";
+    if (btnFilterPendingAdm) btnFilterPendingAdm.className = "button button-dark";
+    renderAdminAdmissionsDesk();
+  });
 }
 
 // ==============================================================
