@@ -3,9 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0c1512" />
-    <meta name="description" content="Captain's Headquarters & Command Bridge — Administrative oversight, student query resolution desk, and fleet circulars broadcast station." />
-    <title>Captain's Headquarters (Admin Bridge) — Vibe College</title>
+    <meta name="theme-color" content="#0e1713" />
+    <meta
+      name="description"
+      content="Vibe College Captain's Headquarters — Sovereign Admiralty Bridge, Central Member Database, Course Approval Desk, and Fleet Command."
+    />
+    <title>Captain's Headquarters — Vibe College</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,16 +18,16 @@
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
   </head>
-  <body style="background: #0d1714; color: #f5eedf;">
-    <!-- TOP ANNOUNCEMENT & LANGUAGE PICKER -->
-    <div class="announcement" style="background: #1a0f08; border-bottom: 2px solid var(--gold); color: #f9e2af;">
+  <body style="background: #09120e; color: #f5eedf;">
+    <!-- TOP ANNOUNCEMENT BANNER -->
+    <div class="announcement" style="background: #050a08; border-bottom: 1px solid rgba(241,201,87,.25);">
       <span class="announcement-icon" aria-hidden="true">⚓</span>
-      <p id="announcement-text">CAPTAIN'S HEADQUARTERS · High Admiralty Command Bridge · Level 5 Sovereign Access</p>
+      <p id="announcement-text">ADMIRALTY COMMAND DESK · High Admiral Sterling's Flagship Console · Fleet Secure</p>
       <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
-        <span class="trust-badge" style="background: rgba(241,201,87,.2); color: var(--gold); border-color: var(--gold); font-size: 8px;">
-          Commander: High Admiral Sterling
+        <span class="trust-badge" style="background: rgba(241,201,87,.2); color: var(--gold); font-size: 8px;">
+          CLEARANCE: HIGH ADMIRAL (LEVEL 5)
         </span>
-        <select class="lang-picker-select" id="lang-picker" aria-label="Choose language">
+        <select class="lang-picker-select" id="lang-picker" aria-label="Choose language" style="background: #14241e; color: #e7dfce; border-color: rgba(241,201,87,.3);">
           <option value="en" selected>English</option>
           <option value="pirate">🏴‍☠️ Pirate Speak</option>
           <option value="hi">हिन्दी</option>
@@ -33,19 +36,23 @@
       </div>
     </div>
 
-    <!-- ADMIN HEADER -->
-    <header class="boarding-header">
+    <!-- SITE HEADER -->
+    <header class="site-header" style="background: rgba(9,18,14,.95);">
       <a class="brand" href="index.html" aria-label="Vibe College home">
-        <span class="brand-mark" aria-hidden="true" style="background: var(--gold); color: #0c1512;">VC</span>
-        <span class="brand-name" style="color: #fff;">VIBE <small style="color: var(--gold);">ADMIRALTY HQ</small></span>
+        <span class="brand-mark" aria-hidden="true">VC</span>
+        <span class="brand-name">VIBE <small>COLLEGE</small></span>
       </a>
-      <nav class="main-nav" style="display: flex; gap: 18px; align-items: center;">
-        <a href="#query-desk">Cadet Query Desk</a>
-        <a href="#notice-station">Circulars Dispatch</a>
-        <a href="#fleet-ops">Fleet Overview</a>
-        <a href="map.html" style="color: var(--gold); font-weight: 700;">Secret Treasure Map ⌖</a>
-        <a href="student.html">View Student Deck ↗</a>
-        <a href="index.html">Public Harbor ↗</a>
+      <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+      <nav class="main-nav" aria-label="Admin navigation">
+        <a href="#course-approval-desk">Course Approvals</a>
+        <a href="#direct-course-registration">Direct Registration</a>
+        <a href="#member-directory">Member Manifest</a>
+        <a href="#query-desk">Cadet Signals</a>
+        <a href="#notice-station">Ship's Log</a>
+        <a href="student.html">Student Deck ↗</a>
+        <a href="map.html" style="color: var(--gold);">Secret Map ⌖</a>
         <button class="nav-portal-btn" id="btn-admin-logout" type="button" style="background: #9b2c2c; border-color: #d35400;">
           Log Out Bridge ⏏
         </button>
@@ -53,193 +60,425 @@
     </header>
 
     <main>
-      <!-- COMMAND BRIDGE HERO BANNER -->
-      <section class="admin-bridge-hero">
-        <div style="max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-          <div style="display: flex; align-items: center; gap: 20px;">
-            <div style="width: 64px; height: 64px; border-radius: 50%; border: 2px solid var(--gold); overflow: hidden; background: #26160c;">
-              <img src="assets/principal_sterling.jpg" alt="High Admiral Sterling" style="width: 100%; height: 100%; object-fit: cover;" />
-            </div>
-            <div>
-              <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> SOVEREIGN QUARTERS · HIGH ADMIRAL</p>
-              <h1 style="font-family: var(--serif); font-size: 32px; margin: 0; color: #fff;">
-                Captain's Command Bridge
-              </h1>
-              <p style="margin: 4px 0 0; font-size: 11px; color: #a4b5a2;">
-                Flagship HMS Discovery · Coordinates: 12° 34' N, 56° 78' W · Administrative Bridge Console
-              </p>
-            </div>
-          </div>
-          <div style="display: flex; gap: 10px;">
-            <button class="button button-gold" id="btn-alert-fleet" type="button">📢 Broadcast Fleet Alarm</button>
-            <button class="button button-dark" id="btn-sound-quarters" type="button">🔔 Sound General Quarters</button>
-          </div>
-        </div>
-
-        <div class="admin-stat-bar" style="margin-top: 32px;">
-          <div class="res-stat-card">
-            <strong>2,418</strong>
-            <span>Active Enlisted Cadets</span>
-          </div>
-          <div class="res-stat-card">
-            <strong id="admin-pending-count" style="color: #ff6b81;">2</strong>
-            <span>Pending Cadet Queries</span>
-          </div>
-          <div class="res-stat-card">
-            <strong>142</strong>
-            <span>Faculty Navigators</span>
-          </div>
-          <div class="res-stat-card">
-            <strong>₹18.4 Cr</strong>
-            <span>Active Research Grants</span>
-          </div>
-        </div>
-      </section>
-
       <!-- ============================================================== -->
-      <!-- SECTION 1: CADET PETITIONS & QUERY COMMAND DESK                -->
+      <!-- 1. ADMIRALTY SECURITY GATE (SHOWN IF NOT AUTHENTICATED AS ADMIN)-->
       <!-- ============================================================== -->
-      <section style="padding: 40px 6%; max-width: 1140px; margin: 0 auto;" id="query-desk">
-        <div class="admin-desk-card">
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(241,201,87,.25); padding-bottom: 16px; margin-bottom: 20px;">
-            <div>
-              <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> CADET SIGNALS · TWO-WAY DESK</p>
-              <h2 style="font-family: var(--serif); font-size: 24px; margin: 0; color: #fff;">
-                Cadet Petition Resolution Desk
-              </h2>
-            </div>
-            <div style="display: flex; gap: 8px;">
-              <button class="button button-gold" id="btn-filter-all-queries" style="padding: 6px 12px; font-size: 10px;" type="button">All Signals</button>
-              <button class="button button-dark" id="btn-filter-pending-queries" style="padding: 6px 12px; font-size: 10px;" type="button">Pending Only</button>
-            </div>
-          </div>
+      <section class="admin-auth-card" id="admin-auth-gate" style="display: none;">
+        <div class="gate-icon" aria-hidden="true">⚓</div>
+        <p class="eyebrow" style="color: var(--gold); justify-content: center; margin-bottom: 6px;">
+          <span></span> RESTRICTED ADMIRALTY BRIDGE <span></span>
+        </p>
+        <h1 style="font-family: var(--serif); font-size: 26px; color: #fff; margin: 0 0 10px;">
+          Captain’s Headquarters Gate
+        </h1>
+        <p style="font-size: 11px; color: #a4b5a2; line-height: 1.6; margin: 0 auto 24px; max-width: 440px;">
+          State your Admiralty counter-sign to enter the Sovereign Command Bridge. Only High Admiral Sterling and authorized Fleet Commanders hold clearance.
+        </p>
 
-          <p style="font-size: 11px; color: #a4b5a2; margin: 0 0 18px; line-height: 1.6;">
-            Review direct petitions dispatched from the Pirate Student Deck. Type your official High Admiral Order below any query to transmit your decision straight back to the cadet's console.
+        <form id="admin-gate-login-form" style="background: rgba(255,255,255,.03); border: 1px solid rgba(241,201,87,.25); border-radius: 4px; padding: 22px; text-align: left; margin-bottom: 20px;">
+          <div class="bottle-field" style="margin-bottom: 12px;">
+            <label for="admin-login-id" style="color: #d6ded4; font-size: 11px;">Admiralty ID / Call-Sign</label>
+            <input type="text" id="admin-login-id" value="captain" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+          </div>
+          <div class="bottle-field" style="margin-bottom: 18px;">
+            <label for="admin-login-key" style="color: #d6ded4; font-size: 11px;">Secret Counter-Sign (Password)</label>
+            <input type="password" id="admin-login-key" placeholder="Enter admin123" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+          </div>
+          <button class="button button-gold" style="width: 100%; min-height: 42px; font-size: 11px;" type="submit">
+            <span>Enter Sovereign Bridge ⚓ →</span>
+          </button>
+          <p class="search-error" id="admin-gate-error" style="margin-top: 8px; color: #ff6b81; font-size: 10px;"></p>
+        </form>
+
+        <div style="border-top: 1px solid rgba(255,255,255,.1); padding-top: 18px;">
+          <p style="font-size: 10px; color: #a4b5a2; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .08em;">
+            1-Click Administrative Evaluation Pass:
           </p>
+          <button class="quick-auth-btn" id="btn-quick-admin-unlock" type="button" style="width: 100%; text-align: center;">
+            <strong>⚓ Quick Unlock as High Admiral Sterling</strong>
+            <small>Role: Captain / Admin · Admiralty HQ</small>
+          </button>
+        </div>
 
-          <div id="admin-queries-container">
-            <!-- Dynamically populated from localStorage vc_queries -->
-          </div>
+        <div style="margin-top: 18px;">
+          <a href="index.html" class="text-link" style="color: #a4b5a2; font-size: 11px;">Return to Public Harbor ↗</a>
         </div>
       </section>
 
       <!-- ============================================================== -->
-      <!-- SECTION 2: SHIP'S LOG CIRCULARS BROADCAST STATION              -->
+      <!-- 2. MAIN ADMIRALTY BRIDGE CONTENT (SHOWN WHEN LOGGED IN)         -->
       <!-- ============================================================== -->
-      <section style="padding: 0 6% 40px; max-width: 1140px; margin: 0 auto;" id="notice-station">
-        <div class="admin-desk-card">
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(241,201,87,.25); padding-bottom: 14px; margin-bottom: 20px;">
-            <div>
-              <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> SHIP'S LOG · FLEET BROADCAST</p>
-              <h2 style="font-family: var(--serif); font-size: 24px; margin: 0; color: #fff;">
-                Publish Official Circular to Ship’s Log
-              </h2>
+      <div id="admin-bridge-content" style="display: none;">
+        
+        <!-- COMMAND BRIDGE HERO BANNER -->
+        <section class="admin-bridge-hero">
+          <div style="max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <div style="display: flex; align-items: center; gap: 20px;">
+              <div style="width: 64px; height: 64px; border-radius: 50%; border: 2px solid var(--gold); overflow: hidden; background: #26160c;">
+                <img src="assets/principal_sterling.jpg" alt="High Admiral Sterling" style="width: 100%; height: 100%; object-fit: cover;" />
+              </div>
+              <div>
+                <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> SOVEREIGN QUARTERS · HIGH ADMIRAL</p>
+                <h1 style="font-family: var(--serif); font-size: 32px; margin: 0; color: #fff;">
+                  Captain's Command Bridge
+                </h1>
+                <p style="margin: 4px 0 0; font-size: 11px; color: #a4b5a2;">
+                  Flagship HMS Discovery · Coordinates: 12° 34' N, 56° 78' W · Administrative Bridge Console
+                </p>
+              </div>
             </div>
-            <span class="trust-badge" style="background: rgba(241,201,87,.15); color: var(--gold); font-size: 9px;">
-              Transmits to All Cadet Screens
-            </span>
+            <div style="display: flex; gap: 10px;">
+              <button class="button button-gold" id="btn-alert-fleet" type="button">📢 Broadcast Fleet Alarm</button>
+              <button class="button button-dark" id="btn-sound-quarters" type="button">🔔 Sound General Quarters</button>
+            </div>
           </div>
 
-          <form id="admin-broadcast-form">
-            <div class="bottle-form-row">
-              <div class="bottle-field">
-                <label for="notice-title" style="color: #d6ded4; font-size: 11px;">Circular Title / Heading</label>
-                <input type="text" id="notice-title" placeholder="E.g. Schedule for Annual Hack-the-Armada Regatta 2026" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+          <div class="admin-stat-bar" style="margin-top: 32px;">
+            <div class="res-stat-card">
+              <strong id="stat-total-cadets">2,418</strong>
+              <span>Central Manifest Cadets</span>
+            </div>
+            <div class="res-stat-card">
+              <strong id="stat-pending-enrollments" style="color: var(--gold);">3</strong>
+              <span>Pending Course Berths</span>
+            </div>
+            <div class="res-stat-card">
+              <strong id="admin-pending-count" style="color: #ff6b81;">2</strong>
+              <span>Pending Cadet Queries</span>
+            </div>
+            <div class="res-stat-card">
+              <strong id="stat-active-courses">6</strong>
+              <span>Registered Fleet Subjects</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- SECTION 1: COURSE BERTH ENROLLMENT APPROVAL DESK               -->
+        <!-- ============================================================== -->
+        <section style="padding: 40px 6% 20px; max-width: 1140px; margin: 0 auto;" id="course-approval-desk">
+          <div class="admin-desk-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(241,201,87,.25); padding-bottom: 16px; margin-bottom: 20px;">
+              <div>
+                <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> ACADEMIC REGISTRATION · APPROVAL DESK</p>
+                <h2 style="font-family: var(--serif); font-size: 24px; margin: 0; color: #fff;">
+                  Cadet Subject & Course Enrollment Approvals
+                </h2>
               </div>
-              <div class="bottle-field">
-                <label for="notice-dept" style="color: #d6ded4; font-size: 11px;">Issuing Harbor Department</label>
-                <input type="text" id="notice-dept" value="Office of the High Admiral & Controller of Examinations" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+              <div style="display: flex; gap: 8px;">
+                <button class="button button-gold" id="btn-filter-pending-enrollments" style="padding: 6px 12px; font-size: 10px;" type="button">Pending Approvals Only</button>
+                <button class="button button-dark" id="btn-filter-all-enrollments" style="padding: 6px 12px; font-size: 10px;" type="button">All Course Records</button>
               </div>
             </div>
-            <div class="bottle-form-row">
+
+            <p style="font-size: 11px; color: #a4b5a2; margin: 0 0 18px; line-height: 1.6;">
+              Review elective and core subject berth applications submitted from the Student Deck. Approving an application officially registers the subject into the central database and updates the cadet's academic record.
+            </p>
+
+            <div id="admin-enrollments-container">
+              <!-- Dynamically populated from localStorage vc_enrollments_db -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- SECTION 2: DIRECT CADET COURSE REGISTRATION TOOL               -->
+        <!-- ============================================================== -->
+        <section style="padding: 0 6% 30px; max-width: 1140px; margin: 0 auto;" id="direct-course-registration">
+          <div class="admin-desk-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(241,201,87,.25); padding-bottom: 14px; margin-bottom: 18px;">
+              <div>
+                <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> DIRECT ADMISSION · ADMIRALTY OVERRIDE</p>
+                <h2 style="font-family: var(--serif); font-size: 22px; margin: 0; color: #fff;">
+                  Directly Register Cadet into Course
+                </h2>
+              </div>
+              <span class="trust-badge" style="background: rgba(241,201,87,.15); color: var(--gold); font-size: 9px;">
+                Instant Admiralty Endorsement
+              </span>
+            </div>
+
+            <p style="font-size: 11px; color: #a4b5a2; margin: 0 0 16px;">
+              Admiralty authority to immediately enroll any cadet into any fleet subject without requiring a student application form.
+            </p>
+
+            <form id="direct-reg-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) auto; gap: 14px; align-items: flex-end;">
               <div class="bottle-field">
-                <label for="notice-category" style="color: #d6ded4; font-size: 11px;">Category Tag</label>
-                <select id="notice-category" style="background: #14241e; border-color: rgba(241,201,87,.3); color: #fff;">
-                  <option value="Urgent Circular">Urgent Circular (Red Alert)</option>
-                  <option value="Academic Notice" selected>Academic Notice</option>
-                  <option value="Regatta & Drills">Regatta & Drills</option>
-                  <option value="Hostel & Harbor">Hostel & Harbor Life</option>
+                <label for="direct-reg-cadet" style="color: #d6ded4; font-size: 11px;">Select Cadet from Manifest</label>
+                <select id="direct-reg-cadet" style="background: #14241e; border-color: rgba(241,201,87,.3); color: #fff; width: 100%;">
+                  <!-- Populated from vc_members_db -->
                 </select>
               </div>
               <div class="bottle-field">
-                <label for="notice-date" style="color: #d6ded4; font-size: 11px;">Dispatch Date</label>
-                <input type="text" id="notice-date" value="09 Oct 2026" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+                <label for="direct-reg-course" style="color: #d6ded4; font-size: 11px;">Select Fleet Subject / Course</label>
+                <select id="direct-reg-course" style="background: #14241e; border-color: rgba(241,201,87,.3); color: #fff; width: 100%;">
+                  <!-- Populated from vc_courses_db -->
+                </select>
               </div>
+              <div class="bottle-field">
+                <label for="direct-reg-term" style="color: #d6ded4; font-size: 11px;">Academic Voyage Term</label>
+                <select id="direct-reg-term" style="background: #14241e; border-color: rgba(241,201,87,.3); color: #fff; width: 100%;">
+                  <option value="Term 2026-27 (Autumn)">Term 2026-27 (Autumn)</option>
+                  <option value="Term 2026-27 (Spring)">Term 2026-27 (Spring)</option>
+                </select>
+              </div>
+              <div>
+                <button class="button button-gold" style="min-height: 40px; font-size: 11px; white-space: nowrap;" type="submit">
+                  <span>⚓ Register & Approve Berth →</span>
+                </button>
+              </div>
+            </form>
+            <div class="bottle-success-notice" id="direct-reg-success" style="margin-top: 14px;">
+              <h4>✦ Cadet Officially Registered in Course! ✦</h4>
+              <p id="direct-reg-success-msg">The subject berth has been assigned and updated in the student's Shipmate Deck.</p>
             </div>
-            <div class="bottle-field" style="margin-bottom: 18px;">
-              <label for="notice-content" style="color: #d6ded4; font-size: 11px;">Circular Decree Body</label>
-              <textarea id="notice-content" rows="3" placeholder="Enter decree details, deadlines, and instructions for all hands on deck..." required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;"></textarea>
-            </div>
-            <button class="button button-gold" style="min-height: 42px; font-size: 11px;" type="submit">
-              <span>📢 Transmit Decree to Ship's Log →</span>
-            </button>
-          </form>
-          <div class="bottle-success-notice" id="broadcast-success">
-            <h4>✦ Decree Transmitted to the Ship's Log! ✦</h4>
-            <p>Your circular has been recorded into the admiralty ledger and is now visible on the Student Portal feed.</p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- ============================================================== -->
-      <!-- SECTION 3: FLEET OPERATIONS & APPLICATIONS QUEUE               -->
-      <!-- ============================================================== -->
-      <section style="padding: 0 6% 60px; max-width: 1140px; margin: 0 auto;" id="fleet-ops">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;" class="calc-grid">
+        <!-- ============================================================== -->
+        <!-- SECTION 3: CENTRAL MEMBER DIRECTORY & MANIFEST EXPLORER         -->
+        <!-- ============================================================== -->
+        <section style="padding: 0 6% 30px; max-width: 1140px; margin: 0 auto;" id="member-directory">
           <div class="admin-desk-card">
-            <h3 style="font-family: var(--serif); font-size: 18px; margin: 0 0 12px; color: var(--gold);">
-              Enlistment Dossiers Queue
-            </h3>
-            <p style="font-size: 10px; color: #a4b5a2; margin: 0 0 14px;">Recent candidate applications under review for 2026-27 admission.</p>
-            <div style="display: grid; gap: 8px;">
-              <div style="padding: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 2px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <strong style="font-size: 11px; color: #fff;">Jennifer Hawk (#VC-2027-APP-9182)</strong>
-                  <small style="display: block; font-size: 9px; color: #a4b5a2;">B.Tech Science & Tech · VIBE-SAT Score: 94th Percentile</small>
-                </div>
-                <span class="trust-badge" style="background: rgba(46,125,50,.2); color: #81c784;">PROVISIONAL ADMIT</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(241,201,87,.25); padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> CENTRAL FLEET DATABASE · CREW MANIFEST</p>
+                <h2 style="font-family: var(--serif); font-size: 24px; margin: 0; color: #fff;">
+                  Central Member Directory & Crew Manifest
+                </h2>
               </div>
-              <div style="padding: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 2px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <strong style="font-size: 11px; color: #fff;">David Sterling (#VC-2027-APP-8841)</strong>
-                  <small style="display: block; font-size: 9px; color: #a4b5a2;">B.B.A. Maritime Commerce · 12th Board: 91.2%</small>
-                </div>
-                <span class="trust-badge" style="background: rgba(241,201,87,.2); color: var(--gold);">UNDER REVIEW</span>
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="search" id="member-search-input" placeholder="Search by name, roll, or branch..." style="background: rgba(255,255,255,.08); border: 1px solid rgba(241,201,87,.3); color: #fff; padding: 6px 12px; font-size: 11px; border-radius: 3px; min-width: 200px;" />
+                <button class="button button-gold" id="btn-open-enlist-modal" style="padding: 6px 14px; font-size: 10px;" type="button">
+                  + Enlist New Cadet
+                </button>
               </div>
             </div>
-          </div>
 
+            <div style="overflow-x: auto;">
+              <table class="admin-table" id="member-manifest-table">
+                <thead>
+                  <tr>
+                    <th>Crew Member</th>
+                    <th>Roll / Staff ID</th>
+                    <th>Station / Role</th>
+                    <th>Program / Department</th>
+                    <th>Enrolled Subjects</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="member-manifest-tbody">
+                  <!-- Dynamically populated from localStorage vc_members_db -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- SECTION 4: CADET PETITIONS & QUERY COMMAND DESK                -->
+        <!-- ============================================================== -->
+        <section style="padding: 0 6% 30px; max-width: 1140px; margin: 0 auto;" id="query-desk">
           <div class="admin-desk-card">
-            <h3 style="font-family: var(--serif); font-size: 18px; margin: 0 0 12px; color: var(--gold);">
-              Faculty Berth Vacancies & Applications
-            </h3>
-            <p style="font-size: 10px; color: #a4b5a2; margin: 0 0 14px;">Scholarly credentials submitted for academic berths.</p>
-            <div style="display: grid; gap: 8px;">
-              <div style="padding: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 2px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <strong style="font-size: 11px; color: #fff;">Dr. Nathan Ross, Ph.D. Imperial</strong>
-                  <small style="display: block; font-size: 9px; color: #a4b5a2;">Applied for: Professor in Autonomous Maritime AI</small>
-                </div>
-                <span class="trust-badge" style="background: rgba(46,125,50,.2); color: #81c784;">INVITED TO COLLOQUIUM</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(241,201,87,.25); padding-bottom: 16px; margin-bottom: 20px;">
+              <div>
+                <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> CADET SIGNALS · TWO-WAY DESK</p>
+                <h2 style="font-family: var(--serif); font-size: 24px; margin: 0; color: #fff;">
+                  Cadet Petition Resolution Desk
+                </h2>
               </div>
-              <div style="padding: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 2px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <strong style="font-size: 11px; color: #fff;">Dr. Serena Hayes, Ph.D. Scripps</strong>
-                  <small style="display: block; font-size: 9px; color: #a4b5a2;">Applied for: Senior Research Scientist in Ocean Climate</small>
+              <div style="display: flex; gap: 8px;">
+                <button class="button button-gold" id="btn-filter-all-queries" style="padding: 6px 12px; font-size: 10px;" type="button">All Signals</button>
+                <button class="button button-dark" id="btn-filter-pending-queries" style="padding: 6px 12px; font-size: 10px;" type="button">Pending Only</button>
+              </div>
+            </div>
+
+            <p style="font-size: 11px; color: #a4b5a2; margin: 0 0 18px; line-height: 1.6;">
+              Review direct petitions dispatched from the Pirate Student Deck. Type your official High Admiral Order below any query to transmit your decision straight back to the cadet's console.
+            </p>
+
+            <div id="admin-queries-container">
+              <!-- Dynamically populated from localStorage vc_queries -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- SECTION 5: SHIP'S LOG CIRCULARS BROADCAST STATION              -->
+        <!-- ============================================================== -->
+        <section style="padding: 0 6% 40px; max-width: 1140px; margin: 0 auto;" id="notice-station">
+          <div class="admin-desk-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(241,201,87,.25); padding-bottom: 14px; margin-bottom: 20px;">
+              <div>
+                <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> SHIP'S LOG · FLEET BROADCAST</p>
+                <h2 style="font-family: var(--serif); font-size: 24px; margin: 0; color: #fff;">
+                  Publish Official Circular to Ship’s Log
+                </h2>
+              </div>
+              <span class="trust-badge" style="background: rgba(241,201,87,.15); color: var(--gold); font-size: 9px;">
+                Transmits to All Cadet Screens
+              </span>
+            </div>
+
+            <form id="admin-broadcast-form">
+              <div class="bottle-form-row">
+                <div class="bottle-field">
+                  <label for="notice-title" style="color: #d6ded4; font-size: 11px;">Circular Title / Heading</label>
+                  <input type="text" id="notice-title" placeholder="E.g. Schedule for Annual Hack-the-Armada Regatta 2026" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
                 </div>
-                <span class="trust-badge" style="background: rgba(241,201,87,.2); color: var(--gold);">DOSSIER SCREENING</span>
+                <div class="bottle-field">
+                  <label for="notice-dept" style="color: #d6ded4; font-size: 11px;">Issuing Harbor Department</label>
+                  <input type="text" id="notice-dept" value="Office of the High Admiral & Controller of Examinations" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+                </div>
+              </div>
+              <div class="bottle-form-row">
+                <div class="bottle-field">
+                  <label for="notice-category" style="color: #d6ded4; font-size: 11px;">Category Tag</label>
+                  <select id="notice-category" style="background: #14241e; border-color: rgba(241,201,87,.3); color: #fff;">
+                    <option value="Urgent Circular">Urgent Circular (Red Alert)</option>
+                    <option value="Academic Notice" selected>Academic Notice</option>
+                    <option value="Regatta & Drills">Regatta & Drills</option>
+                    <option value="Hostel & Harbor">Hostel & Harbor Life</option>
+                  </select>
+                </div>
+                <div class="bottle-field">
+                  <label for="notice-date" style="color: #d6ded4; font-size: 11px;">Dispatch Date</label>
+                  <input type="text" id="notice-date" value="09 Oct 2026" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+                </div>
+              </div>
+              <div class="bottle-field" style="margin-bottom: 18px;">
+                <label for="notice-content" style="color: #d6ded4; font-size: 11px;">Circular Decree Body</label>
+                <textarea id="notice-content" rows="3" placeholder="Enter decree details, deadlines, and instructions for all hands on deck..." required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;"></textarea>
+              </div>
+              <button class="button button-gold" style="min-height: 42px; font-size: 11px;" type="submit">
+                <span>📢 Transmit Decree to Ship's Log →</span>
+              </button>
+            </form>
+            <div class="bottle-success-notice" id="broadcast-success">
+              <h4>✦ Decree Transmitted to the Ship's Log! ✦</h4>
+              <p>Your circular has been recorded into the admiralty ledger and is now visible on the Student Portal feed.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- SECTION 6: FLEET OPERATIONS & APPLICATIONS QUEUE               -->
+        <!-- ============================================================== -->
+        <section style="padding: 0 6% 60px; max-width: 1140px; margin: 0 auto;" id="fleet-ops">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;" class="calc-grid">
+            <div class="admin-desk-card">
+              <h3 style="font-family: var(--serif); font-size: 18px; margin: 0 0 12px; color: var(--gold);">
+                Enlistment Dossiers Queue
+              </h3>
+              <p style="font-size: 10px; color: #a4b5a2; margin: 0 0 14px;">Recent candidate applications under review for 2026-27 admission.</p>
+              <div style="display: grid; gap: 8px;">
+                <div style="padding: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 2px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <strong style="font-size: 11px; color: #fff;">Jennifer Hawk (#VC-2027-APP-9182)</strong>
+                    <small style="display: block; font-size: 9px; color: #a4b5a2;">B.Tech Science & Tech · VIBE-SAT Score: 94th Percentile</small>
+                  </div>
+                  <span class="trust-badge" style="background: rgba(46,125,50,.2); color: #81c784;">PROVISIONAL ADMIT</span>
+                </div>
+                <div style="padding: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 2px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <strong style="font-size: 11px; color: #fff;">David Sterling (#VC-2027-APP-8841)</strong>
+                    <small style="display: block; font-size: 9px; color: #a4b5a2;">B.B.A. Maritime Commerce · 12th Board: 91.2%</small>
+                  </div>
+                  <span class="trust-badge" style="background: rgba(241,201,87,.2); color: var(--gold);">UNDER REVIEW</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-desk-card">
+              <h3 style="font-family: var(--serif); font-size: 18px; margin: 0 0 12px; color: var(--gold);">
+                Faculty Berth Vacancies & Applications
+              </h3>
+              <p style="font-size: 10px; color: #a4b5a2; margin: 0 0 14px;">Scholarly credentials submitted for academic berths.</p>
+              <div style="display: grid; gap: 8px;">
+                <div style="padding: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 2px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <strong style="font-size: 11px; color: #fff;">Dr. Nathan Ross, Ph.D. Imperial</strong>
+                    <small style="display: block; font-size: 9px; color: #a4b5a2;">Applied for: Professor in Autonomous Maritime AI</small>
+                  </div>
+                  <span class="trust-badge" style="background: rgba(46,125,50,.2); color: #81c784;">INVITED TO COLLOQUIUM</span>
+                </div>
+                <div style="padding: 10px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 2px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <strong style="font-size: 11px; color: #fff;">Dr. Serena Hayes, Ph.D. Scripps</strong>
+                    <small style="display: block; font-size: 9px; color: #a4b5a2;">Applied for: Senior Research Scientist in Ocean Climate</small>
+                  </div>
+                  <span class="trust-badge" style="background: rgba(241,201,87,.2); color: var(--gold);">DOSSIER SCREENING</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+      </div>
     </main>
 
+    <!-- ENLIST NEW CADET MODAL -->
+    <div class="modal-backdrop" id="enlist-cadet-modal" role="dialog" aria-modal="true" aria-labelledby="enlist-modal-title">
+      <div class="modal-card" style="background: #14241e; border: 2px solid var(--gold); color: #f5eedf; max-width: 520px;">
+        <div class="modal-head">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 22px;">📜</span>
+            <h3 id="enlist-modal-title" style="margin: 0; font-family: var(--serif); font-size: 18px; color: var(--gold);">
+              Enlist New Cadet to Central Manifest
+            </h3>
+          </div>
+          <button class="modal-close" data-close-modal="enlist-cadet-modal" type="button" aria-label="Close modal" style="color: #f5eedf;">×</button>
+        </div>
+        <div class="modal-body" style="padding: 20px;">
+          <form id="enlist-cadet-form">
+            <div class="bottle-field" style="margin-bottom: 12px;">
+              <label for="new-cadet-name" style="color: #d6ded4; font-size: 11px;">Cadet Full Name</label>
+              <input type="text" id="new-cadet-name" placeholder="E.g. Morgan Drake" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+            </div>
+            <div class="bottle-form-row" style="margin-bottom: 12px;">
+              <div class="bottle-field">
+                <label for="new-cadet-roll" style="color: #d6ded4; font-size: 11px;">Roll Number</label>
+                <input type="text" id="new-cadet-roll" placeholder="E.g. VC-2024-TECH-088" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+              </div>
+              <div class="bottle-field">
+                <label for="new-cadet-rank" style="color: #d6ded4; font-size: 11px;">Rank / Station</label>
+                <select id="new-cadet-rank" style="background: #0d1b15; border-color: rgba(241,201,87,.3); color: #fff;">
+                  <option value="Cadet Midshipman">Cadet Midshipman</option>
+                  <option value="Quartermaster">Quartermaster</option>
+                  <option value="First Mate">First Mate</option>
+                  <option value="Boatswain">Boatswain</option>
+                </select>
+              </div>
+            </div>
+            <div class="bottle-form-row" style="margin-bottom: 18px;">
+              <div class="bottle-field">
+                <label for="new-cadet-prog" style="color: #d6ded4; font-size: 11px;">Academic Program</label>
+                <select id="new-cadet-prog" style="background: #0d1b15; border-color: rgba(241,201,87,.3); color: #fff;">
+                  <option value="B.Tech Computer Science & Maritime AI">B.Tech CS & Maritime AI</option>
+                  <option value="B.Tech Subsea Robotics & Automation">B.Tech Subsea Robotics</option>
+                  <option value="B.Sc Celestial Astrogation">B.Sc Celestial Astrogation</option>
+                  <option value="B.B.A. Maritime Commerce & Logistics">B.B.A. Maritime Commerce</option>
+                  <option value="B.Des Naval Architecture & Design">B.Des Naval Architecture</option>
+                </select>
+              </div>
+              <div class="bottle-field">
+                <label for="new-cadet-email" style="color: #d6ded4; font-size: 11px;">Fleet Pigeon Email</label>
+                <input type="email" id="new-cadet-email" placeholder="cadet@vibe.edu" required style="background: rgba(255,255,255,.08); border-color: rgba(241,201,87,.3); color: #fff;" />
+              </div>
+            </div>
+            <button class="button button-gold" style="width: 100%; min-height: 42px; font-size: 11px;" type="submit">
+              <span>⚓ Seal Enlistment into Fleet Manifest →</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <!-- FOOTER -->
-    <footer class="site-footer">
+    <footer class="site-footer" style="border-top: 1px solid rgba(241,201,87,.2);">
       <div style="max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; font-size: 10px; color: #728273;">
-        <span>© 2026 Vibe College · Captain's Headquarters & Sovereign Admiralty Bridge.</span>
+        <span>© 2026 Vibe College · Captain's Headquarters & Sovereign Admiralty Bridge. Central Database Synchronized.</span>
         <div style="display: flex; gap: 16px;">
           <a href="index.html" style="color: #a4b5a2;">Public Harbor</a>
           <a href="student.html" style="color: #a4b5a2;">Student Deck</a>

@@ -415,6 +415,7 @@ const portalPanes = {
   timetable: document.querySelector("#portal-pane-timetable"),
   fees: document.querySelector("#portal-pane-fees"),
   log: document.querySelector("#portal-pane-log"),
+  courses: document.querySelector("#portal-pane-courses"),
 };
 
 portalNavBtns.forEach((btn) => {
@@ -448,6 +449,7 @@ const btnPortalReceipt = document.querySelector("#btn-portal-view-receipt");
 if (btnPortalReceipt) {
   btnPortalReceipt.addEventListener("click", () => {
     const receiptBody = document.querySelector("#receipt-modal-body");
+    const auth = getAuth() || { name: "Cadet Jack Sparrow", roll: "VC-2024-TECH-042", program: "B.Tech Navigational Engineering" };
     if (receiptBody) {
       receiptBody.innerHTML = `
         <div style="padding: 20px; background: #fffdf8; border: 2px dashed #b8974d; border-radius: 4px; font-family: monospace;">
@@ -456,10 +458,10 @@ if (btnPortalReceipt) {
             <p style="margin: 4px 0 0; font-size: 11px;">OFFICIAL CLEARANCE SCROLL · SEMESTER 5</p>
           </div>
           <table style="width: 100%; font-size: 11px; margin-bottom: 14px;">
-            <tr><td><strong>Mariner Name:</strong></td><td>Cadet Jack Sparrow</td></tr>
-            <tr><td><strong>Roll Number:</strong></td><td>VC-2024-TECH-042</td></tr>
-            <tr><td><strong>Program:</strong></td><td>B.Tech Navigational Engineering</td></tr>
-            <tr><td><strong>Transaction Ref:</strong></td><td>TXN-VC-99418294 (Paid in Full)</td></tr>
+            <tr><td><strong>Mariner Name:</strong></td><td>${auth.name || "Cadet Sailor"}</td></tr>
+            <tr><td><strong>Roll Number:</strong></td><td>${auth.roll || "VC-2024-001"}</td></tr>
+            <tr><td><strong>Program:</strong></td><td>${auth.program || "Maritime Arts & Science"}</td></tr>
+            <tr><td><strong>Transaction Ref:</strong></td><td>TXN-VC-${Math.floor(10000000 + Math.random() * 90000000)} (Paid in Full)</td></tr>
             <tr><td><strong>Payment Mode:</strong></td><td>Maritime NetBanking (SBI Allied)</td></tr>
             <tr><td><strong>Date of Stamp:</strong></td><td>12 August 2026</td></tr>
           </table>
@@ -1611,9 +1613,11 @@ const alertSuccess = document.querySelector("#alert-success");
 const successWelcomeMsg = document.querySelector("#success-welcome-msg");
 const btnRetryClimb = document.querySelector("#btn-retry-climb");
 const btnQuickCadet = document.querySelector("#btn-quick-cadet");
+const btnQuickHawk = document.querySelector("#btn-quick-hawk");
+const btnQuickDavid = document.querySelector("#btn-quick-david");
 const btnQuickCaptain = document.querySelector("#btn-quick-captain");
 
-function playBoardingSuccess(role, name, roll, rank) {
+function playBoardingSuccess(role, name, roll, rank, program) {
   if (ropeWrapper) {
     ropeWrapper.classList.remove("is-cutting", "is-severed");
     ropeWrapper.classList.add("is-success");
@@ -1621,12 +1625,12 @@ function playBoardingSuccess(role, name, roll, rank) {
   if (alertFailure) alertFailure.classList.remove("is-active");
   if (alertSuccess) {
     if (successWelcomeMsg) {
-      successWelcomeMsg.textContent = `Permission to board granted! Welcome aboard, ${name} (${rank} · ${roll}). Hoisting the gangplank...`;
+      successWelcomeMsg.textContent = `Permission to board granted! Welcome aboard, ${name} (${rank || role} · ${roll}). Hoisting the gangplank...`;
     }
     alertSuccess.classList.add("is-active");
   }
 
-  setAuth({ role, name, roll, rank });
+  setAuth({ role, name, roll, rank, program });
 
   // Play boarding transition and redirect
   setTimeout(() => {
@@ -1671,13 +1675,25 @@ if (btnRetryClimb) {
 
 if (btnQuickCadet) {
   btnQuickCadet.addEventListener("click", () => {
-    playBoardingSuccess("student", "Cadet Jack Sparrow", "VC-2024-TECH-042", "Quartermaster");
+    playBoardingSuccess("student", "Cadet Jack Sparrow", "VC-2024-TECH-042", "Quartermaster", "B.Tech Computer Science & Maritime AI");
+  });
+}
+
+if (btnQuickHawk) {
+  btnQuickHawk.addEventListener("click", () => {
+    playBoardingSuccess("student", "Cadet Jennifer Hawk", "VC-2024-NAV-018", "First Mate", "B.Sc Celestial Astrogation");
+  });
+}
+
+if (btnQuickDavid) {
+  btnQuickDavid.addEventListener("click", () => {
+    playBoardingSuccess("student", "Cadet David Sterling", "VC-2024-COMM-099", "Cadet Midshipman", "B.B.A. Maritime Commerce & Logistics");
   });
 }
 
 if (btnQuickCaptain) {
   btnQuickCaptain.addEventListener("click", () => {
-    playBoardingSuccess("admin", "High Admiral Sterling", "VC-ADM-001", "Fleet Commander");
+    playBoardingSuccess("admin", "High Admiral Sterling", "VC-ADM-001", "Fleet Commander", "Admiralty Command");
   });
 }
 
@@ -1688,14 +1704,24 @@ if (boardingForm) {
     const password = (document.querySelector("#login-password")?.value || "").trim();
     const selectedRole = document.querySelector("#login-role")?.value || "student";
 
+    const members = typeof getMembersDb === "function" ? getMembersDb() : [];
+    const matchedMember = members.find(
+      (m) =>
+        m.roll.toLowerCase() === username ||
+        m.name.toLowerCase().includes(username) ||
+        (username.length >= 3 && m.email && m.email.toLowerCase().includes(username))
+    );
+
     // Authentication verification
-    const isCadet = (username === "cadet" || username === "sparrow" || selectedRole === "student") && password === "pirate123";
-    const isCaptain = (username === "captain" || username === "sterling" || selectedRole === "admin") && (password === "admin123" || password === "captain123");
+    const isCaptain = (username === "captain" || username === "sterling" || selectedRole === "admin" || (matchedMember && matchedMember.role === "admin")) && (password === "admin123" || password === "captain123");
+    const isCadetPass = password === "pirate123";
 
     if (isCaptain) {
-      playBoardingSuccess("admin", "High Admiral Sterling", "VC-ADM-001", "Fleet Commander");
-    } else if (isCadet) {
-      playBoardingSuccess("student", "Cadet Jack Sparrow", "VC-2024-TECH-042", "Quartermaster");
+      playBoardingSuccess("admin", "High Admiral Sterling", "VC-ADM-001", "Fleet Commander", "Admiralty Command");
+    } else if (matchedMember && isCadetPass) {
+      playBoardingSuccess(matchedMember.role, matchedMember.name, matchedMember.roll, matchedMember.rank, matchedMember.program);
+    } else if (isCadetPass) {
+      playBoardingSuccess("student", "Cadet Jack Sparrow", "VC-2024-TECH-042", "Quartermaster", "B.Tech Computer Science & Maritime AI");
     } else {
       playBoardingFailure();
     }
@@ -1703,7 +1729,7 @@ if (boardingForm) {
 }
 
 // ==============================================================
-// 4. STUDENT DECK: FAQS, QUERIES & TABS (student.html)
+// 4. STUDENT DECK: MULTI-TENANT CONTAINER & FAQS (STUDENT.HTML)
 // ==============================================================
 const btnLogout = document.querySelector("#btn-logout");
 if (btnLogout) {
@@ -1711,6 +1737,48 @@ if (btnLogout) {
     clearAuth();
     window.location.href = "login.html";
   });
+}
+
+function initStudentContainer() {
+  const heroNameEl = document.querySelector("#cadet-hero-name");
+  if (!heroNameEl) return;
+
+  const auth = getAuth() || {
+    roll: "VC-2024-TECH-042",
+    name: "Cadet Jack Sparrow",
+    rank: "Quartermaster",
+    program: "B.Tech Computer Science & Maritime AI"
+  };
+
+  const members = typeof getMembersDb === "function" ? getMembersDb() : [];
+  const cadet = members.find((m) => m.roll === auth.roll) || auth;
+
+  // Compute Initials
+  const nameParts = (cadet.name || "Jack Sparrow").replace(/^(Cadet|Captain|Dr\.|Prof\.)\s*/i, "").trim().split(" ");
+  const initials = nameParts.length >= 2 ? (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase() : nameParts[0].slice(0, 2).toUpperCase();
+
+  // Populate dynamic profile elements
+  const avatarEl = document.querySelector("#cadet-avatar-initials");
+  const heroRollEl = document.querySelector("#cadet-hero-roll");
+  const heroProgEl = document.querySelector("#cadet-hero-program");
+  const badgeRankEl = document.querySelector("#cadet-badge-rank");
+  const topRankEl = document.querySelector("#cadet-top-rank");
+  const statAttendEl = document.querySelector("#cadet-stat-attendance");
+  const statGpaEl = document.querySelector("#cadet-stat-gpa");
+  const statDuesEl = document.querySelector("#cadet-stat-dues");
+
+  if (avatarEl) avatarEl.textContent = initials;
+  if (heroNameEl) heroNameEl.textContent = `Ahoy, ${cadet.name}!`;
+  if (heroRollEl) heroRollEl.textContent = cadet.roll;
+  if (heroProgEl) heroProgEl.textContent = cadet.program || "Maritime Arts & Computational Science";
+  if (badgeRankEl) badgeRankEl.textContent = `Rank: ${cadet.rank || "Quartermaster"}`;
+  if (topRankEl) topRankEl.textContent = `Rank: ${cadet.rank || "Quartermaster"} (${cadet.roll})`;
+  if (statAttendEl) statAttendEl.textContent = cadet.attendance || "88.4%";
+  if (statGpaEl) statGpaEl.textContent = cadet.gpa ? `${cadet.gpa} / 10` : "9.18 / 10";
+  if (statDuesEl) statDuesEl.textContent = cadet.dues || "₹0.00";
+
+  renderStudentQueryHistory();
+  if (typeof renderStudentCoursesPane === "function") renderStudentCoursesPane();
 }
 
 // Cadet FAQs Accordion
@@ -1735,23 +1803,28 @@ document.querySelectorAll(".faq-trigger").forEach((trigger) => {
   });
 });
 
-// Render Student Query Ledger
+// Render Student Query Ledger (Isolated to Active Logged-In Cadet)
 function renderStudentQueryHistory() {
   const container = document.querySelector("#student-query-history");
   if (!container) return;
 
-  const queries = getStoredQueries();
-  if (!queries || queries.length === 0) {
+  const auth = getAuth() || { roll: "VC-2024-TECH-042", name: "Cadet Jack Sparrow" };
+  const allQueries = getStoredQueries();
+
+  // Strict Container Isolation: Filter queries for this student only
+  const myQueries = allQueries.filter((q) => q.roll === auth.roll || q.studentName === auth.name);
+
+  if (myQueries.length === 0) {
     container.innerHTML = `
       <div style="text-align: center; padding: 28px 12px; color: #889487;">
         <span style="font-size: 32px; display: block; margin-bottom: 8px;">📭</span>
-        <p style="margin: 0; font-size: 11px;">No signals dispatched yet. Use the parchment form on the left to petition the Captain!</p>
+        <p style="margin: 0; font-size: 11px;">No signals dispatched yet for <strong>${auth.name}</strong>. Use the parchment form on the left to petition the Captain!</p>
       </div>
     `;
     return;
   }
 
-  container.innerHTML = queries
+  container.innerHTML = myQueries
     .map((q) => {
       const isAnswered = q.status === "answered";
       const statusBadge = isAnswered
@@ -1805,7 +1878,7 @@ function renderStudentQueryHistory() {
 // Student Query Form Submission
 const cadetQueryForm = document.querySelector("#cadet-query-form");
 if (cadetQueryForm) {
-  renderStudentQueryHistory();
+  initStudentContainer();
 
   cadetQueryForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -2110,5 +2183,939 @@ if (btnMapLogout) {
 if (document.querySelector("#portcullis-lockout")) {
   initMapSecurity();
 }
+
+/* ============================================================== */
+/* CENTRAL DATABASE & COURSE ENROLLMENT ENGINE                    */
+/* Unified Manifest, Subject Registry, Approvals & Direct Admin   */
+/* ============================================================== */
+
+// 1. DEFAULT SEED DATABASE
+const DEFAULT_MEMBERS_DB = [
+  {
+    roll: "VC-2024-TECH-042",
+    name: "Cadet Jack Sparrow",
+    role: "student",
+    rank: "Quartermaster",
+    program: "B.Tech Computer Science & Maritime AI",
+    batch: "2024-2028",
+    email: "sparrow.j@vibe.edu",
+    gpa: 9.18,
+    enrolledCourses: ["CS-301", "CS-302", "NV-201", "AI-405"],
+    status: "Active"
+  },
+  {
+    roll: "VC-2024-NAV-018",
+    name: "Cadet Jennifer Hawk",
+    role: "student",
+    rank: "First Mate",
+    program: "B.Sc Celestial Astrogation",
+    batch: "2024-2028",
+    email: "hawk.j@vibe.edu",
+    gpa: 9.42,
+    enrolledCourses: ["NV-201", "AI-405", "NA-101"],
+    status: "Active"
+  },
+  {
+    roll: "VC-2024-COMM-099",
+    name: "Cadet David Sterling",
+    role: "student",
+    rank: "Cadet Midshipman",
+    program: "B.B.A. Maritime Commerce & Logistics",
+    batch: "2024-2028",
+    email: "sterling.d@vibe.edu",
+    gpa: 8.75,
+    enrolledCourses: ["BM-401", "NA-101"],
+    status: "Active"
+  },
+  {
+    roll: "VC-2024-TECH-055",
+    name: "Cadet Morgan Drake",
+    role: "student",
+    rank: "Boatswain",
+    program: "B.Tech Subsea Robotics & Automation",
+    batch: "2024-2028",
+    email: "drake.m@vibe.edu",
+    gpa: 8.94,
+    enrolledCourses: ["CS-301", "NA-101"],
+    status: "Active"
+  },
+  {
+    roll: "FAC-CS-01",
+    name: "Dr. Alistair Roy",
+    role: "faculty",
+    rank: "Professor Navigator",
+    program: "Computer Science & Cryptography",
+    batch: "Faculty",
+    email: "roy.a@vibe.edu",
+    gpa: null,
+    enrolledCourses: ["CS-302"],
+    status: "Active"
+  },
+  {
+    roll: "FAC-NAV-02",
+    name: "Captain Sarah Vance",
+    role: "faculty",
+    rank: "Master Navigator",
+    program: "Celestial Astrogation & Cartography",
+    batch: "Faculty",
+    email: "vance.s@vibe.edu",
+    gpa: null,
+    enrolledCourses: ["NV-201"],
+    status: "Active"
+  },
+  {
+    roll: "FAC-ROB-03",
+    name: "Dr. Priya Malhotra",
+    role: "faculty",
+    rank: "Dean of Subsea Robotics",
+    program: "Robotics & AI Systems",
+    batch: "Faculty",
+    email: "malhotra.p@vibe.edu",
+    gpa: null,
+    enrolledCourses: ["CS-301", "AI-405"],
+    status: "Active"
+  },
+  {
+    roll: "VC-ADM-001",
+    name: "High Admiral Sterling",
+    role: "admin",
+    rank: "Fleet Commander",
+    program: "Admiralty Command",
+    batch: "Admiralty",
+    email: "admiral.sterling@vibe.edu",
+    gpa: null,
+    enrolledCourses: [],
+    status: "Active"
+  }
+];
+
+const DEFAULT_COURSES_DB = [
+  {
+    code: "CS-301",
+    title: "Subsea Autonomous Systems & Robotics",
+    credits: 4,
+    dept: "Computer Science & Robotics",
+    instructor: "Dr. Priya Malhotra",
+    capacity: 40,
+    enrolledCount: 34,
+    schedule: "Mon & Wed 09:00 - 11:00 Tide",
+    description: "Underwater localization, lidar point clouds, hydrophone telemetry, and ROS2 navigation stacks."
+  },
+  {
+    code: "CS-302",
+    title: "Maritime Cryptography & Cyber Rig",
+    credits: 4,
+    dept: "Computer Science & Cyber Defense",
+    instructor: "Dr. Alistair Roy",
+    capacity: 35,
+    enrolledCount: 29,
+    schedule: "Tue & Thu 10:00 - 12:00 Tide",
+    description: "Elliptic curve naval comms, vessel telemetry zero-knowledge proofs, and sovereign quantum rig defense."
+  },
+  {
+    code: "NV-201",
+    title: "Celestial Astrogation & Satellite Lidar",
+    credits: 3,
+    dept: "Navigation & Nautical Science",
+    instructor: "Captain Sarah Vance",
+    capacity: 50,
+    enrolledCount: 42,
+    schedule: "Mon & Fri 14:00 - 15:30 Tide",
+    description: "Deep sea astronomical bearings, sextant precision, satellite geodesy, and oceanic current mapping."
+  },
+  {
+    code: "BM-401",
+    title: "High-Seas Trade Law & Maritime Logistics",
+    credits: 3,
+    dept: "Maritime Commerce",
+    instructor: "Commander Tariq",
+    capacity: 45,
+    enrolledCount: 38,
+    schedule: "Wed & Fri 11:30 - 13:00 Tide",
+    description: "Admiralty charter contracts, bill of lading protocols, international salvage treaties, and port economics."
+  },
+  {
+    code: "NA-101",
+    title: "Advanced Naval Architecture & Hydrodynamics",
+    credits: 4,
+    dept: "Naval Architecture",
+    instructor: "Prof. Elena Rostova",
+    capacity: 30,
+    enrolledCount: 22,
+    schedule: "Tue & Thu 14:00 - 16:00 Tide",
+    description: "Hull wave resistance, computational fluid dynamics, composite hull stress analysis, and trim modeling."
+  },
+  {
+    code: "AI-405",
+    title: "Fleet Predictive Navigation & Machine Learning",
+    credits: 3,
+    dept: "Applied AI",
+    instructor: "Dr. Priya Malhotra",
+    capacity: 40,
+    enrolledCount: 31,
+    schedule: "Wed & Fri 16:00 - 17:30 Tide",
+    description: "Neural storm trajectory forecasting, AIS collision prediction, and reinforcement learning fleet routing."
+  }
+];
+
+const DEFAULT_ENROLLMENTS_DB = [
+  {
+    id: "ENR-8101",
+    studentRoll: "VC-2024-TECH-042",
+    studentName: "Cadet Jack Sparrow",
+    courseCode: "CS-301",
+    courseTitle: "Subsea Autonomous Systems & Robotics",
+    credits: 4,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "06 Oct 2026",
+    status: "approved",
+    approvalDate: "07 Oct 2026",
+    adminDecree: "Approved for Quartermaster capstone research."
+  },
+  {
+    id: "ENR-8102",
+    studentRoll: "VC-2024-TECH-042",
+    studentName: "Cadet Jack Sparrow",
+    courseCode: "CS-302",
+    courseTitle: "Maritime Cryptography & Cyber Rig",
+    credits: 4,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "06 Oct 2026",
+    status: "approved",
+    approvalDate: "07 Oct 2026",
+    adminDecree: "Approved for cyber track."
+  },
+  {
+    id: "ENR-8103",
+    studentRoll: "VC-2024-TECH-042",
+    studentName: "Cadet Jack Sparrow",
+    courseCode: "NV-201",
+    courseTitle: "Celestial Astrogation & Satellite Lidar",
+    credits: 3,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "07 Oct 2026",
+    status: "approved",
+    approvalDate: "08 Oct 2026",
+    adminDecree: "Approved core requirement."
+  },
+  {
+    id: "ENR-8104",
+    studentRoll: "VC-2024-TECH-042",
+    studentName: "Cadet Jack Sparrow",
+    courseCode: "AI-405",
+    courseTitle: "Fleet Predictive Navigation & Machine Learning",
+    credits: 3,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "07 Oct 2026",
+    status: "approved",
+    approvalDate: "08 Oct 2026",
+    adminDecree: "Approved elective."
+  },
+  {
+    id: "ENR-8105",
+    studentRoll: "VC-2024-TECH-042",
+    studentName: "Cadet Jack Sparrow",
+    courseCode: "NA-101",
+    courseTitle: "Advanced Naval Architecture & Hydrodynamics",
+    credits: 4,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "09 Oct 2026",
+    status: "pending_approval",
+    approvalDate: null,
+    adminDecree: null
+  },
+  {
+    id: "ENR-8106",
+    studentRoll: "VC-2024-NAV-018",
+    studentName: "Cadet Jennifer Hawk",
+    courseCode: "CS-302",
+    courseTitle: "Maritime Cryptography & Cyber Rig",
+    credits: 4,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "09 Oct 2026",
+    status: "pending_approval",
+    approvalDate: null,
+    adminDecree: null
+  },
+  {
+    id: "ENR-8107",
+    studentRoll: "VC-2024-COMM-099",
+    studentName: "Cadet David Sterling",
+    courseCode: "CS-301",
+    courseTitle: "Subsea Autonomous Systems & Robotics",
+    credits: 4,
+    term: "Term 2026-27 (Autumn)",
+    requestDate: "09 Oct 2026",
+    status: "pending_approval",
+    approvalDate: null,
+    adminDecree: null
+  }
+];
+
+function getMembersDb() {
+  try {
+    const raw = localStorage.getItem("vc_members_db");
+    if (raw) return JSON.parse(raw);
+    localStorage.setItem("vc_members_db", JSON.stringify(DEFAULT_MEMBERS_DB));
+    return DEFAULT_MEMBERS_DB;
+  } catch (e) {
+    return DEFAULT_MEMBERS_DB;
+  }
+}
+
+function saveMembersDb(members) {
+  try {
+    localStorage.setItem("vc_members_db", JSON.stringify(members));
+  } catch (e) {}
+}
+
+function getCoursesDb() {
+  try {
+    const raw = localStorage.getItem("vc_courses_db");
+    if (raw) return JSON.parse(raw);
+    localStorage.setItem("vc_courses_db", JSON.stringify(DEFAULT_COURSES_DB));
+    return DEFAULT_COURSES_DB;
+  } catch (e) {
+    return DEFAULT_COURSES_DB;
+  }
+}
+
+function saveCoursesDb(courses) {
+  try {
+    localStorage.setItem("vc_courses_db", JSON.stringify(courses));
+  } catch (e) {}
+}
+
+function getEnrollmentsDb() {
+  try {
+    const raw = localStorage.getItem("vc_enrollments_db");
+    if (raw) return JSON.parse(raw);
+    localStorage.setItem("vc_enrollments_db", JSON.stringify(DEFAULT_ENROLLMENTS_DB));
+    return DEFAULT_ENROLLMENTS_DB;
+  } catch (e) {
+    return DEFAULT_ENROLLMENTS_DB;
+  }
+}
+
+function saveEnrollmentsDb(enrollments) {
+  try {
+    localStorage.setItem("vc_enrollments_db", JSON.stringify(enrollments));
+  } catch (e) {}
+}
+
+// ==============================================================
+// 2. ADMIRALTY SECURITY GATE HANDLERS (ADMIN.HTML)
+// ==============================================================
+function initAdminSecurity() {
+  const gateEl = document.querySelector("#admin-auth-gate");
+  const bridgeEl = document.querySelector("#admin-bridge-content");
+  if (!gateEl || !bridgeEl) return;
+
+  const auth = getAuth();
+  if (auth && auth.role === "admin") {
+    // Authenticated High Admiral!
+    gateEl.style.display = "none";
+    bridgeEl.style.display = "block";
+
+    // Initialize all admin bridge desks
+    renderAdminEnrollmentsDesk();
+    populateDirectRegForm();
+    renderAdminMembersRoster();
+    if (typeof renderAdminQueries === "function") renderAdminQueries();
+  } else {
+    // Unauthenticated: Show Sovereign Gate
+    gateEl.style.display = "block";
+    bridgeEl.style.display = "none";
+  }
+}
+
+const adminGateForm = document.querySelector("#admin-gate-login-form");
+const btnQuickAdminUnlock = document.querySelector("#btn-quick-admin-unlock");
+
+if (adminGateForm) {
+  adminGateForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const id = (document.querySelector("#admin-login-id")?.value || "").trim().toLowerCase();
+    const key = (document.querySelector("#admin-login-key")?.value || "").trim();
+    const errorEl = document.querySelector("#admin-gate-error");
+
+    const isValid = (id === "captain" || id === "sterling" || id === "admin") && (key === "admin123" || key === "captain123");
+
+    if (isValid) {
+      if (errorEl) errorEl.textContent = "";
+      setAuth({
+        role: "admin",
+        name: "High Admiral Sterling",
+        roll: "VC-ADM-001",
+        rank: "Fleet Commander"
+      });
+      initAdminSecurity();
+    } else {
+      if (errorEl) {
+        errorEl.textContent = "☠ Sovereign Clearance Denied! Invalid Captain ID or counter-sign.";
+      }
+    }
+  });
+}
+
+if (btnQuickAdminUnlock) {
+  btnQuickAdminUnlock.addEventListener("click", () => {
+    setAuth({
+      role: "admin",
+      name: "High Admiral Sterling",
+      roll: "VC-ADM-001",
+      rank: "Fleet Commander"
+    });
+    initAdminSecurity();
+  });
+}
+
+if (document.querySelector("#admin-auth-gate")) {
+  initAdminSecurity();
+}
+
+// ==============================================================
+// 3. STUDENT COURSE ENROLLMENT & ELECTIVE BAY (STUDENT.HTML)
+// ==============================================================
+function renderStudentCoursesPane() {
+  const pane = document.querySelector("#portal-pane-courses");
+  if (!pane) return;
+
+  const auth = getAuth() || { roll: "VC-2024-TECH-042", name: "Cadet Jack Sparrow" };
+  const userRoll = auth.roll || "VC-2024-TECH-042";
+
+  const allEnrollments = getEnrollmentsDb();
+  const allCourses = getCoursesDb();
+
+  const myApproved = allEnrollments.filter((e) => e.studentRoll === userRoll && e.status === "approved");
+  const myPending = allEnrollments.filter((e) => e.studentRoll === userRoll && e.status === "pending_approval");
+
+  // Calculate total approved credits
+  const totalCredits = myApproved.reduce((acc, curr) => acc + (curr.credits || 0), 0);
+
+  const creditsEl = document.querySelector("#cadet-enrolled-credits");
+  const approvedCountEl = document.querySelector("#cadet-approved-count");
+  const pendingCountEl = document.querySelector("#cadet-pending-count");
+
+  if (creditsEl) creditsEl.textContent = `${totalCredits} Credits`;
+  if (approvedCountEl) approvedCountEl.textContent = `${myApproved.length} Subjects`;
+  if (pendingCountEl) pendingCountEl.textContent = `${myPending.length} Elective${myPending.length === 1 ? "" : "s"}`;
+
+  // 1. Render Approved Enrolled Subjects
+  const approvedListEl = document.querySelector("#cadet-enrolled-courses-list");
+  if (approvedListEl) {
+    if (myApproved.length === 0) {
+      approvedListEl.innerHTML = `<p style="grid-column: 1/-1; color: #728273; font-size: 11px;">No active subjects approved yet. Browse available electives below.</p>`;
+    } else {
+      approvedListEl.innerHTML = myApproved
+        .map((enr) => {
+          const courseInfo = allCourses.find((c) => c.code === enr.courseCode) || {};
+          return `
+            <div class="course-enroll-card" style="border-left: 3px solid #2e7d32;">
+              <div>
+                <div class="course-enroll-header">
+                  <div>
+                    <span class="credit-chip">${enr.courseCode} · ${enr.credits} Credits</span>
+                    <h4 style="margin: 6px 0 2px; font-family: var(--serif); font-size: 15px; color: var(--sea);">${enr.courseTitle}</h4>
+                  </div>
+                  <span class="course-status-pill status-approved">Approved ⚓</span>
+                </div>
+                <p style="margin: 0 0 10px; font-size: 11px; color: #5a6258; line-height: 1.5;">
+                  ${courseInfo.description || "Core maritime module."}
+                </p>
+              </div>
+              <div style="border-top: 1px solid #f0e9d9; padding-top: 10px; font-size: 10px; color: #6d756b;">
+                <div><strong>Instructor:</strong> ${courseInfo.instructor || "Faculty Navigator"}</div>
+                <div><strong>Watch Schedule:</strong> ${courseInfo.schedule || "Regular Tides"}</div>
+                <div style="margin-top: 4px; font-size: 9px; color: #2e7d32;">Decree: ${enr.adminDecree || "Approved by Admiralty Bridge"}</div>
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+  }
+
+  // 2. Render Pending Applications
+  const pendingListEl = document.querySelector("#cadet-pending-courses-list");
+  if (pendingListEl) {
+    if (myPending.length === 0) {
+      pendingListEl.innerHTML = `<p style="grid-column: 1/-1; color: #728273; font-size: 11px;">No pending applications. All requested berths have been processed.</p>`;
+    } else {
+      pendingListEl.innerHTML = myPending
+        .map((enr) => {
+          return `
+            <div class="course-enroll-card" style="border-left: 3px solid #f59f00;">
+              <div>
+                <div class="course-enroll-header">
+                  <div>
+                    <span class="credit-chip" style="background: #fff3cd; color: #856404;">${enr.courseCode} · ${enr.credits} Credits</span>
+                    <h4 style="margin: 6px 0 2px; font-family: var(--serif); font-size: 15px; color: #856404;">${enr.courseTitle}</h4>
+                  </div>
+                  <span class="course-status-pill status-pending">Awaiting Decree ⏳</span>
+                </div>
+                <p style="margin: 0 0 10px; font-size: 11px; color: #5a6258;">
+                  Application transmitted to High Admiral Sterling on <strong>${enr.requestDate}</strong>.
+                </p>
+              </div>
+              <div style="border-top: 1px solid #f0e9d9; padding-top: 8px; font-size: 10px; color: #856404;">
+                <span>Ref: ${enr.id} · Term: ${enr.term}</span>
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+  }
+
+  // 3. Render Available Elective Catalog
+  const catalogEl = document.querySelector("#available-courses-catalog");
+  if (catalogEl) {
+    const enrolledOrPendingCodes = allEnrollments
+      .filter((e) => e.studentRoll === userRoll && (e.status === "approved" || e.status === "pending_approval"))
+      .map((e) => e.courseCode);
+
+    const availableCourses = allCourses.filter((c) => !enrolledOrPendingCodes.includes(c.code));
+
+    if (availableCourses.length === 0) {
+      catalogEl.innerHTML = `<p style="grid-column: 1/-1; color: #2e7d32; font-size: 11px;">✦ Ye have applied for or enrolled in all available elective berths for this term!</p>`;
+    } else {
+      catalogEl.innerHTML = availableCourses
+        .map((c) => {
+          const capPercent = Math.min(100, Math.round((c.enrolledCount / c.capacity) * 100));
+          return `
+            <div class="course-enroll-card">
+              <div>
+                <div class="course-enroll-header">
+                  <div>
+                    <span class="credit-chip">${c.code} · ${c.credits} Credits</span>
+                    <h4 style="margin: 6px 0 2px; font-family: var(--serif); font-size: 15px; color: var(--sea);">${c.title}</h4>
+                    <span style="font-size: 9px; color: var(--gold); text-transform: uppercase; font-weight: 700;">${c.dept}</span>
+                  </div>
+                </div>
+                <p style="margin: 8px 0 10px; font-size: 11px; color: #5a6258; line-height: 1.5;">
+                  ${c.description}
+                </p>
+                <div style="font-size: 10px; color: #6d756b; margin-bottom: 8px;">
+                  <div><strong>Navigator:</strong> ${c.instructor}</div>
+                  <div><strong>Tide Schedule:</strong> ${c.schedule}</div>
+                </div>
+                <div style="margin-bottom: 12px;">
+                  <div style="display: flex; justify-content: space-between; font-size: 9px; color: #889487;">
+                    <span>Berth Occupancy</span>
+                    <span><strong>${c.enrolledCount}</strong> / ${c.capacity} Cadets</span>
+                  </div>
+                  <div class="berth-progress">
+                    <div class="berth-progress-fill" style="width: ${capPercent}%;"></div>
+                  </div>
+                </div>
+              </div>
+              <button class="button button-gold btn-apply-course" data-ccode="${c.code}" style="width: 100%; font-size: 10px; padding: 8px 12px;" type="button">
+                Apply for Course Berth ⚓ →
+              </button>
+            </div>
+          `;
+        })
+        .join("");
+
+      // Attach apply button listeners
+      catalogEl.querySelectorAll(".btn-apply-course").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const ccode = btn.dataset.ccode;
+          const targetCourse = allCourses.find((c) => c.code === ccode);
+          if (!targetCourse) return;
+
+          const enrollments = getEnrollmentsDb();
+          const newEnrollment = {
+            id: "ENR-" + Math.floor(8000 + Math.random() * 2000),
+            studentRoll: userRoll,
+            studentName: auth.name || "Cadet Jack Sparrow",
+            courseCode: targetCourse.code,
+            courseTitle: targetCourse.title,
+            credits: targetCourse.credits,
+            term: "Term 2026-27 (Autumn)",
+            requestDate: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
+            status: "pending_approval",
+            approvalDate: null,
+            adminDecree: null
+          };
+
+          enrollments.unshift(newEnrollment);
+          saveEnrollmentsDb(enrollments);
+
+          alert(`⚓ Application for ${targetCourse.title} (${targetCourse.code}) transmitted to High Admiral's Command Bridge!`);
+          renderStudentCoursesPane();
+        });
+      });
+    }
+  }
+}
+
+if (document.querySelector("#portal-pane-courses")) {
+  renderStudentCoursesPane();
+}
+
+// ==============================================================
+// 4. ADMIN COURSE APPROVAL & DIRECT REGISTRATION (ADMIN.HTML)
+// ==============================================================
+let adminEnrollFilter = "pending";
+
+function renderAdminEnrollmentsDesk() {
+  const container = document.querySelector("#admin-enrollments-container");
+  if (!container) return;
+
+  const enrollments = getEnrollmentsDb();
+  const pendingCount = enrollments.filter((e) => e.status === "pending_approval").length;
+
+  const pendingStatEl = document.querySelector("#stat-pending-enrollments");
+  if (pendingStatEl) pendingStatEl.textContent = String(pendingCount);
+
+  const filtered = adminEnrollFilter === "pending"
+    ? enrollments.filter((e) => e.status === "pending_approval")
+    : enrollments;
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 32px 14px; color: #a4b5a2;">
+        <span style="font-size: 32px; display: block; margin-bottom: 8px;">⚓</span>
+        <p style="margin: 0; font-size: 11px;">No course berth applications in this view. All student enrollments are up to date!</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered
+    .map((enr) => {
+      const isPending = enr.status === "pending_approval";
+      const isApproved = enr.status === "approved";
+      const isRejected = enr.status === "rejected";
+
+      const statusBadge = isPending
+        ? `<span class="course-status-pill status-pending">Pending Approval</span>`
+        : isApproved
+          ? `<span class="course-status-pill status-approved">Approved ⚓</span>`
+          : `<span class="course-status-pill status-rejected">Rejected ✖</span>`;
+
+      const actions = isPending
+        ? `
+          <div style="display: flex; gap: 8px; margin-top: 10px;">
+            <button class="btn-approve-berth" data-eid="${enr.id}" type="button">
+              ⚓ Approve Berth & Register
+            </button>
+            <button class="btn-reject-berth" data-eid="${enr.id}" type="button">
+              ✖ Reject / Defer
+            </button>
+          </div>
+        `
+        : `
+          <div style="margin-top: 8px; font-size: 10px; color: ${isApproved ? "#81c784" : "#ff8a80"};">
+            <strong>Admiralty Decree:</strong> ${enr.adminDecree || (isApproved ? "Approved by High Admiral Sterling." : "Application deferred.")}
+          </div>
+        `;
+
+      return `
+        <div style="background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 3px; padding: 14px 18px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <strong style="color: #fff; font-size: 13px;">${enr.studentName}</strong>
+              <small style="color: #a4b5a2; font-size: 10px;">(${enr.studentRoll})</small>
+              <span class="credit-chip">${enr.courseCode} · ${enr.credits} Credits</span>
+              ${statusBadge}
+            </div>
+            <h4 style="margin: 0 0 2px; font-family: var(--serif); font-size: 14px; color: var(--gold);">${enr.courseTitle}</h4>
+            <div style="font-size: 10px; color: #889487;">Requested on: ${enr.requestDate} · Term: ${enr.term} · Ref: ${enr.id}</div>
+          </div>
+          <div>
+            ${actions}
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+
+  // Attach Approve / Reject listeners
+  container.querySelectorAll(".btn-approve-berth").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const eid = btn.dataset.eid;
+      const allEnrollments = getEnrollmentsDb();
+      const target = allEnrollments.find((e) => e.id === eid);
+      if (target) {
+        target.status = "approved";
+        target.approvalDate = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+        target.adminDecree = "Official berth approved by High Admiral Sterling.";
+        saveEnrollmentsDb(allEnrollments);
+
+        // Update Member Record in central database
+        const members = getMembersDb();
+        const student = members.find((m) => m.roll === target.studentRoll);
+        if (student) {
+          if (!student.enrolledCourses) student.enrolledCourses = [];
+          if (!student.enrolledCourses.includes(target.courseCode)) {
+            student.enrolledCourses.push(target.courseCode);
+          }
+          saveMembersDb(members);
+        }
+
+        // Increment Course Count
+        const courses = getCoursesDb();
+        const course = courses.find((c) => c.code === target.courseCode);
+        if (course) {
+          course.enrolledCount = (course.enrolledCount || 0) + 1;
+          saveCoursesDb(courses);
+        }
+
+        renderAdminEnrollmentsDesk();
+        renderAdminMembersRoster();
+      }
+    });
+  });
+
+  container.querySelectorAll(".btn-reject-berth").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const eid = btn.dataset.eid;
+      const allEnrollments = getEnrollmentsDb();
+      const target = allEnrollments.find((e) => e.id === eid);
+      if (target) {
+        const reason = prompt("Enter decree rationale for deferring this subject berth:", "Prerequisite review required / Elective capacity full.");
+        if (reason !== null) {
+          target.status = "rejected";
+          target.adminDecree = reason;
+          saveEnrollmentsDb(allEnrollments);
+          renderAdminEnrollmentsDesk();
+        }
+      }
+    });
+  });
+}
+
+const btnFilterPendingEnr = document.querySelector("#btn-filter-pending-enrollments");
+const btnFilterAllEnr = document.querySelector("#btn-filter-all-enrollments");
+
+if (btnFilterPendingEnr) {
+  btnFilterPendingEnr.addEventListener("click", () => {
+    adminEnrollFilter = "pending";
+    btnFilterPendingEnr.classList.replace("button-dark", "button-gold");
+    if (btnFilterAllEnr) btnFilterAllEnr.classList.replace("button-gold", "button-dark");
+    renderAdminEnrollmentsDesk();
+  });
+}
+
+if (btnFilterAllEnr) {
+  btnFilterAllEnr.addEventListener("click", () => {
+    adminEnrollFilter = "all";
+    btnFilterAllEnr.classList.replace("button-dark", "button-gold");
+    if (btnFilterPendingEnr) btnFilterPendingEnr.classList.replace("button-gold", "button-dark");
+    renderAdminEnrollmentsDesk();
+  });
+}
+
+// 5. DIRECT CADET COURSE REGISTRATION TOOL (ADMIN.HTML)
+function populateDirectRegForm() {
+  const cadetSelect = document.querySelector("#direct-reg-cadet");
+  const courseSelect = document.querySelector("#direct-reg-course");
+  if (!cadetSelect || !courseSelect) return;
+
+  const members = getMembersDb();
+  const students = members.filter((m) => m.role === "student");
+  cadetSelect.innerHTML = students
+    .map((s) => `<option value="${s.roll}">${s.name} (${s.roll} · ${s.program})</option>`)
+    .join("");
+
+  const courses = getCoursesDb();
+  courseSelect.innerHTML = courses
+    .map((c) => `<option value="${c.code}">${c.code}: ${c.title} (${c.credits} Credits · ${c.dept})</option>`)
+    .join("");
+}
+
+const directRegForm = document.querySelector("#direct-reg-form");
+if (directRegForm) {
+  directRegForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const roll = document.querySelector("#direct-reg-cadet")?.value;
+    const courseCode = document.querySelector("#direct-reg-course")?.value;
+    const term = document.querySelector("#direct-reg-term")?.value || "Term 2026-27 (Autumn)";
+
+    const members = getMembersDb();
+    const courses = getCoursesDb();
+    const enrollments = getEnrollmentsDb();
+
+    const cadet = members.find((m) => m.roll === roll);
+    const course = courses.find((c) => c.code === courseCode);
+
+    if (!cadet || !course) return;
+
+    // Check if already enrolled
+    if (!cadet.enrolledCourses) cadet.enrolledCourses = [];
+    if (!cadet.enrolledCourses.includes(courseCode)) {
+      cadet.enrolledCourses.push(courseCode);
+      saveMembersDb(members);
+      course.enrolledCount = (course.enrolledCount || 0) + 1;
+      saveCoursesDb(courses);
+    }
+
+    // Add approved enrollment record
+    enrollments.unshift({
+      id: "ENR-" + Math.floor(8000 + Math.random() * 2000),
+      studentRoll: cadet.roll,
+      studentName: cadet.name,
+      courseCode: course.code,
+      courseTitle: course.title,
+      credits: course.credits,
+      term: term,
+      requestDate: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
+      status: "approved",
+      approvalDate: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
+      adminDecree: "Direct Admiralty Endorsement by High Admiral Sterling."
+    });
+    saveEnrollmentsDb(enrollments);
+
+    const successEl = document.querySelector("#direct-reg-success");
+    const msgEl = document.querySelector("#direct-reg-success-msg");
+    if (successEl && msgEl) {
+      msgEl.textContent = `${cadet.name} (${cadet.roll}) has been directly registered and approved in ${course.code}: ${course.title}.`;
+      successEl.style.display = "block";
+      setTimeout(() => {
+        successEl.style.display = "none";
+      }, 5000);
+    }
+
+    renderAdminEnrollmentsDesk();
+    renderAdminMembersRoster();
+  });
+}
+
+// 6. CENTRAL MEMBER DIRECTORY & MANIFEST EXPLORER (ADMIN.HTML)
+let memberSearchQuery = "";
+function renderAdminMembersRoster() {
+  const tbody = document.querySelector("#member-manifest-tbody");
+  if (!tbody) return;
+
+  const members = getMembersDb();
+  const query = memberSearchQuery.trim().toLowerCase();
+
+  const totalCadets = members.filter((m) => m.role === "student").length;
+  const statCadetsEl = document.querySelector("#stat-total-cadets");
+  if (statCadetsEl) statCadetsEl.textContent = String(totalCadets);
+
+  const filtered = members.filter((m) => {
+    if (!query) return true;
+    return (
+      m.name.toLowerCase().includes(query) ||
+      m.roll.toLowerCase().includes(query) ||
+      (m.program && m.program.toLowerCase().includes(query)) ||
+      (m.rank && m.rank.toLowerCase().includes(query))
+    );
+  });
+
+  tbody.innerHTML = filtered
+    .map((m) => {
+      const isStudent = m.role === "student";
+      const isFaculty = m.role === "faculty";
+      const isAdmin = m.role === "admin";
+
+      const roleBadge = isStudent
+        ? `<span class="trust-badge" style="background: rgba(43,99,80,.4); color: #78e08f;">Cadet (${m.rank || "Sailor"})</span>`
+        : isFaculty
+          ? `<span class="trust-badge" style="background: rgba(241,201,87,.2); color: var(--gold);">Faculty (${m.rank || "Navigator"})</span>`
+          : `<span class="trust-badge" style="background: rgba(255,71,87,.25); color: #ff6b81;">High Admiral</span>`;
+
+      const courseChips = (m.enrolledCourses || [])
+        .map((code) => `<span class="credit-chip" style="margin-right: 4px; margin-bottom: 2px; display: inline-block;">${code}</span>`)
+        .join("") || `<span style="color: #728273; font-size: 10px;">None</span>`;
+
+      const statusColor = m.status === "Active" ? "member-status-active" : "member-status-suspended";
+
+      return `
+        <tr>
+          <td>
+            <strong style="color: #fff;">${m.name}</strong>
+            <small style="display: block; color: #a4b5a2; font-size: 9px;">${m.email || "No pigeon address"}</small>
+          </td>
+          <td><code style="color: var(--gold);">${m.roll}</code></td>
+          <td>${roleBadge}</td>
+          <td><span style="font-size: 10px; color: #d6ded4;">${m.program || "General Admiralty"}</span></td>
+          <td>${courseChips}</td>
+          <td><span class="${statusColor}">${m.status || "Active"}</span></td>
+          <td>
+            <button class="button button-dark btn-toggle-member-status" data-roll="${m.roll}" style="padding: 4px 8px; font-size: 9px;" type="button">
+              ${m.status === "Active" ? "Suspend" : "Reactivate"}
+            </button>
+          </td>
+        </tr>
+      `;
+    })
+    .join("");
+
+  // Attach status toggle listeners
+  tbody.querySelectorAll(".btn-toggle-member-status").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const roll = btn.dataset.roll;
+      const allMembers = getMembersDb();
+      const target = allMembers.find((m) => m.roll === roll);
+      if (target) {
+        target.status = target.status === "Active" ? "Suspended" : "Active";
+        saveMembersDb(allMembers);
+        renderAdminMembersRoster();
+      }
+    });
+  });
+}
+
+const memberSearchInput = document.querySelector("#member-search-input");
+if (memberSearchInput) {
+  memberSearchInput.addEventListener("input", (e) => {
+    memberSearchQuery = e.target.value;
+    renderAdminMembersRoster();
+  });
+}
+
+const btnOpenEnlistModal = document.querySelector("#btn-open-enlist-modal");
+if (btnOpenEnlistModal) {
+  btnOpenEnlistModal.addEventListener("click", () => {
+    openModal("enlist-cadet-modal");
+  });
+}
+
+const enlistCadetForm = document.querySelector("#enlist-cadet-form");
+if (enlistCadetForm) {
+  enlistCadetForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.querySelector("#new-cadet-name")?.value?.trim();
+    const roll = document.querySelector("#new-cadet-roll")?.value?.trim();
+    const rank = document.querySelector("#new-cadet-rank")?.value;
+    const prog = document.querySelector("#new-cadet-prog")?.value;
+    const email = document.querySelector("#new-cadet-email")?.value?.trim();
+
+    if (!name || !roll) return;
+
+    const members = getMembersDb();
+    const existing = members.find((m) => m.roll === roll);
+    if (existing) {
+      alert("A crew member with this Roll Number is already registered in the central manifest!");
+      return;
+    }
+
+    members.unshift({
+      roll: roll,
+      name: name,
+      role: "student",
+      rank: rank,
+      program: prog,
+      batch: "2024-2028",
+      email: email,
+      gpa: 8.50,
+      enrolledCourses: ["CS-301"],
+      status: "Active"
+    });
+
+    saveMembersDb(members);
+    closeModal("enlist-cadet-modal");
+    enlistCadetForm.reset();
+    populateDirectRegForm();
+    renderAdminMembersRoster();
+    alert(`⚓ ${name} (${roll}) has been enlisted into the Central Fleet Manifest!`);
+  });
+}
+
 
 

@@ -21,7 +21,7 @@
       <span class="announcement-icon" aria-hidden="true">✦</span>
       <p id="announcement-text">THE SHIPMATE DECK · Cadet Session Active · All Systems Clear</p>
       <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
-        <span class="trust-badge" style="background: rgba(255,255,255,.15); color: var(--ink); font-size: 8px;">
+        <span class="trust-badge" id="cadet-top-rank" style="background: rgba(255,255,255,.15); color: var(--ink); font-size: 8px;">
           Rank: Quartermaster (VC-2024-TECH-042)
         </span>
         <select class="lang-picker-select" id="lang-picker" aria-label="Choose language">
@@ -61,14 +61,14 @@
       <section class="student-deck-hero">
         <div class="student-deck-hero-wrap">
           <div style="display: flex; align-items: center; gap: 18px;">
-            <div class="portal-avatar" style="width: 56px; height: 56px; font-size: 20px;">JS</div>
+            <div class="portal-avatar" id="cadet-avatar-initials" style="width: 56px; height: 56px; font-size: 20px;">JS</div>
             <div>
               <p class="eyebrow" style="color: var(--gold); margin: 0 0 2px;"><span></span> SWORN PIRATE CADET</p>
-              <h1 style="font-family: var(--serif); font-size: 28px; margin: 0; color: #fff;">
+              <h1 id="cadet-hero-name" style="font-family: var(--serif); font-size: 28px; margin: 0; color: #fff;">
                 Ahoy, Cadet Jack Sparrow!
               </h1>
               <p style="margin: 4px 0 0; font-size: 11px; color: #a4b5a2;">
-                Roll No: <strong>VC-2024-TECH-042</strong> · 3rd Year Navigational Engineering · Division A
+                Roll No: <strong id="cadet-hero-roll">VC-2024-TECH-042</strong> · <span id="cadet-hero-program">B.Tech Computer Science & Maritime AI</span>
               </p>
             </div>
           </div>
@@ -114,7 +114,7 @@
                 ☸ The Shipmate Deck — Academic Console
               </h2>
             </div>
-            <span class="portal-badge-tier">Rank: Quartermaster</span>
+            <span class="portal-badge-tier" id="cadet-badge-rank">Rank: Quartermaster</span>
           </div>
 
           <div class="portal-nav-tabs">
@@ -123,6 +123,7 @@
             <button class="portal-nav-btn" data-ptab="timetable" type="button">Watch Duty Timetable</button>
             <button class="portal-nav-btn" data-ptab="fees" type="button">Fee Dues & Receipts</button>
             <button class="portal-nav-btn" data-ptab="log" type="button">Ship's Log Circulars</button>
+            <button class="portal-nav-btn" data-ptab="courses" type="button" style="color: var(--gold); font-weight: 700;">Course Enrollment & Electives ✦</button>
           </div>
 
           <!-- SUB-TAB 1: OVERVIEW -->
@@ -130,17 +131,17 @@
             <div class="portal-stats-row">
               <div class="portal-stat-box">
                 <span>Sea-Readiness Attendance</span>
-                <strong style="color: #21733b;">88.4%</strong>
+                <strong style="color: #21733b;" id="cadet-stat-attendance">88.4%</strong>
                 <small>Above 75% Safe Sailing Threshold</small>
               </div>
               <div class="portal-stat-box">
                 <span>Cumulative GPA</span>
-                <strong style="color: var(--sea);">9.18 / 10</strong>
+                <strong style="color: var(--sea);" id="cadet-stat-gpa">9.18 / 10</strong>
                 <small>First Class with High Honors</small>
               </div>
               <div class="portal-stat-box">
                 <span>Doubloon Dues</span>
-                <strong style="color: #21733b;">₹0.00</strong>
+                <strong style="color: #21733b;" id="cadet-stat-dues">₹0.00</strong>
                 <small>All Semester Fees Cleared</small>
               </div>
             </div>
@@ -262,6 +263,70 @@
             <input class="portal-filter-input" id="portal-log-search" type="search" placeholder="Search Ship's Log circulars by keyword..." />
             <div class="portal-log-list" id="portal-log-list">
               <!-- Dynamically populated from localStorage vc_notices -->
+            </div>
+          </div>
+
+          <!-- SUB-TAB 6: COURSE ENROLLMENT & ELECTIVES -->
+          <div class="portal-pane" id="portal-pane-courses" style="display: none;">
+            <div class="portal-stats-row" style="margin-bottom: 24px;">
+              <div class="portal-stat-box">
+                <span>Approved Enrolled Credits</span>
+                <strong style="color: var(--sea);" id="cadet-enrolled-credits">14 Credits</strong>
+                <small>Semester Target: 16 - 24 Credits</small>
+              </div>
+              <div class="portal-stat-box">
+                <span>Active Subjects</span>
+                <strong style="color: #21733b;" id="cadet-approved-count">4 Subjects</strong>
+                <small>Admiralty Approved Berths</small>
+              </div>
+              <div class="portal-stat-box">
+                <span>Pending Approval</span>
+                <strong style="color: #b06c00;" id="cadet-pending-count">1 Elective</strong>
+                <small>Under High Admiral Review</small>
+              </div>
+            </div>
+
+            <!-- Active Approved Subjects Section -->
+            <div style="margin-bottom: 28px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3 style="margin: 0; font-family: var(--serif); font-size: 17px; color: var(--sea);">
+                  ⚓ My Approved Enrolled Subjects (Term 2026-27)
+                </h3>
+                <span class="trust-badge" style="background: #eaf7ee; color: #21733b; font-size: 8px;">Official Fleet Record</span>
+              </div>
+              <div class="course-enroll-grid" id="cadet-enrolled-courses-list">
+                <!-- Rendered dynamically via app.js -->
+              </div>
+            </div>
+
+            <!-- Pending Applications Section -->
+            <div style="margin-bottom: 28px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3 style="margin: 0; font-family: var(--serif); font-size: 17px; color: #856404;">
+                  ⏳ Pending Course Berth Applications
+                </h3>
+                <span class="trust-badge" style="background: #fff3cd; color: #856404; font-size: 8px;">Awaiting Captain Decree</span>
+              </div>
+              <div class="course-enroll-grid" id="cadet-pending-courses-list">
+                <!-- Rendered dynamically via app.js -->
+              </div>
+            </div>
+
+            <!-- Available Course & Elective Catalog -->
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-top: 1px solid #ded4bb; padding-top: 20px;">
+                <div>
+                  <h3 style="margin: 0; font-family: var(--serif); font-size: 17px; color: var(--sea);">
+                    📜 Available Fleet Electives & Course Catalog
+                  </h3>
+                  <p style="margin: 2px 0 0; font-size: 11px; color: #6d756b;">
+                    Select specialized elective berths for this term. Enrollment requests are transmitted to the Captain's Bridge for administrative decree.
+                  </p>
+                </div>
+              </div>
+              <div class="course-enroll-grid" id="available-courses-catalog">
+                <!-- Rendered dynamically via app.js -->
+              </div>
             </div>
           </div>
         </div>
