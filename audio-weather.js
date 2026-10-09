@@ -312,16 +312,47 @@
     const ringBellBtn = widgetContainer.querySelector('#btn-ring-bell');
     const volSlider = widgetContainer.querySelector('#helm-volume-slider');
 
-    fab.addEventListener('click', () => {
-      isPanelOpen = !isPanelOpen;
-      panel.hidden = !isPanelOpen;
-      fab.classList.toggle('is-open', isPanelOpen);
-    });
+    function openHelm() {
+      isPanelOpen = true;
+      panel.hidden = false;
+      panel.style.display = 'block';
+      fab.classList.add('is-open');
+    }
 
-    closeBtn.addEventListener('click', () => {
+    function closeHelm() {
       isPanelOpen = false;
       panel.hidden = true;
+      panel.style.display = 'none';
       fab.classList.remove('is-open');
+    }
+
+    fab.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isPanelOpen) {
+        closeHelm();
+      } else {
+        openHelm();
+      }
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeHelm();
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (isPanelOpen && !widgetContainer.contains(e.target)) {
+        closeHelm();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isPanelOpen) {
+        closeHelm();
+      }
     });
 
     toggleSoundBtn.addEventListener('click', () => {

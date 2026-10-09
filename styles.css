@@ -1269,6 +1269,11 @@ body.weather-storm {
   100% { transform: translateY(-4px); }
 }
 
+.polly-drawer[hidden],
+.helm-panel[hidden] {
+  display: none !important;
+}
+
 .polly-drawer {
   position: absolute;
   bottom: 56px;
@@ -1322,14 +1327,27 @@ body.weather-storm {
   cursor: pointer;
 }
 .polly-close-btn {
-  background: none;
-  border: none;
-  color: #a4b5a2;
-  font-size: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f1c957;
+  font-size: 18px;
   cursor: pointer;
   line-height: 1;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+  padding: 0;
 }
-.polly-close-btn:hover { color: #fff; }
+.polly-close-btn:hover {
+  color: #fff;
+  background: #c0392b;
+  border-color: #e74c3c;
+  transform: scale(1.1);
+}
 
 .polly-chips-bar {
   display: flex;

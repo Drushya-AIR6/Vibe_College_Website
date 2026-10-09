@@ -153,21 +153,52 @@
       if (idleBubble) idleBubble.style.opacity = '0';
     }, 6000);
 
-    fab.addEventListener('click', () => {
-      isDrawerOpen = !isDrawerOpen;
-      drawer.hidden = !isDrawerOpen;
-      fab.classList.toggle('is-active', isDrawerOpen);
+    function openDrawer() {
+      isDrawerOpen = true;
+      drawer.hidden = false;
+      drawer.style.display = 'flex';
+      fab.classList.add('is-active');
       if (idleBubble) idleBubble.remove();
+      input.focus();
+      scrollToBottom();
+    }
+
+    function closeDrawer() {
+      isDrawerOpen = false;
+      drawer.hidden = true;
+      drawer.style.display = 'none';
+      fab.classList.remove('is-active');
+    }
+
+    fab.addEventListener('click', (e) => {
+      e.stopPropagation();
       if (isDrawerOpen) {
-        input.focus();
-        scrollToBottom();
+        closeDrawer();
+      } else {
+        openDrawer();
       }
     });
 
-    closeBtn.addEventListener('click', () => {
-      isDrawerOpen = false;
-      drawer.hidden = true;
-      fab.classList.remove('is-active');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeDrawer();
+      });
+    }
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (isDrawerOpen && !container.contains(e.target)) {
+        closeDrawer();
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isDrawerOpen) {
+        closeDrawer();
+      }
     });
 
     if (voiceChk) {
@@ -279,7 +310,21 @@
     ask: (q) => handleUserMessage(q),
     open: () => {
       const drawer = document.querySelector('#polly-drawer');
-      if (drawer) drawer.hidden = false;
+      const fab = document.querySelector('#polly-fab');
+      if (drawer) {
+        drawer.hidden = false;
+        drawer.style.display = 'flex';
+      }
+      if (fab) fab.classList.add('is-active');
+    },
+    close: () => {
+      const drawer = document.querySelector('#polly-drawer');
+      const fab = document.querySelector('#polly-fab');
+      if (drawer) {
+        drawer.hidden = true;
+        drawer.style.display = 'none';
+      }
+      if (fab) fab.classList.remove('is-active');
     },
   };
 })();
