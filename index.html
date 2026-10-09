@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#14211d" />
+    <meta
+      name="description"
+      content="Set sail for Vibe College: find your way around campus, discover courses, and join the crew."
+    />
+    <title>Vibe College — Chart Your Own Course</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="announcement">
+      <span class="announcement-icon" aria-hidden="true">✦</span>
+      <p>OPEN DECK DAY · Saturday, 24 October · All hands welcome</p>
+      <a href="#events">Claim your place <span aria-hidden="true">→</span></a>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Vibe College home">
+        <span class="brand-mark" aria-hidden="true">VC</span>
+        <span class="brand-name">VIBE <small>COLLEGE</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#about">Our college</a>
+        <a href="#courses">Courses</a>
+        <a href="#locator">Campus map</a>
+        <a href="#events">Crew life</a>
+      </nav>
+      <a class="nav-cta" href="#apply">Come aboard <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main>
+      <section class="hero" id="about">
+        <div class="hero-chart" aria-hidden="true"></div>
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> A college for curious souls</p>
+          <h1>Chart your<br />own <em>course.</em></h1>
+          <p class="hero-intro">
+            Big ideas. Good people. A little salt in the air. Find your crew and
+            make a future worth sailing toward.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-gold" href="#courses">Explore courses <span aria-hidden="true">→</span></a>
+            <a class="text-link" href="#locator"><span class="play-icon" aria-hidden="true">⌖</span> Find your way around</a>
+          </div>
+          <div class="hero-proof">
+            <div class="crew-avatars" aria-hidden="true"><span>J</span><span>M</span><span>A</span><b>+</b></div>
+            <p><strong>2,400+ crew members</strong><br />and counting</p>
+            <span class="proof-divider"></span>
+            <p class="proof-rating"><strong>4.9 <span aria-label="out of 5 stars">★★★★★</span></strong><br />student rating</p>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="Illustration of a ship sailing toward the college">
+          <div class="sun"></div>
+          <span class="art-label">Somewhere worth<br />finding <span>↙</span></span>
+          <div class="distant-island"></div>
+          <div class="wave wave-back"></div>
+          <div class="wave wave-mid"></div>
+          <div class="wave wave-front"></div>
+          <div class="ship">
+            <div class="ship-flag">✦</div>
+            <div class="sail sail-large"></div>
+            <div class="sail sail-small"></div>
+            <div class="mast"></div>
+            <div class="hull"></div>
+          </div>
+          <div class="art-compass"><span>N</span><i>✳</i></div>
+          <div class="art-coordinate">12° 34' N &nbsp; 56° 78' W</div>
+        </div>
+        <div class="hero-bottom">
+          <span>LEARNING WITH A LITTLE ADVENTURE</span>
+          <span>↓ &nbsp; SCROLL TO EXPLORE</span>
+        </div>
+      </section>
+
+      <section class="locator-section" id="locator">
+        <div class="section-heading">
+          <p class="eyebrow eyebrow-dark"><span></span> The campus chart room</p>
+          <h2>Lost? Not on <em>our watch.</em></h2>
+          <p>Ask your feathered first mate. There’s a treasure somewhere on this map.</p>
+        </div>
+        <div class="locator-card">
+          <div class="locator-topline">
+            <div class="locator-title"><span class="tiny-compass">✳</span><span>CAMPUS TREASURE FINDER</span></div>
+            <span class="map-coordinate">CHART NO. 07 — UPDATED TODAY</span>
+          </div>
+          <div class="locator-content">
+            <div class="locator-guide">
+              <div class="parrot" aria-hidden="true">🦜</div>
+              <div class="parrot-speech">
+                <span class="speech-name">CAPTAIN POLLY</span>
+                <p>“Arrr, where be ye headed today?”</p>
+                <span class="speech-tail" aria-hidden="true"></span>
+              </div>
+              <form class="destination-form" id="destination-form">
+                <label for="destination">Name your destination</label>
+                <div class="search-field">
+                  <span aria-hidden="true">⌕</span>
+                  <input
+                    id="destination"
+                    name="destination"
+                    type="search"
+                    list="campus-places"
+                    placeholder="Try ‘The Old Library’"
+                    autocomplete="off"
+                    aria-describedby="search-hint"
+                  />
+                  <datalist id="campus-places"></datalist>
+                  <button type="submit" aria-label="Find destination">→</button>
+                </div>
+                <span class="search-hint" id="search-hint">A building, a landmark, or a place to grab a bite.</span>
+                <p class="search-error" id="search-error" role="status" aria-live="polite"></p>
+              </form>
+              <div class="popular-destinations">
+                <span>POPULAR PORTS</span>
+                <button type="button" data-destination="The Old Library">The Old Library</button>
+                <button type="button" data-destination="Founders Hall">Founders Hall</button>
+                <button type="button" data-destination="The Galley Café">The Galley Café</button>
+              </div>
+              <div class="bottle-prompt">
+                <span class="bottle-mini" aria-hidden="true">♧</span>
+                <p>Send Polly on a mission<br /><strong>and crack open a clue.</strong></p>
+              </div>
+            </div>
+            <div class="treasure-area" aria-live="polite">
+              <div class="treasure-empty" id="treasure-empty">
+                <div class="empty-bottle" aria-hidden="true">
+                  <span class="bottle-cork"></span><span class="bottle-neck"></span>
+                  <span class="bottle-glass"><i>✉</i></span>
+                </div>
+                <p class="empty-title">A message in a bottle awaits</p>
+                <p>Pick your destination and Polly will<br />reveal the secret chart.</p>
+                <span class="empty-doodle" aria-hidden="true">↗ &nbsp; ✳</span>
+              </div>
+              <article class="treasure-map is-hidden" id="treasure-map" aria-labelledby="map-destination">
+                <div class="map-stamp">POLLY<br />APPROVED</div>
+                <div class="map-paper-top">
+                  <span>THE VIBE ISLES · CAMPUS CHART</span><span>NO. 01</span>
+                </div>
+                <div class="map-scene">
+                  <svg class="route-lines" viewBox="0 0 600 250" role="img" aria-label="Dotted route leading to your destination">
+                    <path d="M72 186 C130 170 114 106 198 126 S260 191 330 151 S376 78 447 104 S495 109 525 74" />
+                  </svg>
+                  <span class="map-land land-one"></span>
+                  <span class="map-land land-two"></span>
+                  <span class="map-watermark">VIBE<br />CAMPUS</span>
+                  <div class="map-location" id="map-location">
+                    <span class="map-cross" aria-hidden="true">✕</span>
+                    <span class="map-pin-label" id="map-destination">The Old Library</span>
+                  </div>
+                  <span class="map-building building-one" id="nearby-one"><i>▤</i><b>North Quad</b></span>
+                  <span class="map-building building-two" id="nearby-two"><i>⌂</i><b>The Galley</b></span>
+                  <span class="map-building building-three" id="nearby-three"><i>▥</i><b>Founders Hall</b></span>
+                  <span class="map-building building-four" id="nearby-four"><i>♜</i><b>Arts Dock</b></span>
+                  <span class="map-compass"><i>✳</i><b>N</b></span>
+                  <span class="map-scale">0 ─── 100 paces</span>
+                </div>
+                <div class="map-caption">
+                  <span class="caption-icon" aria-hidden="true">⚑</span>
+                  <p><strong id="map-caption-title">The Old Library</strong><br /><span id="map-directions">Head past North Quad and follow the story-shaped trail.</span></p>
+                  <button class="map-copy" id="copy-directions" type="button" aria-label="Copy directions" title="Copy directions">⧉</button>
+                </div>
+              </article>
+            </div>
+          </div>
+          <div class="locator-foot"><span>✦ &nbsp; NO GPS NEEDED. JUST A SENSE OF ADVENTURE.</span><span>IF POLLY GETS LOST, ASK THE LIBRARIANS.</span></div>
+        </div>
+      </section>
+
+      <section class="courses-section" id="courses">
+        <div class="courses-heading">
+          <div>
+            <p class="eyebrow"><span></span> Choose your adventure</p>
+            <h2>Find your <em>north star.</em></h2>
+          </div>
+          <a class="text-link light-link" href="#apply">Browse all courses <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="course-grid">
+          <a class="course-card course-sand" href="#apply">
+            <span class="course-number">01 / THINK</span><span class="course-icon" aria-hidden="true">✳</span>
+            <h3>Arts &<br />Humanities</h3><p>Ask better questions. Find surprising answers.</p><span class="course-arrow">↗</span>
+          </a>
+          <a class="course-card course-sea" href="#apply">
+            <span class="course-number">02 / MAKE</span><span class="course-icon" aria-hidden="true">⌘</span>
+            <h3>Science &<br />Technology</h3><p>Build things that make tomorrow better.</p><span class="course-arrow">↗</span>
+          </a>
+          <a class="course-card course-rust" href="#apply">
+            <span class="course-number">03 / LEAD</span><span class="course-icon" aria-hidden="true">⚓</span>
+            <h3>Business &<br />Leadership</h3><p>Turn big-hearted ideas into real impact.</p><span class="course-arrow">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="crew-section" id="events">
+        <div class="crew-copy">
+          <p class="eyebrow eyebrow-dark"><span></span> Life beyond the lecture hall</p>
+          <h2>Good ships need<br />a <em>good crew.</em></h2>
+          <p>From first light on the water to late-night ideas in the studio, the best part of college is who you find along the way.</p>
+          <a class="button button-dark" href="#apply">Meet your future crew <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="crew-note">
+          <span class="note-tape"></span>
+          <span class="note-star">✳</span>
+          <span class="note-label">THE CAPTAIN'S LOG · 04</span>
+          <h3>Next up on deck</h3>
+          <div class="event-row"><span class="event-date">24<br /><small>OCT</small></span><p><strong>Open Deck Day</strong><br />Bring a friend. Meet the crew.</p><span>↗</span></div>
+          <div class="event-row"><span class="event-date">31<br /><small>OCT</small></span><p><strong>Night of a Thousand Lanterns</strong><br />A little light on the harbour.</p><span>↗</span></div>
+          <div class="note-footer">ALL HANDS. ALL HEARTS. &nbsp; <span>♡</span></div>
+        </div>
+      </section>
+
+      <section class="apply-banner" id="apply">
+        <div class="apply-spark" aria-hidden="true">✳</div>
+        <p class="eyebrow"><span></span> Your next chapter starts here</p>
+        <h2>Ready to come <em>aboard?</em></h2>
+        <p>No peg leg required. Just a curious mind and room for a little adventure.</p>
+        <a href="mailto:admissions@vibecollege.example" class="button button-gold">Talk to admissions <span aria-hidden="true">→</span></a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand footer-brand" href="#"><span class="brand-mark" aria-hidden="true">VC</span><span class="brand-name">VIBE <small>COLLEGE</small></span></a>
+      <p>Curious minds. Kind hearts. Good adventures.</p>
+      <span>© 2026 Vibe College · Made with a little mischief</span>
+    </footer>
+  </body>
+</html>
