@@ -35,11 +35,19 @@
       </button>
       <nav class="main-nav" aria-label="Main navigation">
         <a href="#about">Our college</a>
+        <a href="#captain">Captain's Quarters</a>
         <a href="#courses">Courses</a>
+        <a href="#admissions">Admissions</a>
+        <a href="#placements">Placements</a>
         <a href="#locator">Campus map</a>
-        <a href="#events">Crew life</a>
+        <a href="#legends">Hall of Legends</a>
+        <a href="#bottle-enquiry">Bottle Post</a>
+        <a href="#ship-code">Pirate Code</a>
         <button class="compass-toggle" type="button" aria-expanded="false" aria-controls="learning-compass">
           <span aria-hidden="true">✳</span> Learning compass
+        </button>
+        <button class="nav-portal-btn" id="open-portal-btn" type="button" aria-label="Open Shipmate Deck Portal">
+          <span aria-hidden="true">☸</span> Shipmate Deck
         </button>
       </nav>
       <section class="learning-compass" id="learning-compass" aria-labelledby="compass-title" hidden>
@@ -107,6 +115,526 @@
         </div>
       </section>
 
+      <!-- CAPTAIN'S QUARTERS (PRINCIPAL'S DISPATCH & ACCREDITATIONS) -->
+      <section class="quarters-section" id="captain">
+        <div class="quarters-grid">
+          <div class="captain-frame">
+            <span class="captain-frame-corners" aria-hidden="true"></span>
+            <img class="captain-portrait-img" src="assets/principal_sterling.jpg" alt="High Admiral Thaddeus Sterling in academic regalia" />
+            <div class="captain-plaque">
+              <p class="captain-plaque-title">High Admiral Thaddeus Sterling</p>
+              <p class="captain-plaque-sub">Ph.D., F.R.G.S. · Principal & Chancellor</p>
+            </div>
+          </div>
+          <div class="quarters-content">
+            <p class="eyebrow"><span></span> THE HIGH ADMIRALTY · CAPTAIN'S QUARTERS</p>
+            <h2>A Beacon for the <em>Bold & Curious.</em></h2>
+            <blockquote class="captain-quote">
+              “No great mariner ever discovered a new world by hugging the safe shallows of conventional thinking. At Vibe College, we provide the charts, the rigging, and the fearless crew—the journey is entirely yours.”
+            </blockquote>
+            <p class="quarters-text">
+              Founded on the belief that scholarship should be an adventure rather than an ordeal, Vibe College brings together leading minds across the humanities, computational sciences, and international commerce. Under our charter, every student learns to steer their own intellectual vessel.
+            </p>
+            <div class="quarters-credentials">
+              <div class="credential-pill">
+                <span aria-hidden="true">⚓</span>
+                <div>
+                  <strong>NAAC Grade A++</strong>
+                  <small>Highest Nautical Honor</small>
+                </div>
+              </div>
+              <div class="credential-pill">
+                <span aria-hidden="true">✳</span>
+                <div>
+                  <strong>NIRF Top 50</strong>
+                  <small>Leading Academic Fleets</small>
+                </div>
+              </div>
+              <div class="credential-pill">
+                <span aria-hidden="true">📜</span>
+                <div>
+                  <strong>UGC & AICTE</strong>
+                  <small>Full Statutory Recognition</small>
+                </div>
+              </div>
+            </div>
+            <div class="quarters-actions">
+              <a class="button button-gold" href="#admissions">Enlist for 2026-27 <span aria-hidden="true">→</span></a>
+              <a class="text-link light-link" href="#ship-code">View institution charters <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COURSES & PROGRAMS -->
+      <section class="courses-section" id="courses">
+        <div class="courses-heading">
+          <div>
+            <p class="eyebrow"><span></span> Academic voyages</p>
+            <h2>Find your <em>north star.</em></h2>
+          </div>
+          <a class="text-link light-link" href="#admissions">Check entrance requirements <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="course-grid">
+          <div class="course-card course-sand">
+            <span class="course-number">01 / THINK</span><span class="course-icon" aria-hidden="true">✳</span>
+            <h3>Arts &<br />Humanities</h3>
+            <p>Cartography, deep narrative storytelling, philosophy, and creative high-seas culture.</p>
+            <div class="course-meta-tags">
+              <span>3 Years</span> · <span>120 Berths</span> · <span>B.A. Hons</span>
+            </div>
+            <div class="course-card-actions">
+              <button type="button" class="inspect-course-btn" data-course="arts">Inspect Charter ↗</button>
+              <a class="text-link" href="#admissions">Fee Calculator →</a>
+            </div>
+          </div>
+          <div class="course-card course-sea">
+            <span class="course-number">02 / MAKE</span><span class="course-icon" aria-hidden="true">⌘</span>
+            <h3>Science &<br />Technology</h3>
+            <p>Autonomous navigation, digital alchemy, AI systems, and marine robotic engineering.</p>
+            <div class="course-meta-tags">
+              <span>4 Years</span> · <span>240 Berths</span> · <span>B.Tech / B.S.</span>
+            </div>
+            <div class="course-card-actions">
+              <button type="button" class="inspect-course-btn" data-course="tech">Inspect Charter ↗</button>
+              <a class="text-link" href="#admissions">Fee Calculator →</a>
+            </div>
+          </div>
+          <div class="course-card course-rust">
+            <span class="course-number">03 / LEAD</span><span class="course-icon" aria-hidden="true">⚓</span>
+            <h3>Business &<br />Leadership</h3>
+            <p>Global trade routes, venture logistics, treasury command, and maritime economics.</p>
+            <div class="course-meta-tags">
+              <span>3 Years</span> · <span>180 Berths</span> · <span>B.B.A. / B.Com</span>
+            </div>
+            <div class="course-card-actions">
+              <button type="button" class="inspect-course-btn" data-course="business">Inspect Charter ↗</button>
+              <a class="text-link" href="#admissions">Fee Calculator →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ADMISSIONS: THE CREW QUARTERS -->
+      <section class="admissions-section" id="admissions">
+        <div class="section-heading">
+          <p class="eyebrow eyebrow-dark"><span></span> SEEKING PASSAGE · 2026-2027 ENLISTMENT</p>
+          <h2>Admissions: The <em>Crew Quarters.</em></h2>
+          <p>Everything you need before setting sail: calculate tuition doubloons, check deadlines, and assemble your dossier.</p>
+        </div>
+        <div class="admissions-wrapper">
+          <div class="admissions-tabs" role="tablist" aria-label="Admissions navigation tabs">
+            <button class="adm-tab is-active" id="tab-btn-calc" role="tab" aria-selected="true" aria-controls="pane-calc">
+              <span aria-hidden="true">🪙</span> Doubloon Calculator
+            </button>
+            <button class="adm-tab" id="tab-btn-schedule" role="tab" aria-selected="false" aria-controls="pane-schedule">
+              <span aria-hidden="true">📜</span> Sailing Schedule & Dates
+            </button>
+            <button class="adm-tab" id="tab-btn-dossier" role="tab" aria-selected="false" aria-controls="pane-dossier">
+              <span aria-hidden="true">🗂️</span> Seafarer's Dossier Checklist
+            </button>
+            <button class="adm-tab" id="tab-btn-faq" role="tab" aria-selected="false" aria-controls="pane-faq">
+              <span aria-hidden="true">❓</span> Ship's Counsel (FAQs)
+            </button>
+          </div>
+
+          <!-- TAB 1: DOUBLOON CALCULATOR -->
+          <div class="adm-content-pane is-active" id="pane-calc" role="tabpanel" aria-labelledby="tab-btn-calc">
+            <div class="calc-grid">
+              <div class="calc-form">
+                <div class="calc-form-group">
+                  <label class="calc-label" for="calc-program">Select Academic Voyage</label>
+                  <select class="calc-select" id="calc-program">
+                    <option value="tech" selected>Science & Technology (B.Tech) — ₹1,80,000 / yr</option>
+                    <option value="business">Business & Leadership (B.B.A.) — ₹1,50,000 / yr</option>
+                    <option value="arts">Arts & Humanities (B.A. Hons) — ₹1,20,000 / yr</option>
+                  </select>
+                </div>
+                <div class="calc-form-group">
+                  <span class="calc-label">Berth & Boarding Accommodation</span>
+                  <div class="calc-options-grid">
+                    <label class="calc-radio-card">
+                      <input type="radio" name="stay" value="hostel" checked />
+                      <span class="radio-content">
+                        <strong>Harbour Deck Hostel</strong>
+                        <small>Includes Mess + Wi-Fi (₹75,000 / yr)</small>
+                      </span>
+                    </label>
+                    <label class="calc-radio-card">
+                      <input type="radio" name="stay" value="dayscholar" />
+                      <span class="radio-content">
+                        <strong>Day Cadet</strong>
+                        <small>Campus access only (₹0 / yr)</small>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <div class="calc-form-group">
+                  <span class="calc-label">Scholarship / Merit Grant</span>
+                  <div class="calc-options-grid">
+                    <label class="calc-radio-card">
+                      <input type="radio" name="scholarship" value="merit" checked />
+                      <span class="radio-content">
+                        <strong>High Sea Merit (30% off)</strong>
+                        <small>&gt;90% in Entrance Trials</small>
+                      </span>
+                    </label>
+                    <label class="calc-radio-card">
+                      <input type="radio" name="scholarship" value="voyager" />
+                      <span class="radio-content">
+                        <strong>Voyager Grant (15% off)</strong>
+                        <small>&gt;80% in 12th Board</small>
+                      </span>
+                    </label>
+                    <label class="calc-radio-card">
+                      <input type="radio" name="scholarship" value="none" />
+                      <span class="radio-content">
+                        <strong>Standard Berth (0%)</strong>
+                        <small>Regular fee structure</small>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="calc-summary-card">
+                <div class="calc-summary-title">
+                  <span>Voyage Fee Estimate</span>
+                  <span aria-hidden="true">⚓</span>
+                </div>
+                <table class="calc-summary-table">
+                  <tbody>
+                    <tr>
+                      <td>Base Voyage Tuition</td>
+                      <td id="calc-base-tuition">₹1,80,000</td>
+                    </tr>
+                    <tr>
+                      <td>Fleet Labs & Equipment Fund</td>
+                      <td>₹25,000</td>
+                    </tr>
+                    <tr>
+                      <td>Berth & Mess Boarding</td>
+                      <td id="calc-hostel-dues">₹75,000</td>
+                    </tr>
+                    <tr>
+                      <td>Merit Scholarship Waiver</td>
+                      <td id="calc-waiver-dues" style="color: #2b7045;">-₹54,000</td>
+                    </tr>
+                    <tr class="calc-total-row">
+                      <td>Net Annual Doubloons</td>
+                      <td id="calc-net-total">₹2,26,000</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="calc-schedule-box">
+                  <strong>3-TRIMESTER VOYAGE INSTALMENT SCHEDULE</strong>
+                  <div class="calc-installments">
+                    <div class="calc-inst-item">
+                      <span>Term I (Aug)</span>
+                      <strong id="calc-inst-1">₹75,333</strong>
+                    </div>
+                    <div class="calc-inst-item">
+                      <span>Term II (Nov)</span>
+                      <strong id="calc-inst-2">₹75,333</strong>
+                    </div>
+                    <div class="calc-inst-item">
+                      <span>Term III (Feb)</span>
+                      <strong id="calc-inst-3">₹75,334</strong>
+                    </div>
+                  </div>
+                </div>
+                <div class="calc-summary-actions">
+                  <button class="button button-gold" id="btn-print-estimate" type="button">
+                    <span>📜 Print Official Charter</span>
+                  </button>
+                  <button class="button button-dark" id="btn-open-enlist-form" type="button">
+                    <span>Enlist with the Crew →</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="bank-tieups">
+              <p>Education Loan Tie-ups & Banking Alliances</p>
+              <div class="bank-badge-list">
+                <span class="bank-badge">State Bank of India — 7.9% Mariner Rate</span>
+                <span class="bank-badge">HDFC Credila Fleet Loan</span>
+                <span class="bank-badge">Canara Bank Vidyasagar Scheme</span>
+                <span class="bank-badge">0% Pre-closure Charges</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: SAILING SCHEDULE -->
+          <div class="adm-content-pane" id="pane-schedule" role="tabpanel" aria-labelledby="tab-btn-schedule">
+            <div class="schedule-grid">
+              <div>
+                <h3 class="timeline-title">2026-2027 Sailing Calendar</h3>
+                <div class="timeline-track">
+                  <div class="timeline-milestone">
+                    <p class="milestone-date">15 NOVEMBER 2026</p>
+                    <h4 class="milestone-name">Application Port Opens</h4>
+                    <p class="milestone-desc">Online registration and submission of the digital seafarer dossier commences.</p>
+                  </div>
+                  <div class="timeline-milestone">
+                    <p class="milestone-date">20 JANUARY 2027</p>
+                    <h4 class="milestone-name">The Navigator's Entrance Trials</h4>
+                    <p class="milestone-desc">Computer-based cognitive navigation exam (VIBE-SAT) conducted at 40 harbors nationwide.</p>
+                  </div>
+                  <div class="timeline-milestone">
+                    <p class="milestone-date">28 FEBRUARY 2027</p>
+                    <h4 class="milestone-name">Merit Scroll & Berth Allotment</h4>
+                    <p class="milestone-desc">Rank lists published. Round 1 counseling and scholarship grant letters released.</p>
+                  </div>
+                  <div class="timeline-milestone">
+                    <p class="milestone-date">10 AUGUST 2027</p>
+                    <h4 class="milestone-name">Anchor Drop & Induction Voyage</h4>
+                    <p class="milestone-desc">Freshman mariners report to campus for orientation, uniform fitting, and crew swearing-in.</p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h3 class="timeline-title">Eligibility Charters</h3>
+                <div class="eligibility-box">
+                  <h4>Science & Technology (B.Tech / B.S.)</h4>
+                  <ul>
+                    <li>10+2 with Physics, Mathematics & Chemistry/Computing from a recognized board.</li>
+                    <li>Minimum 60% aggregate (55% for SC/ST/Maritime Quota).</li>
+                    <li>Valid score in VIBE-SAT, JEE Main, or State Engineering CET.</li>
+                  </ul>
+                </div>
+                <div class="eligibility-box">
+                  <h4>Business & Leadership (B.B.A. / B.Com)</h4>
+                  <ul>
+                    <li>10+2 in any stream (Commerce, Science, or Arts) with minimum 55% marks.</li>
+                    <li>Demonstrated curiosity for enterprise, trade, or collaborative leadership.</li>
+                  </ul>
+                </div>
+                <div class="eligibility-box">
+                  <h4>Arts & Humanities (B.A. Hons)</h4>
+                  <ul>
+                    <li>10+2 in any discipline with minimum 50% marks and fluency in English.</li>
+                    <li>Submission of a creative portfolio, essay scroll, or historical query.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: SEAFARER'S DOSSIER -->
+          <div class="adm-content-pane" id="pane-dossier" role="tabpanel" aria-labelledby="tab-btn-dossier">
+            <div class="dossier-header">
+              <div>
+                <h3 style="margin: 0; font-family: var(--serif); font-size: 20px;">Seafarer's Document Dossier</h3>
+                <p style="margin: 4px 0 0; font-size: 11px; color: #727a6f;">Verify your credentials before boarding. Check off each scroll as you prepare it.</p>
+              </div>
+              <div class="dossier-progress-wrap">
+                <span class="dossier-progress-label" id="dossier-counter">0 OF 5 SCROLLS PREPARED (0%)</span>
+                <div class="dossier-progress-bar">
+                  <div class="dossier-progress-fill" id="dossier-fill"></div>
+                </div>
+              </div>
+            </div>
+            <div class="dossier-checklist-grid">
+              <label class="dossier-item">
+                <input type="checkbox" class="dossier-check" data-doc="10th" />
+                <div class="dossier-item-text">
+                  <strong>Secondary School Marksheet (10th Standard)</strong>
+                  <small>Proof of age, parentage, and primary arithmetic/reading marks.</small>
+                </div>
+                <span class="dossier-status-badge">Pending</span>
+              </label>
+              <label class="dossier-item">
+                <input type="checkbox" class="dossier-check" data-doc="12th" />
+                <div class="dossier-item-text">
+                  <strong>Senior Secondary Marksheet (12th Standard)</strong>
+                  <small>Official qualifying marksheet or predicted grades scroll.</small>
+                </div>
+                <span class="dossier-status-badge">Pending</span>
+              </label>
+              <label class="dossier-item">
+                <input type="checkbox" class="dossier-check" data-doc="id" />
+                <div class="dossier-item-text">
+                  <strong>Government Mariner Identity Scroll</strong>
+                  <small>Aadhaar Card, Passport, or National Identity card (clear copy).</small>
+                </div>
+                <span class="dossier-status-badge">Pending</span>
+              </label>
+              <label class="dossier-item">
+                <input type="checkbox" class="dossier-check" data-doc="scorecard" />
+                <div class="dossier-item-text">
+                  <strong>Entrance Trial Scorecard (VIBE-SAT / JEE / CUET)</strong>
+                  <small>Verified scorecard with candidate roll number and percentile rank.</small>
+                </div>
+                <span class="dossier-status-badge">Pending</span>
+              </label>
+              <label class="dossier-item">
+                <input type="checkbox" class="dossier-check" data-doc="medical" />
+                <div class="dossier-item-text">
+                  <strong>Medical Fitness & Sea-Readiness Certificate</strong>
+                  <small>Signed by a registered medical practitioner, certifying good health and vision.</small>
+                </div>
+                <span class="dossier-status-badge">Pending</span>
+              </label>
+            </div>
+            <div style="margin-top: 24px; display: flex; justify-content: space-between; align-items: center;">
+              <p style="margin: 0; font-size: 10px; color: #7f867c;">
+                ✦ All documents must be self-attested before final seat locking.
+              </p>
+              <button class="button button-gold" id="btn-dossier-enlist" type="button">
+                Ready? Open Application Form →
+              </button>
+            </div>
+          </div>
+
+          <!-- TAB 4: FAQS -->
+          <div class="adm-content-pane" id="pane-faq" role="tabpanel" aria-labelledby="tab-btn-faq">
+            <div class="faq-grid">
+              <div class="faq-accordion is-open">
+                <button class="faq-question-btn" type="button">
+                  <span>Can I transfer credits from another collegiate academy?</span>
+                  <span class="faq-icon">▶</span>
+                </button>
+                <div class="faq-answer">
+                  Yes, under the Academic Bank of Credits (ABC) guideline, mariners who completed semester coursework at approved universities may transfer up to 40% of their degree credits following syllabus evaluation by our Board of Studies.
+                </div>
+              </div>
+              <div class="faq-accordion">
+                <button class="faq-question-btn" type="button">
+                  <span>What is the refund policy if I cancel my seat before sailing?</span>
+                  <span class="faq-icon">▶</span>
+                </button>
+                <div class="faq-answer">
+                  Our refund charter complies 100% with UGC directives. Full refund (minus ₹1,000 administrative processing dues) is granted if cancellation occurs 15 days or more prior to the formally notified commencement of induction.
+                </div>
+              </div>
+              <div class="faq-accordion">
+                <button class="faq-question-btn" type="button">
+                  <span>Is hostel accommodation guaranteed for out-of-harbor students?</span>
+                  <span class="faq-icon">▶</span>
+                </button>
+                <div class="faq-answer">
+                  All first-year cadets arriving from outside the home maritime region are guaranteed berths in the Harbour Deck Hostels, equipped with 24/7 security watch, dining mess, and high-speed beacon Wi-Fi.
+                </div>
+              </div>
+              <div class="faq-accordion">
+                <button class="faq-question-btn" type="button">
+                  <span>How are the scholarship grants renewed each year?</span>
+                  <span class="faq-icon">▶</span>
+                </button>
+                <div class="faq-answer">
+                  The High Sea Merit and Voyager Grants are maintained annually provided the cadet sustains a minimum CGPA of 8.0 with no backlog disciplinary flags in the Ship's Log.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PLACEMENTS: THE BOUNTY BOARD -->
+      <section class="placements-section" id="placements">
+        <div class="section-heading">
+          <p class="eyebrow"><span></span> FLEET ALLIANCES & CAREER OUTCOMES</p>
+          <h2 style="color: #f7f3e8;">The Bounty Board: <em>Where Cadets Turn Commanders.</em></h2>
+          <p style="color: #9cb09b;">Our mariners do not merely seek jobs—they helm global engineering, strategy, and creative fleets.</p>
+        </div>
+
+        <div class="bounty-metrics">
+          <div class="bounty-stat-card">
+            <p class="bounty-stat-kicker">Highest Fleet Package</p>
+            <h3 class="bounty-stat-number">₹48.5 LPA</h3>
+            <p class="bounty-stat-desc">Offered by CloudGalleon International</p>
+          </div>
+          <div class="bounty-stat-card">
+            <p class="bounty-stat-kicker">Average Crew Bounty</p>
+            <h3 class="bounty-stat-number">₹14.8 LPA</h3>
+            <p class="bounty-stat-desc">+22% increase over previous voyage</p>
+          </div>
+          <div class="bounty-stat-card">
+            <p class="bounty-stat-kicker">Placement Rate</p>
+            <h3 class="bounty-stat-number">96.4%</h3>
+            <p class="bounty-stat-desc">Mariners placed prior to graduation day</p>
+          </div>
+          <div class="bounty-stat-card">
+            <p class="bounty-stat-kicker">Allied Fleets</p>
+            <h3 class="bounty-stat-number">180+</h3>
+            <p class="bounty-stat-desc">Global technology & commerce partners</p>
+          </div>
+        </div>
+
+        <p class="bounty-alliances-title">✦ OUR DISTINGUISHED FLEET RECRUITERS ✦</p>
+        <div class="recruiters-grid">
+          <span class="recruiter-chip"><span>⚓</span> Google Armada</span>
+          <span class="recruiter-chip"><span>⌘</span> Microsoft Galleon</span>
+          <span class="recruiter-chip"><span>⚡</span> Stripe Oceanics</span>
+          <span class="recruiter-chip"><span>✦</span> Amazon Trading Co.</span>
+          <span class="recruiter-chip"><span>✳</span> Goldman Sachs Admiralty</span>
+          <span class="recruiter-chip"><span>⚙</span> Nvidia High Seas</span>
+          <span class="recruiter-chip"><span>⛵</span> McKinsey Maritime</span>
+          <span class="recruiter-chip"><span>⌬</span> DeepSea Robotics</span>
+          <span class="recruiter-chip"><span>🪙</span> Morgan Stanley Fleet</span>
+        </div>
+
+        <div class="placement-double">
+          <div class="trajectory-box">
+            <h3>Year-on-Year Placement Trajectory</h3>
+            <div class="trajectory-tabs">
+              <button class="traj-tab is-active" data-year="2026" type="button">Class of 2026</button>
+              <button class="traj-tab" data-year="2025" type="button">Class of 2025</button>
+              <button class="traj-tab" data-year="2024" type="button">Class of 2024</button>
+            </div>
+            <div class="traj-stat-rows" id="traj-stats-container">
+              <div class="traj-row">
+                <span>Total Offers Made</span>
+                <strong>412 Offers</strong>
+              </div>
+              <div class="traj-row">
+                <span>Mariners with Dream Offers (&gt;₹20 LPA)</span>
+                <strong>68 Cadets</strong>
+              </div>
+              <div class="traj-row">
+                <span>Leading Sector</span>
+                <strong>Distributed AI & Cloud (44%)</strong>
+              </div>
+              <div class="traj-row">
+                <span>International Placements</span>
+                <strong>24 Berths in SG, UK & US</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="trajectory-box">
+            <h3>From Deck Cadet to Fleet Commander</h3>
+            <div class="cadet-stories-grid">
+              <div class="cadet-card">
+                <div class="cadet-avatar">AR</div>
+                <div class="cadet-info">
+                  <h4>Aditi Rao (B.Tech '26)</h4>
+                  <p>Placed at <strong>Stripe Oceanics</strong> as Systems Engineer</p>
+                  <span class="cadet-package">₹42.0 LPA BOUNTY</span>
+                </div>
+              </div>
+              <div class="cadet-card">
+                <div class="cadet-avatar">RS</div>
+                <div class="cadet-info">
+                  <h4>Rohan Sharma (B.B.A. '26)</h4>
+                  <p>Placed at <strong>Goldman Sachs</strong> as Global Analyst</p>
+                  <span class="cadet-package">₹28.5 LPA BOUNTY</span>
+                </div>
+              </div>
+              <div class="cadet-card">
+                <div class="cadet-avatar">KL</div>
+                <div class="cadet-info">
+                  <h4>Kavya Lakshman (B.A. '26)</h4>
+                  <p>Placed at <strong>Penguin Nautical Media</strong> as Lead Strategist</p>
+                  <span class="cadet-package">₹18.2 LPA BOUNTY</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CAMPUS MAP: THE TREASURE FINDER -->
       <section class="locator-section" id="locator">
         <div class="section-heading">
           <p class="eyebrow eyebrow-dark"><span></span> The campus chart room</p>
@@ -201,61 +729,648 @@
         </div>
       </section>
 
-      <section class="courses-section" id="courses">
-        <div class="courses-heading">
-          <div>
-            <p class="eyebrow"><span></span> Choose your adventure</p>
-            <h2>Find your <em>north star.</em></h2>
-          </div>
-          <a class="text-link light-link" href="#apply">Browse all courses <span aria-hidden="true">→</span></a>
+      <!-- HALL OF LEGENDS: ALUMNI WANTED POSTERS -->
+      <section class="legends-section" id="legends">
+        <div class="legends-header">
+          <p class="eyebrow" style="color: var(--gold);"><span></span> OUR MOST RENOWNED PRIVATEERS</p>
+          <h2 style="font-family: var(--serif); font-size: clamp(34px, 4vw, 48px); margin: 0 0 12px; color: #fbf6ec;">
+            Hall of Legends: <em>The Wanted Board.</em>
+          </h2>
+          <p style="margin: 0; font-size: 12px; color: #c4b5a2; line-height: 1.7;">
+            Graduates who conquered the seven commercial, technical, and scientific oceans.
+            <br />Reward: Boundless inspiration for the crew that follows.
+          </p>
         </div>
-        <div class="course-grid">
-          <a class="course-card course-sand" href="#apply">
-            <span class="course-number">01 / THINK</span><span class="course-icon" aria-hidden="true">✳</span>
-            <h3>Arts &<br />Humanities</h3><p>Ask better questions. Find surprising answers.</p><span class="course-arrow">↗</span>
-          </a>
-          <a class="course-card course-sea" href="#apply">
-            <span class="course-number">02 / MAKE</span><span class="course-icon" aria-hidden="true">⌘</span>
-            <h3>Science &<br />Technology</h3><p>Build things that make tomorrow better.</p><span class="course-arrow">↗</span>
-          </a>
-          <a class="course-card course-rust" href="#apply">
-            <span class="course-number">03 / LEAD</span><span class="course-icon" aria-hidden="true">⚓</span>
-            <h3>Business &<br />Leadership</h3><p>Turn big-hearted ideas into real impact.</p><span class="course-arrow">↗</span>
-          </a>
+
+        <div class="legends-filter-bar">
+          <button class="legend-filter-btn is-active" data-cat="all" type="button">All Legends</button>
+          <button class="legend-filter-btn" data-cat="tech" type="button">Tech Pioneers</button>
+          <button class="legend-filter-btn" data-cat="science" type="button">Cartographers & Scientists</button>
+          <button class="legend-filter-btn" data-cat="merchant" type="button">Merchant Captains</button>
+        </div>
+
+        <div class="wanted-posters-grid">
+          <!-- POSTER 1 -->
+          <article class="wanted-poster" data-cat="tech">
+            <span class="wanted-tack" aria-hidden="true"></span>
+            <p class="wanted-banner">★ WANTED ★</p>
+            <div class="wanted-portrait-wrap">
+              <img class="wanted-portrait" src="assets/legend_roy.jpg" alt="Portrait of Captain Ananya Roy" />
+            </div>
+            <h3 class="wanted-name">Captain Ananya Roy</h3>
+            <p class="wanted-year">CLASS OF 2021 · B.TECH</p>
+            <p class="wanted-role">Founder & CEO, SkyCorsair AI ($40M Series B)</p>
+            <div class="wanted-reward">BOUNTY: INSPIRATION</div>
+            <button class="wanted-btn" type="button" data-legend="roy">Inspect Chronicle ↗</button>
+          </article>
+
+          <!-- POSTER 2 -->
+          <article class="wanted-poster" data-cat="tech">
+            <span class="wanted-tack" aria-hidden="true"></span>
+            <p class="wanted-banner">★ WANTED ★</p>
+            <div class="wanted-portrait-wrap">
+              <img class="wanted-portrait" src="assets/legend_malhotra.jpg" alt="Portrait of Commander Vikram Malhotra" />
+            </div>
+            <h3 class="wanted-name">Cmdr. Vikram Malhotra</h3>
+            <p class="wanted-year">CLASS OF 2019 · B.TECH</p>
+            <p class="wanted-role">Principal Systems Architect, CloudGalleon Global</p>
+            <div class="wanted-reward">BOUNTY: ARCHITECTURE</div>
+            <button class="wanted-btn" type="button" data-legend="malhotra">Inspect Chronicle ↗</button>
+          </article>
+
+          <!-- POSTER 3 -->
+          <article class="wanted-poster" data-cat="science">
+            <span class="wanted-tack" aria-hidden="true"></span>
+            <p class="wanted-banner">★ WANTED ★</p>
+            <div class="wanted-portrait-wrap">
+              <img class="wanted-portrait" src="assets/legend_vance.jpg" alt="Portrait of Commodore Elara Vance" />
+            </div>
+            <h3 class="wanted-name">Cmdr. Elara Vance</h3>
+            <p class="wanted-year">CLASS OF 2022 · B.S. OCEANICS</p>
+            <p class="wanted-role">Lead Climate Cartographer, Oceanic Observatory</p>
+            <div class="wanted-reward">BOUNTY: DISCOVERY</div>
+            <button class="wanted-btn" type="button" data-legend="vance">Inspect Chronicle ↗</button>
+          </article>
+
+          <!-- POSTER 4 -->
+          <article class="wanted-poster" data-cat="merchant">
+            <span class="wanted-tack" aria-hidden="true"></span>
+            <p class="wanted-banner">★ WANTED ★</p>
+            <div class="wanted-portrait-wrap">
+              <img class="wanted-portrait" src="assets/legend_tariq.jpg" alt="Portrait of Captain Tariq Al-Mansoor" />
+            </div>
+            <h3 class="wanted-name">Capt. Tariq Al-Mansoor</h3>
+            <p class="wanted-year">CLASS OF 2020 · B.B.A.</p>
+            <p class="wanted-role">Managing Partner, Clean Ocean Ventures ($120M Fund)</p>
+            <div class="wanted-reward">BOUNTY: ENDEAVOR</div>
+            <button class="wanted-btn" type="button" data-legend="tariq">Inspect Chronicle ↗</button>
+          </article>
+        </div>
+
+        <div class="legends-alumni-cta">
+          <div>
+            <strong>Are you a former Vibe College privateer?</strong>
+            <p>Join the Old Salts Guild directory, mentor rookie cadets, or submit your modern voyages.</p>
+          </div>
+          <button class="button button-gold" id="btn-alumni-join" type="button">
+            Enlist in Alumni Guild →
+          </button>
         </div>
       </section>
 
+      <!-- CREW LIFE & EVENTS (CAPTAIN'S LOG) -->
       <section class="crew-section" id="events">
         <div class="crew-copy">
           <p class="eyebrow eyebrow-dark"><span></span> Life beyond the lecture hall</p>
           <h2>Good ships need<br />a <em>good crew.</em></h2>
           <p>From first light on the water to late-night ideas in the studio, the best part of college is who you find along the way.</p>
-          <a class="button button-dark" href="#apply">Meet your future crew <span aria-hidden="true">→</span></a>
+          <a class="button button-dark" href="#admissions">Meet your future crew <span aria-hidden="true">→</span></a>
         </div>
         <div class="crew-note">
           <span class="note-tape"></span>
           <span class="note-star">✳</span>
           <span class="note-label">THE CAPTAIN'S LOG · 04</span>
           <h3>Next up on deck</h3>
-          <div class="event-row"><span class="event-date">24<br /><small>OCT</small></span><p><strong>Open Deck Day</strong><br />Bring a friend. Meet the crew.</p><span>↗</span></div>
-          <div class="event-row"><span class="event-date">31<br /><small>OCT</small></span><p><strong>Night of a Thousand Lanterns</strong><br />A little light on the harbour.</p><span>↗</span></div>
+          <div class="event-row">
+            <span class="event-date">24<br /><small>OCT</small></span>
+            <p><strong>Open Deck Day</strong><br />Bring a friend. Meet the crew and explore labs.</p>
+            <span>↗</span>
+          </div>
+          <div class="event-row">
+            <span class="event-date">31<br /><small>OCT</small></span>
+            <p><strong>Night of a Thousand Lanterns</strong><br />A little light on the harbour with live sea shanties.</p>
+            <span>↗</span>
+          </div>
+          <div class="event-row">
+            <span class="event-date">14<br /><small>NOV</small></span>
+            <p><strong>Annual Hack-the-Armada Regatta</strong><br />48-hour prototype challenge across AI & robotics.</p>
+            <span>↗</span>
+          </div>
           <div class="note-footer">ALL HANDS. ALL HEARTS. &nbsp; <span>♡</span></div>
         </div>
       </section>
 
+      <!-- MESSAGE IN A BOTTLE: CONTACT & ENQUIRY -->
+      <section class="bottle-section" id="bottle-enquiry">
+        <div class="section-heading">
+          <p class="eyebrow eyebrow-dark"><span></span> SIGNAL THE HARBOR · MESSAGE IN A BOTTLE</p>
+          <h2>Cast Your Question <em>Into the Tide.</em></h2>
+          <p>Have an inquiry for our admissions officers, faculty deans, or hostel warden? Seal your message in a bottle and cast it into the sea.</p>
+        </div>
+
+        <div class="bottle-grid">
+          <div class="bottle-dispatch-card">
+            <form id="bottle-form">
+              <div class="bottle-form-row">
+                <div class="bottle-field">
+                  <label for="bottle-name">Mariner Name</label>
+                  <input type="text" id="bottle-name" placeholder="E.g. Cadet Liam Smith" required />
+                </div>
+                <div class="bottle-field">
+                  <label for="bottle-audience">Who are you?</label>
+                  <select id="bottle-audience">
+                    <option value="prospective">Prospective Student / Parent</option>
+                    <option value="current">Current Cadet / Crew</option>
+                    <option value="recruiter">Fleet Recruiter</option>
+                    <option value="other">General Inquirer</option>
+                  </select>
+                </div>
+              </div>
+              <div class="bottle-form-row">
+                <div class="bottle-field">
+                  <label for="bottle-email">Carrier Pigeon (Email)</label>
+                  <input type="email" id="bottle-email" placeholder="liam@domain.example" required />
+                </div>
+                <div class="bottle-field">
+                  <label for="bottle-phone">Signal Horn (Phone)</label>
+                  <input type="tel" id="bottle-phone" placeholder="+1 (555) 019-2834" />
+                </div>
+              </div>
+              <div class="bottle-field">
+                <label for="bottle-dept">Destination Port / Department</label>
+                <select id="bottle-dept">
+                  <option value="admissions">Admissions & Enlistment Deck</option>
+                  <option value="finance">Doubloons & Scholarships Desk</option>
+                  <option value="hostel">Hostel & Transport Warden</option>
+                  <option value="dean">Academic Deans & Faculty</option>
+                  <option value="grievance">Grievance & Anti-Ragging Cell</option>
+                </select>
+              </div>
+              <div class="bottle-field">
+                <label for="bottle-message">Your Secret Parchment Message</label>
+                <textarea id="bottle-message" placeholder="Write your question, enquiry, or request for guidance..." required></textarea>
+              </div>
+              <button class="bottle-cast-btn" type="submit" id="btn-cast-bottle">
+                <span aria-hidden="true">🍾</span> Cork & Cast Bottle to Sea →
+              </button>
+            </form>
+
+            <div class="bottle-success-notice" id="bottle-success">
+              <h4>✦ Bottle Fished from the Waves! ✦</h4>
+              <p id="bottle-success-msg">
+                Ahoy! Your bottle has been retrieved by the Harbor Watch. A carrier pigeon receipt has been dispatched to your email with Tracking ID <strong>#VB-8492</strong>. Expect an answer within 24 tide hours!
+              </p>
+            </div>
+          </div>
+
+          <div class="harbor-coords-card">
+            <h3>Direct Port Beacons</h3>
+            <div class="coord-items">
+              <div class="coord-item">
+                <div class="coord-icon" aria-hidden="true">📍</div>
+                <div class="coord-info">
+                  <strong>Campus Coordinates</strong>
+                  <p>Vibe College Anchorage, Bay of Curiosity, 12° 34' N, 56° 78' W</p>
+                </div>
+              </div>
+              <div class="coord-item">
+                <div class="coord-icon" aria-hidden="true">📞</div>
+                <div class="coord-info">
+                  <strong>Harbor Signal Horn (Phone)</strong>
+                  <p>+1 (800) 555-VIBE · +1 (800) 555-8423 (09:00 - 17:00 IST)</p>
+                </div>
+              </div>
+              <div class="coord-item">
+                <div class="coord-icon" aria-hidden="true">✉️</div>
+                <div class="coord-info">
+                  <strong>Carrier Pigeon (Email)</strong>
+                  <p>admissions@vibecollege.edu · harbor@vibecollege.edu</p>
+                </div>
+              </div>
+              <div class="coord-item">
+                <div class="coord-icon" aria-hidden="true">🕒</div>
+                <div class="coord-info">
+                  <strong>Deck Visiting Hours</strong>
+                  <p>Monday to Saturday: 08:30 – 16:30 Tide Time</p>
+                </div>
+              </div>
+            </div>
+            <a class="whatsapp-beacon-btn" href="https://wa.me/18005558423" target="_blank" rel="noopener">
+              <span aria-hidden="true">💬</span> Signal via WhatsApp Beacon
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- THE PIRATE CODE: RULES & STATUTORY GOVERNANCE -->
+      <section class="code-section" id="ship-code">
+        <div class="section-heading">
+          <p class="eyebrow" style="color: var(--gold);"><span></span> CAMPUS GOVERNANCE & REGULATIONS</p>
+          <h2 style="color: #f7f2e6;">The Pirate Code: <em>Honor, Safety & Truth.</em></h2>
+          <p style="color: #9cb19c;">A ship without rules is merely driftwood. Here are our mandatory charters and public pledges.</p>
+        </div>
+
+        <div class="code-grid">
+          <div class="code-card">
+            <span class="code-num">I</span>
+            <h3>Zero-Tolerance Anti-Ragging</h3>
+            <p>Ragging on campus or hostels is strictly banned. Strict disciplinary action, suspension, and legal prosecution will be initiated against violators.</p>
+            <a class="code-action-link" href="tel:18001805522">National Helpline: 1800-180-5522 ↗</a>
+          </div>
+          <div class="code-card">
+            <span class="code-num">II</span>
+            <h3>Grievance Redressal Cell</h3>
+            <p>Fair ombudsman hearings for academic and personal grievances. Confidential drop box and swift resolution within 7 sailing days.</p>
+            <a class="code-action-link" href="#bottle-enquiry">File Grievance Scroll ↗</a>
+          </div>
+          <div class="code-card">
+            <span class="code-num">III</span>
+            <h3>Infirmary & Mental Health</h3>
+            <p>24/7 on-deck emergency medical center with resident surgeon, ambulance, and confidential psychological counseling sessions.</p>
+            <a class="code-action-link" href="#bottle-enquiry">Book Health Counselor ↗</a>
+          </div>
+          <div class="code-card">
+            <span class="code-num">IV</span>
+            <h3>Mandatory Public Disclosures</h3>
+            <p>AICTE Approval Letters, UGC 2(f) & 12(B) Gazettes, NAAC SSR Scrolls, and annual audited financial statements open to all.</p>
+            <a class="code-action-link" href="#ship-code" id="btn-view-disclosures">View Public Disclosures ↗</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- CALL TO ACTION BANNER -->
       <section class="apply-banner" id="apply">
         <div class="apply-spark" aria-hidden="true">✳</div>
         <p class="eyebrow"><span></span> Your next chapter starts here</p>
         <h2>Ready to come <em>aboard?</em></h2>
         <p>No peg leg required. Just a curious mind and room for a little adventure.</p>
-        <a href="mailto:admissions@vibecollege.example" class="button button-gold">Talk to admissions <span aria-hidden="true">→</span></a>
+        <button class="button button-gold" id="btn-banner-enlist" type="button">
+          Open Enlistment Application <span aria-hidden="true">→</span>
+        </button>
       </section>
     </main>
 
+    <!-- RICH 4-COLUMN FOOTER -->
     <footer class="site-footer">
-      <a class="brand footer-brand" href="#"><span class="brand-mark" aria-hidden="true">VC</span><span class="brand-name">VIBE <small>COLLEGE</small></span></a>
-      <p>Curious minds. Kind hearts. Good adventures.</p>
-      <span>© 2026 Vibe College · Made with a little mischief</span>
+      <div class="footer-top">
+        <div class="footer-col">
+          <a class="brand footer-brand" href="#">
+            <span class="brand-mark" aria-hidden="true">VC</span>
+            <span class="brand-name">VIBE <small>COLLEGE</small></span>
+          </a>
+          <p class="footer-desc">
+            An accredited institution for bold voyagers, curious researchers, and fleet commanders. Charting modern education with rigor, camaraderie, and a dash of high-seas adventure.
+          </p>
+          <div class="footer-socials">
+            <a class="social-beacon" href="#" aria-label="LinkedIn Beacon">in</a>
+            <a class="social-beacon" href="#" aria-label="Instagram Beacon">ig</a>
+            <a class="social-beacon" href="#" aria-label="GitHub Beacon">gh</a>
+            <a class="social-beacon" href="#" aria-label="YouTube Broadcast">yt</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Academic Voyages</h4>
+          <ul>
+            <li><a href="#courses">Science & Technology</a></li>
+            <li><a href="#courses">Business & Leadership</a></li>
+            <li><a href="#courses">Arts & Humanities</a></li>
+            <li><a href="#admissions">Doubloon Fee Calculator</a></li>
+            <li><a href="#admissions">Sailing Schedule & Dates</a></li>
+            <li><a href="#placements">Bounty Board & Placements</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Crew Resources</h4>
+          <ul>
+            <li><a href="#" id="footer-portal-link">Shipmate Student Portal</a></li>
+            <li><a href="#locator">Campus Treasure Map</a></li>
+            <li><a href="#events">The Captain's Log Events</a></li>
+            <li><a href="#legends">Hall of Legends (Alumni)</a></li>
+            <li><a href="#bottle-enquiry">Message in a Bottle (Help)</a></li>
+            <li><a href="#ship-code">Hostel & Transport Charters</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Trust & Regulatory</h4>
+          <ul>
+            <li><a href="#ship-code">Anti-Ragging Committee</a></li>
+            <li><a href="#ship-code">Internal Complaints Committee</a></li>
+            <li><a href="#ship-code">Mandatory AICTE Disclosures</a></li>
+            <li><a href="#ship-code">RTI & Public Audit Reports</a></li>
+            <li><a href="#ship-code">NAAC Accreditation (A++)</a></li>
+          </ul>
+          <div class="footer-badges">
+            <span class="trust-badge">⚓ NAAC A++</span>
+            <span class="trust-badge">📜 UGC Approved</span>
+            <span class="trust-badge">🏛️ AICTE Recognized</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Vibe College · Chart your own course with honour and courage.</span>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Cookie Notice</a>
+          <a href="#">Accessibility Statement</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
     </footer>
+
+    <!-- ============================================================== -->
+    <!-- MODALS SYSTEM                                                  -->
+    <!-- ============================================================== -->
+
+    <!-- MODAL 1: STUDENT PORTAL ("THE SHIPMATE DECK") -->
+    <div class="modal-backdrop" id="portal-modal" role="dialog" aria-modal="true" aria-labelledby="portal-modal-title">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 id="portal-modal-title">☸ The Shipmate Deck — Cadet Portal</h3>
+          <button class="modal-close-btn" type="button" aria-label="Close portal modal" data-close-modal="portal-modal">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="portal-profile-bar">
+            <div class="portal-user-wrap">
+              <div class="portal-avatar">JS</div>
+              <div class="portal-user-meta">
+                <h4>Cadet Jack Sparrow</h4>
+                <p>Roll No: VC-2024-TECH-042 · 3rd Year Navigational Engineering</p>
+              </div>
+            </div>
+            <span class="portal-badge-tier">Rank: Quartermaster</span>
+          </div>
+
+          <div class="portal-nav-tabs">
+            <button class="portal-nav-btn is-active" data-ptab="overview" type="button">Voyage Overview</button>
+            <button class="portal-nav-btn" data-ptab="grades" type="button">Marks & Transcripts</button>
+            <button class="portal-nav-btn" data-ptab="timetable" type="button">Watch Duty Timetable</button>
+            <button class="portal-nav-btn" data-ptab="fees" type="button">Fee Dues & Receipts</button>
+            <button class="portal-nav-btn" data-ptab="log" type="button">Ship's Log Circulars</button>
+          </div>
+
+          <!-- SUB-TAB 1: OVERVIEW -->
+          <div class="portal-pane" id="portal-pane-overview">
+            <div class="portal-stats-row">
+              <div class="portal-stat-box">
+                <span>Sea-Readiness Attendance</span>
+                <strong>88.4%</strong>
+                <small>Above 75% Safe Sailing Threshold</small>
+              </div>
+              <div class="portal-stat-box">
+                <span>Cumulative GPA</span>
+                <strong>9.18 / 10</strong>
+                <small>First Class with High Honors</small>
+              </div>
+              <div class="portal-stat-box">
+                <span>Doubloon Dues</span>
+                <strong style="color: #2b7045;">₹0.00</strong>
+                <small>All Semester Fees Cleared</small>
+              </div>
+            </div>
+            <h4 style="margin: 0 0 10px; font-family: var(--serif); font-size: 15px;">Next Lecture Duty</h4>
+            <div style="padding: 12px 16px; background: #fbf7ee; border: 1px solid #ded5be; border-radius: 3px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="font-size: 13px; font-family: var(--serif);">Advanced Astrolabe Cryptography & AI</strong>
+                <p style="margin: 3px 0 0; font-size: 10px; color: #6d756b;">Prof. Blackbeard · Founders Hall Deck 3 · 14:00 - 15:30 Tide Time</p>
+              </div>
+              <span class="badge-tag" style="background: var(--gold); color: var(--ink); padding: 4px 8px; border-radius: 2px; font-size: 9px; font-weight: 700;">IN 45 MINS</span>
+            </div>
+          </div>
+
+          <!-- SUB-TAB 2: GRADES -->
+          <div class="portal-pane" id="portal-pane-grades" style="display: none;">
+            <table class="portal-table">
+              <thead>
+                <tr>
+                  <th>Course Code</th>
+                  <th>Voyage Subject</th>
+                  <th>Credits</th>
+                  <th>Internal</th>
+                  <th>Grade</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>NAV-301</td>
+                  <td>Celestial Navigation & Algorithms</td>
+                  <td>4.0</td>
+                  <td>48 / 50</td>
+                  <td><strong>A+ (10)</strong></td>
+                </tr>
+                <tr>
+                  <td>CSE-304</td>
+                  <td>Distributed High-Seas Networks</td>
+                  <td>4.0</td>
+                  <td>46 / 50</td>
+                  <td><strong>A (9)</strong></td>
+                </tr>
+                <tr>
+                  <td>ROB-302</td>
+                  <td>Autonomous Galleon Systems Lab</td>
+                  <td>3.0</td>
+                  <td>49 / 50</td>
+                  <td><strong>O (Outstanding)</strong></td>
+                </tr>
+                <tr>
+                  <td>ETH-201</td>
+                  <td>The Pirate Code & Engineering Ethics</td>
+                  <td>2.0</td>
+                  <td>50 / 50</td>
+                  <td><strong>O (Outstanding)</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- SUB-TAB 3: TIMETABLE -->
+          <div class="portal-pane" id="portal-pane-timetable" style="display: none;">
+            <table class="portal-table">
+              <thead>
+                <tr>
+                  <th>Day</th>
+                  <th>09:00 - 10:30</th>
+                  <th>11:00 - 12:30</th>
+                  <th>14:00 - 15:30</th>
+                  <th>16:00 - 17:30</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Monday</strong></td>
+                  <td>NAV-301 (Deck 2)</td>
+                  <td>CSE-304 (Lab 1)</td>
+                  <td>Library Study</td>
+                  <td>Rigging Drills</td>
+                </tr>
+                <tr>
+                  <td><strong>Tuesday</strong></td>
+                  <td>ROB-302 (Hangar A)</td>
+                  <td>ROB-302 (Hangar A)</td>
+                  <td>Astrolabe AI</td>
+                  <td>Crew Sports</td>
+                </tr>
+                <tr>
+                  <td><strong>Wednesday</strong></td>
+                  <td>CSE-304 (Deck 2)</td>
+                  <td>NAV-301 (Deck 2)</td>
+                  <td>Ethics & Law</td>
+                  <td>Open Deck Study</td>
+                </tr>
+                <tr>
+                  <td><strong>Thursday</strong></td>
+                  <td>Distributed AI</td>
+                  <td>DeepSea Robotics</td>
+                  <td>Project Review</td>
+                  <td>Club Meet</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- SUB-TAB 4: FEES -->
+          <div class="portal-pane" id="portal-pane-fees" style="display: none;">
+            <div style="padding: 16px; background: #fbf7ee; border: 1px solid #ded5be; border-radius: 3px; margin-bottom: 16px;">
+              <h4 style="margin: 0 0 8px; font-family: var(--serif);">Semester 5 Clearance Certificate</h4>
+              <p style="margin: 0 0 12px; font-size: 11px; color: #6d756b;">
+                Transaction ID: <strong>TXN-VC-99418294</strong> · Amount: ₹1,13,000 · Paid via Maritime NetBanking on 12 Aug 2026.
+              </p>
+              <button class="button button-gold" id="btn-portal-view-receipt" type="button">
+                View & Download Official Receipt #VC-9941 ↗
+              </button>
+            </div>
+          </div>
+
+          <!-- SUB-TAB 5: LOG -->
+          <div class="portal-pane" id="portal-pane-log" style="display: none;">
+            <input class="portal-filter-input" id="portal-log-search" type="search" placeholder="Search Ship's Log circulars by keyword..." />
+            <div class="portal-log-list" id="portal-log-list">
+              <div class="portal-log-item">
+                <div>
+                  <strong>Mid-Term Examination Hall Tickets Released</strong>
+                  <small>Office of the Controller of Examinations · 08 Oct 2026</small>
+                </div>
+                <a class="text-link" href="#" style="color: var(--rust); font-weight: 700;">Download Hall Ticket ↗</a>
+              </div>
+              <div class="portal-log-item">
+                <div>
+                  <strong>Library Deck Extended Hours for Finals Preparation</strong>
+                  <small>Harbor Head Librarian · 04 Oct 2026</small>
+                </div>
+                <span class="trust-badge">General Notice</span>
+              </div>
+              <div class="portal-log-item">
+                <div>
+                  <strong>Inter-Collegiate Nautical Regatta Registrations Open</strong>
+                  <small>Director of Physical Drills & Sports · 28 Sep 2026</small>
+                </div>
+                <a class="text-link" href="#events" style="color: var(--gold); font-weight: 700;">View Event ↗</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 2: COURSE CHARTER DETAILS -->
+    <div class="modal-backdrop" id="course-modal" role="dialog" aria-modal="true" aria-labelledby="course-modal-title">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 id="course-modal-title">Voyage Charter Details</h3>
+          <button class="modal-close-btn" type="button" aria-label="Close course modal" data-close-modal="course-modal">×</button>
+        </div>
+        <div class="modal-body" id="course-modal-body">
+          <!-- Dynamic content loaded via app.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 3: CREW ENLISTMENT APPLICATION -->
+    <div class="modal-backdrop" id="enlist-modal" role="dialog" aria-modal="true" aria-labelledby="enlist-modal-title">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 id="enlist-modal-title">⚓ Enlist with the Crew — Application Form</h3>
+          <button class="modal-close-btn" type="button" aria-label="Close enlist modal" data-close-modal="enlist-modal">×</button>
+        </div>
+        <div class="modal-body">
+          <form id="enlist-form">
+            <p style="margin: 0 0 18px; font-size: 11px; color: #6a7368;">
+              Fill in your seafarer dossier details. Our admissions harbor masters will review your credentials and issue your trial roll number.
+            </p>
+            <div class="bottle-form-row">
+              <div class="bottle-field">
+                <label for="enlist-name">Candidate Full Name</label>
+                <input type="text" id="enlist-name" placeholder="E.g. Jennifer Hawk" required />
+              </div>
+              <div class="bottle-field">
+                <label for="enlist-dob">Date of Birth</label>
+                <input type="date" id="enlist-dob" required />
+              </div>
+            </div>
+            <div class="bottle-form-row">
+              <div class="bottle-field">
+                <label for="enlist-email">Email Address</label>
+                <input type="email" id="enlist-email" placeholder="jennifer@example.com" required />
+              </div>
+              <div class="bottle-field">
+                <label for="enlist-phone">Phone / WhatsApp</label>
+                <input type="tel" id="enlist-phone" placeholder="+1 (555) 345-6789" required />
+              </div>
+            </div>
+            <div class="bottle-form-row">
+              <div class="bottle-field">
+                <label for="enlist-program">Desired Program</label>
+                <select id="enlist-program">
+                  <option value="tech">Science & Technology (B.Tech)</option>
+                  <option value="business">Business & Leadership (B.B.A.)</option>
+                  <option value="arts">Arts & Humanities (B.A. Hons)</option>
+                </select>
+              </div>
+              <div class="bottle-field">
+                <label for="enlist-exam">Entrance Exam Status</label>
+                <select id="enlist-exam">
+                  <option value="vibe-sat">Taking VIBE-SAT Navigator Trials</option>
+                  <option value="jee">Qualified in JEE Main / CET</option>
+                  <option value="cuet">Qualified in CUET</option>
+                  <option value="merit">Applying via 12th Board Marks</option>
+                </select>
+              </div>
+            </div>
+            <div class="bottle-field">
+              <label for="enlist-statement">Statement of Voyage (Why Vibe College?)</label>
+              <textarea id="enlist-statement" placeholder="Share why you wish to set sail with our crew..." rows="3" required></textarea>
+            </div>
+            <button class="button button-gold" style="width: 100%; min-height: 44px;" type="submit">
+              Submit Enlistment Scroll & Pay Trial Fee (₹500) →
+            </button>
+          </form>
+          <div class="bottle-success-notice" id="enlist-success">
+            <h4>✦ Enlistment Scroll Received! ✦</h4>
+            <p id="enlist-success-msg">
+              Your application has been registered under Application Number <strong>#VC-2027-APP-9182</strong>. Check your pigeon post inbox for the trial hall ticket and entrance dates!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 4: LEGEND'S CHRONICLE -->
+    <div class="modal-backdrop" id="legend-modal" role="dialog" aria-modal="true" aria-labelledby="legend-modal-title">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 id="legend-modal-title">Legend's Chronicle</h3>
+          <button class="modal-close-btn" type="button" aria-label="Close legend modal" data-close-modal="legend-modal">×</button>
+        </div>
+        <div class="modal-body" id="legend-modal-body">
+          <!-- Dynamic content loaded via app.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 5: OFFICIAL RECEIPT / ESTIMATE PRINT VIEW -->
+    <div class="modal-backdrop" id="receipt-modal" role="dialog" aria-modal="true" aria-labelledby="receipt-modal-title">
+      <div class="modal-dialog" style="max-width: 620px;">
+        <div class="modal-header">
+          <h3 id="receipt-modal-title">Official Doubloon Charter</h3>
+          <button class="modal-close-btn" type="button" aria-label="Close receipt modal" data-close-modal="receipt-modal">×</button>
+        </div>
+        <div class="modal-body" id="receipt-modal-body">
+          <!-- Populated dynamically via app.js -->
+        </div>
+      </div>
+    </div>
   </body>
 </html>
